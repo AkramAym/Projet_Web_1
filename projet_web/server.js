@@ -23,6 +23,9 @@ app.get('/inscription', (req, res) => {
     res.render('pages/inscription'); 
 });
 
+app.get('/connexion', (req, res) => {
+    res.render('pages/connexion'); 
+});
 // Démarrer le serveur
 const PORT = 3000;
 app.listen(PORT, () => {
