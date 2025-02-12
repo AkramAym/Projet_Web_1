@@ -17,6 +17,8 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 400px;
     text-align: center;
+    min-height: 100%;
+    align-self: center;
 }
 
 
@@ -98,4 +100,23 @@ input {
 
 .signup-button:hover {
     background-color: #bbb;
+}
+
+.content-wrap {
+    flex: 1; /* Takes up remaining space */
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
 }
