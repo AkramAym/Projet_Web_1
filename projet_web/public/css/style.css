@@ -33,7 +33,7 @@
 }
 /* Barre grise (se connecter, s'inscrire) */
 .top-bar {
-    background-color: #b6b6b6;
+    background-color: #dad9d9;
     font-size: 14px;
     padding: 5px 15px;
 }
@@ -69,9 +69,8 @@
 
 /* Image à gauche */
 .left-image img {
-    max-width: 400px;
+    max-width: 700px;
     border-radius: 10px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Texte à droite */
@@ -119,16 +118,20 @@ hr {
 }
 
 .manga-card {
-    background-color: #eaeaea;
-    padding: 15px;
-    border-radius: 10px;
+    background-color: #d8d7d7; /* Couleur de fond */
+    padding: 35px; /* Ajustement de l'espace intérieur */
     text-align: center;
-    width: 160px;
+    width: 220px; /* Augmenter la largeur */
+    height: 380px; /* Augmenter la hauteur */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+
 
 .manga-card img {
     width: 100%;
-    border-radius: 5px;
 }
 
 .title {
