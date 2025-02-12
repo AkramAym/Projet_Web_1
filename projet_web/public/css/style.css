@@ -229,32 +229,51 @@ hr {
 .series-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
+    gap: 30px;
+    padding: 30px;
 }
-
-/* Carte de série */
+/* Style pour les cartes de série */
 .series-card {
     background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
-    padding: 50px;
-    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden; /* Pour s'assurer que l'image ne dépasse pas */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    width: 100%; /* Largeur de la carte */
+    max-width: 300px; /* Largeur maximale pour une meilleure lisibilité */
+    margin: 20px; /* Espacement entre les cartes */
 }
 
 /* Effet de survol */
 .series-card:hover {
-    background-color: rgba(241, 7, 7, 0.9); /* Fond plus foncé au survol */
-    cursor: pointer;
+    transform: scale(1.05); /* Légère mise à l'échelle au survol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre portée */
 }
 
-/* Titre et texte */
-.series-card h2 {
+/* Style pour les images des séries */
+.series-image {
+    width: 100%; /* Largeur de l'image */
+    height: 200px; /* Hauteur fixe pour toutes les images */
+    object-fit: cover; /* Pour s'assurer que l'image couvre bien la zone */
+    display: block; /* Pour éviter les espaces indésirables */
+}
+
+/* Style pour le contenu de la carte (titre et description) */
+.series-content {
+    padding: 15px; /* Espacement intérieur */
+}
+
+/* Titre */
+.series-content h2 {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    color: #fff; /* Couleur du texte */
 }
 
-.series-card p {
+/* Description */
+.series-content p {
     font-size: 16px;
-    color: #ddd;
+    color: #ddd; /* Couleur du texte */
 }
 
 footer {
