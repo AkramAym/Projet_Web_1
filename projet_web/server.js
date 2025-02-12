@@ -17,7 +17,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.render('index');
 });
-
+//  Route pour afficher la page d'inscription
+app.get('/inscription', (req, res) => {
+    res.render('inscription'); 
+});
 // Démarrer le serveur
 const PORT = 3000;
 app.listen(PORT, () => {
