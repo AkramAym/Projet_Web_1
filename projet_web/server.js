@@ -14,6 +14,7 @@ app.set('views', path.join(__dirname, 'projet', 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Route principale (Page d'accueil)
+
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 app.get('/inscription', (req, res) => {
     res.render('inscription'); 
 });
+
 // Démarrer le serveur
 const PORT = 3000;
 app.listen(PORT, () => {
