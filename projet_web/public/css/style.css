@@ -144,3 +144,110 @@ hr {
     font-size: 14px;
     color: #333;
 }
+/* Section des mangas en bas */
+.manga-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.manga-card {
+    background-color: #d8d7d7; /* Couleur de fond */
+    padding: 35px; /* Ajustement de l'espace intérieur */
+    text-align: center;
+    width: 220px; /* Augmenter la largeur */
+    height: 380px; /* Augmenter la hauteur */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s ease; /* Ajout d'une transition pour un effet fluide */
+}
+
+.manga-card:hover {
+    background-color: #7a7a7a; /* Couleur plus foncée au survol */
+}
+
+.manga-card img {
+    width: 100%;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.price {
+    font-size: 14px;
+    color: #333;
+}
+.left-image {
+    max-width: 700px; /* Ajustez cette valeur selon vos besoins */
+    border-radius: 35px;
+    overflow: hidden; /* Pour s'assurer que les images ne dépassent pas */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+}
+/* Section "Nos séries" */
+.nos-series-section {
+    position: relative;
+    padding: 50px 0;
+    color: white;
+    text-align: center;
+}
+
+/* Image de fond */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/background-series.jpg'); /* Remplacez par votre image */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5; /* Ajustez l'opacité ici */
+    z-index: -1;
+}
+
+/* Conteneur pour le contenu */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Liste des séries */
+.series-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Carte de série */
+.series-card {
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Effet de survol */
+.series-card:hover {
+    background-color: rgba(241, 7, 7, 0.9); /* Fond plus foncé au survol */
+    cursor: pointer;
+}
+
+/* Titre et texte */
+.series-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.series-card p {
+    font-size: 16px;
+    color: #ddd;
+}

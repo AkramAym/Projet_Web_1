@@ -6,7 +6,6 @@ import mysql from "mysql";
 import { body, validationResult } from "express-validator";
 import dateFormat from "dateformat";
 
-
 const app = express();
 
 // Définition du dossier contenant les vues
@@ -19,20 +18,27 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Route principale (Page d'accueil)
-
 app.get('/', (req, res) => {
     res.render('pages/index');
 });
-//  Route pour afficher la page d'inscription
+
+// Route pour afficher la page d'inscription
 app.get('/inscription', (req, res) => {
-    res.render('pages/inscription'); 
+    res.render('pages/inscription');
 });
 
+// Route pour afficher la page de connexion
 app.get('/connexion', (req, res) => {
-    res.render('pages/connexion'); 
+    res.render('pages/connexion');
 });
 
-app.post("inscription/add", function (req, res) {
+// Route pour afficher la page "Nos séries"
+app.get('/nos-series', (req, res) => {
+    res.render('pages/nos-series'); // Assurez-vous que le fichier `nos-series.ejs` existe dans le dossier `views/pages`
+});
+
+// Route pour gérer l'inscription (POST)
+app.post("/inscription/add", function (req, res) {
     const parametres = [
         req.body.identifiant,
         req.body.prenom,
@@ -41,7 +47,9 @@ app.post("inscription/add", function (req, res) {
         req.body.telephone,
         req.body.password
     ];
-})
+    // Ajoutez ici la logique pour traiter l'inscription
+});
+
 // Démarrer le serveur
 const PORT = 3000;
 app.listen(PORT, () => {
