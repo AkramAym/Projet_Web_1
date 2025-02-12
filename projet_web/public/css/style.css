@@ -235,7 +235,6 @@ hr {
 /* Style pour les cartes de série */
 .series-card {
     background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
-    border-radius: 10px;
     overflow: hidden; /* Pour s'assurer que l'image ne dépasse pas */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
@@ -393,3 +392,38 @@ footer {
   .footer-bottom ul li a:hover {
     text-decoration: underline;
   }
+  body {
+    background: url('/images/best-demon-slayer-panels-feature-image.avif') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+/* Image de fond spécifique à la page d'inscription */
+.inscription-page {
+    background: url('/images/manga-better-than-its-anime.avif') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Image de fond spécifique à la page de connexion */
+.connexion-page {
+    background: url('/images/manga-better-than-its-anime.avif') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Ajoute un overlay semi-transparent pour contrôler l’opacité */
+body::before {
+    content: "";
+    position: fixed; /* Fixe l'overlay sur toute la page */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5); /* Ajuste l'opacité ici */
+    z-index: -100; /* Réduit la priorité de l'overlay pour ne pas cacher le contenu */
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+

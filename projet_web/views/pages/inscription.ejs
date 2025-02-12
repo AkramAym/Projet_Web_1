@@ -1,49 +1,66 @@
-<body>
-<div class="signup-container">
-    <div class="signup-box">
-        <!-- Logo -->
-        <div class="logo-container">
-            <a href="/">
-                <img src="/images/logo.png" alt="MangaThèque" class="logo-img">
-            </a>
-        </div>
-        <link rel="stylesheet" href="/css/inscription.css">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/inscription.css">
+</head>
+<body class="inscription-page">
 
-        <!-- Titre -->
-        <h2>Créez votre compte</h2>
+    <div class="content-container">
+        <div class="signup-container">
+            <div class="signup-box">
+                <!-- Logo -->
+                <div class="logo-container">
+                    <a href="/">
+                        <img src="/images/logo.png" alt="MangaThèque" class="logo-img">
+                    </a>
+                </div>
 
-        <!-- Lien de connexion -->
-        <p>Vous avez déjà un compte ? <a href="/connexion">Ouvrez une session</a></p>
+                <!-- Titre -->
+                <h2>Créez votre compte</h2>
 
-        <!-- Formulaire -->
-        <form action="/inscription" method="POST">
-            <label for="identifiant">Identifiant</label>
-            <input type="text" id="identifiant" name="identifiant" required>
+                <!-- Lien de connexion -->
+                <p>Vous avez déjà un compte ? <a href="/connexion">Ouvrez une session</a></p>
 
-            <label for="prenom">Prénom</label>
-            <input type="text" id="prenom" name="prenom" required>
+                <!-- Formulaire -->
+                <form action="/inscription" method="POST">
+                    <label for="identifiant">Identifiant</label>
+                    <input type="text" id="identifiant" name="identifiant" required>
 
-            <label for="nom">Nom de famille</label>
-            <input type="text" id="nom" name="nom" required>
+                    <label for="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" required>
 
-            <label for="telephone">Numéro de téléphone</label>
-            <input type="tel" id="telephone" name="telephone" required>
+                    <label for="nom">Nom de famille</label>
+                    <input type="text" id="nom" name="nom" required>
 
-            <label for="email">Adresse de courriel</label>
-            <input type="email" id="email" name="email" required>
+                    <label for="telephone">Numéro de téléphone</label>
+                    <input type="tel" id="telephone" name="telephone" required>
 
-            <label for="password">Mot de passe</label>
-            <div class="password-container">
-                <input type="password" id="password" name="password" required>
-                <span class="toggle-password">
-                    <i class="fas fa-eye"></i>
-                </span>
+                    <label for="email">Adresse de courriel</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="password">Mot de passe</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" required>
+                        <span class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+
+                    <!-- Bouton de validation -->
+                    <button type="submit" class="signup-button">Créer un compte</button>
+                </form>
             </div>
-
-            <!-- Bouton de validation -->
-            <button type="submit" class="signup-button">Créer un compte</button>
-        </form>
+        </div>
     </div>
-</div>
+
+    <!-- Footer en bas -->
+    <footer>
+        <%- include('../partials/footer') %>
+    </footer>
+
 </body>
-<footer> <%- include('../partials/footer') %></footer>
+</html>

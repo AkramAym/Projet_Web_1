@@ -20,13 +20,20 @@ body {
     min-height: 100%;
     align-self: center;
 }
+.signup-box {
+    min-height: 10px; /* Ajuste selon ton besoin */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre le contenu verticalement */
+}
+
 
 
 .logo-container img {
-    width: 240px;  
-    height: auto;  
-    margin-bottom: 20px;
+    width: 120px; /* Ajuste la taille si nécessaire */
+    margin-top: 20px; /* Ajoute un espace sous le logo */
 }
+
 
 
 
@@ -107,16 +114,68 @@ input {
     padding: 20px;
 }
 
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: auto; /* Pushes footer to the bottom */
-}
+
 
 .page-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Full viewport height */
+}
+/* Ajuste la hauteur totale de la page */
+.full-height {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Contenu principal qui pousse le footer vers le bas */
+.content-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container {
+    flex-grow: 1; /* Permet au contenu de s'étirer et pousse le footer vers le bas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Ajuste la hauteur du contenu */
+}
+
+footer {
+    background-color: #d8d7d7;
+    padding: 10px 20px; /* Réduit l'espace autour du footer */
+    font-family: Arial, sans-serif;
+    color: #333;
+    width: 100%;
+    text-align: center;
+    font-size: 14px; /* Diminue légèrement la taille du texte */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: auto;
+    padding: 10px 0; /* Réduit l'espace interne */
+}
+
+.footer-links ul li {
+    margin-bottom: 5px; /* Réduit l'espacement entre les éléments */
+}
+
+.footer-bottom {
+    font-size: 12px; /* Réduit la taille du texte */
 }
