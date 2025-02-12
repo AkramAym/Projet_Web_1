@@ -236,8 +236,7 @@ hr {
 /* Carte de série */
 .series-card {
     background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
-    padding: 20px;
-    border-radius: 10px;
+    padding: 50px;
     transition: background-color 0.3s ease;
 }
 
