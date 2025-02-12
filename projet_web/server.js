@@ -1,6 +1,11 @@
-import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import express from "express";
+import session from "express-session";
+import path from "path";
+import { fileURLToPath } from "url";
+import mysql from "mysql";
+import { body, validationResult } from "express-validator";
+import dateFormat from "dateformat";
+
 
 const app = express();
 
@@ -26,6 +31,17 @@ app.get('/inscription', (req, res) => {
 app.get('/connexion', (req, res) => {
     res.render('pages/connexion'); 
 });
+
+app.post("inscription/add", function (req, res) {
+    const parametres = [
+        req.body.identifiant,
+        req.body.prenom,
+        req.body.nom,
+        req.body.email,
+        req.body.telephone,
+        req.body.password
+    ];
+})
 // Démarrer le serveur
 const PORT = 3000;
 app.listen(PORT, () => {
