@@ -29,9 +29,9 @@ CREATE TABLE article_panier (
 );
 
 CREATE TABLE categorie (
-    id_categorie  INT NOT NULL AUTO_INCREMENT, 
+    id_categorie  INT AUTO_INCREMENT NOT NULL, 
     nom_categorie VARCHAR(20) NOT NULL,
-    description   VARCHAR(100) NOT NULL,
+    description   VARCHAR(500) NOT NULL,
     PRIMARY KEY (id_categorie) 
 );
 
@@ -83,22 +83,22 @@ CREATE TABLE panier (
 );
 
 CREATE TABLE serie (
-    id_serie               INT NOT NULL AUTO_INCREMENT,
+    id_serie               INT AUTO_INCREMENT NOT NULL,
     titre_serie            VARCHAR(20) NOT NULL,
     auteur                 VARCHAR(20) NOT NULL,
     editeur                VARCHAR(20) NOT NULL,
-    synopsis               VARCHAR(1000) NOT NULL,
+    synopsis               VARCHAR(2000) NOT NULL,
     categorie_id_categorie INT NOT NULL,
     PRIMARY KEY (id_serie) 
 );
 
 CREATE TABLE tome (
-    isbn              INT NOT NULL, 
+    isbn              DECIMAL(13) NOT NULL, 
     numero_volume     INT NOT NULL,
     annee_publication DATE NOT NULL,
     serie_id_serie    INT NOT NULL,
     prix              DECIMAL(10,2) NOT NULL,
-    image             BLOB NOT NULL,
+    image             VARCHAR(255) NOT NULL,
     stock             INT NOT NULL,
     PRIMARY KEY (isbn) 
 );
