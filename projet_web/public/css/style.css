@@ -215,7 +215,7 @@ hr {
     background-image: url('/images/background-series.jpg'); /* Remplacez par votre image */
     background-size: cover;
     background-position: center;
-    opacity: 0.5; /* Ajustez l'opacité ici */
+    opacity: .0; /* Ajustez l'opacité ici */
     z-index: -1;
 }
 
@@ -419,7 +419,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.5); /* Ajuste l'opacité ici */
+    background: rgba(255, 251, 251, 0.753); /* Ajuste l'opacité ici */
     z-index: -100; /* Réduit la priorité de l'overlay pour ne pas cacher le contenu */
 }
 html, body {
