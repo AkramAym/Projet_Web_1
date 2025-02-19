@@ -290,7 +290,7 @@ VALUES (
     'Shūeisha', 
     'Demon Slayer suit l''histoire de Tanjiro Kamado, un jeune garçon dont la famille est massacrée par des démons, à l''exception de sa sœur Nezuko, qui est transformée en démon. Tanjiro se lance alors dans une quête pour venger sa famille et trouver un moyen de rendre à Nezuko son humanité.', 
     1,
-    'Rejoignez Tanjiro dans sa quête pour sauver sa sœur.'
+    'Rejoignez Tanjiro dans sa quete pour sauver sa sœur.'
 );
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
@@ -312,7 +312,7 @@ VALUES (
     'Shūeisha', 
     'Dragon Ball suit les aventures de Son Goku, un jeune garçon doté d''une force surhumaine, qui part à la recherche des Dragon Balls, des artefacts magiques capables d''exaucer n''importe quel souhait. Au fil de son voyage, Goku affronte de nombreux ennemis et devient l''un des combattants les plus puissants de l''univers.', 
     1,
-    'Rejoignez Goku dans sa quête des Dragon Balls.'
+    'Rejoignez Goku dans sa quete des Dragon Balls.'
 );
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)

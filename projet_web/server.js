@@ -72,16 +72,27 @@ app.get('/nos-series', function (req, res) {
 });
 
 // Route pour gérer l'inscription (POST)
-app.post("/inscription/add", function (req, res) {
+app.post("/inscription", function (req, res) {
     const parametres = [
         req.body.identifiant,
         req.body.prenom,
         req.body.nom,
         req.body.email,
         req.body.telephone,
-        req.body.password
+        req.body.mot_de_passe
     ];
-    // Ajoutez ici la logique pour traiter l'inscription
+    
+    const [utilisateurExiste] = db.query(
+        'SELECT * FROM utilisateur WHERE email = ? OR identifiant = ?',
+        [email, identifiant]
+    );
+    
+    if (utilisateurExiste.length > 0) {
+        return res.status(409).json({
+            success: false,
+            message: "Cet email ou identifiant est déjà utilisé"
+        });
+    }
 });
 
 // Démarrer le serveur
