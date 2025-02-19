@@ -1,7 +1,17 @@
 
+DROP DATABASE IF EXISTS MangathequeBD;
+
+
+CREATE DATABASE MangathequeBD;
+
+
+USE MangathequeBD;
+
+
+DROP TABLE IF EXISTS adresse, article_commande, article_panier, categorie, commande, emprunt, evaluation, historique, panier, serie, tome, utilisateur;
 
 CREATE TABLE adresse (
-    id_adresse                          INT NOT NULL AUTO_INCREMENT, 
+    id_adresse                          INT AUTO_INCREMENT NOT NULL, 
     rue                                 VARCHAR(20) NOT NULL,
     numero_adresse                      INT NOT NULL,
     code_postal                         VARCHAR(7) NOT NULL,
@@ -13,7 +23,7 @@ CREATE TABLE adresse (
 );
 
 CREATE TABLE article_commande (
-    id_article           INT NOT NULL AUTO_INCREMENT, 
+    id_article           INT AUTO_INCREMENT NOT NULL, 
     quantite             INT NOT NULL,
     commande_id_commande INT NOT NULL,
     tome_isbn            INT NOT NULL,
@@ -21,7 +31,7 @@ CREATE TABLE article_commande (
 );
 
 CREATE TABLE article_panier (
-    id_article_panier INT NOT NULL AUTO_INCREMENT, 
+    id_article_panier INT AUTO_INCREMENT NOT NULL, 
     tome_isbn         INT NOT NULL,
     panier_id_panier  INT NOT NULL,
     quantite          INT,
@@ -36,7 +46,7 @@ CREATE TABLE categorie (
 );
 
 CREATE TABLE commande (
-    id_commande                         INT NOT NULL AUTO_INCREMENT,
+    id_commande                         INT AUTO_INCREMENT NOT NULL,
     date_commande                       DATE NOT NULL,
     montant_total                       DECIMAL(10,2) NOT NULL,
     utilisateur_identifiant_utilisateur VARCHAR(10) NOT NULL,
@@ -45,7 +55,7 @@ CREATE TABLE commande (
 );
 
 CREATE TABLE emprunt (
-    id_emprunt                          INT NOT NULL AUTO_INCREMENT,
+    id_emprunt                          INT AUTO_INCREMENT NOT NULL,
     date_emprunt                        DATE NOT NULL,
     date_retour                         DATE NOT NULL,
     statut                              VARCHAR(20) NOT NULL,
@@ -57,7 +67,7 @@ CREATE TABLE emprunt (
 );
 
 CREATE TABLE evaluation (
-    id_evaluation           INT NOT NULL AUTO_INCREMENT, 
+    id_evaluation           INT AUTO_INCREMENT NOT NULL, 
     note                    INT NOT NULL,
     commentaire             VARCHAR(200),
     date_note               DATE NOT NULL,
@@ -67,7 +77,7 @@ CREATE TABLE evaluation (
 );
 
 CREATE TABLE historique (
-    id_historique                       INT NOT NULL AUTO_INCREMENT,
+    id_historique                       INT AUTO_INCREMENT NOT NULL,
     `type`                              VARCHAR(10) NOT NULL,
     utilisateur_identifiant_utilisateur VARCHAR(10) NOT NULL,
     commande_id_commande                INT NOT NULL,
@@ -76,7 +86,7 @@ CREATE TABLE historique (
 );
 
 CREATE TABLE panier (
-    id_panier                           INT NOT NULL AUTO_INCREMENT, 
+    id_panier                           INT AUTO_INCREMENT NOT NULL, 
     date_creation                       DATE NOT NULL,
     u_identifiant_utilisateur           VARCHAR(10) NOT NULL,
     PRIMARY KEY (id_panier) 
@@ -84,10 +94,12 @@ CREATE TABLE panier (
 
 CREATE TABLE serie (
     id_serie               INT AUTO_INCREMENT NOT NULL,
+    image_serie            VARCHAR(255) NOT NULL,
     titre_serie            VARCHAR(20) NOT NULL,
     auteur                 VARCHAR(20) NOT NULL,
     editeur                VARCHAR(20) NOT NULL,
     synopsis               VARCHAR(2000) NOT NULL,
+    aguicheur              VARCHAR(255) NOT NULL,
     categorie_id_categorie INT NOT NULL,
     PRIMARY KEY (id_serie) 
 );
@@ -215,9 +227,10 @@ VALUES
     ('Seinen', 'Le Seinen est un genre de manga ciblant un public adulte masculin. Les thèmes abordés sont souvent plus matures et complexes, incluant la psychologie, la politique, la violence ou la science-fiction. Exemples populaires : "Berserk", "Tokyo Ghoul", "Ghost in the Shell".'),
     ('Shojo', 'Le Shojo est un genre de manga destiné à un public jeune féminin. Il met souvent l\'accent sur les relations interpersonnelles, les romances, les drames et les émotions. Le style artistique est généralement plus raffiné et expressif. Exemples populaires : "Fruits Basket", "Nana", "Sailor Moon".');
 
-INSERT INTO serie (titre_serie, auteur, editeur, synopsis, categorie_id_categorie)
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
     'Jujutsu Kaisen', 
+    '/images/imgserie_jjk.png',
     'Gege Akutami', 
     'Shūeisha', 
     'Plus de 10 000 morts et disparus sont recensés chaque année au Japon. Les sentiments négatifs que relâchent les êtres humains sont en cause. Souffrance, regrets, humiliation : leur concentration dans un même endroit engendre des malédictions souvent mortelles... C''est ce que va découvrir Yuji Itadori, lycéen et membre du club d''occultisme. Il ne croit pas aux fantômes, mais il est doté d''une force physique hors norme qui représente un véritable atout pour les missions du groupe... jusqu''à ce que l''une d''elles prenne une mauvaise tournure. La relique qu''ils dénichent, le doigt découpé d''un démon millénaire, attire les monstres ! Sans réfléchir : le jeune homme avale la relique pour briser la malédiction ! Maintenant, il se trouve possédé par Ryômen Sukuna, le célèbre démon à deux visages. Cependant, contre toute attente, Yuji est toujours capable de garder le contrôle de son corps. Mais en dépit de cela, il est condamné à mort par l''organisation des exorcistes... Une décision qui ne pourra être repoussée qu''à une seule condition : trouver tous les doigts de Sukuna afin d''écarter la menace une bonne fois pour toutes !', 
@@ -231,6 +244,6 @@ VALUES (
     '2020-07-21', 
     1, 
     16.00, 
-    '/images/kaisen.jpg', 
+    '/images/imgtome_jjk1.jpg', 
     5
 );
