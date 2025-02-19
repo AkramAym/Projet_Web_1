@@ -80,3 +80,20 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
+
+//page d'acceuil
+app.get('/', function (req, res) {
+    const query = `
+        SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
+        FROM tome t
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+    `;
+
+    con.query(query, function (err, result) {
+        if (err) throw err;
+
+        res.render("pages/index", {
+            tomes: result 
+        });
+    });
+});
