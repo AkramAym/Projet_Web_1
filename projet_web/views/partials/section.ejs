@@ -15,11 +15,13 @@
                             <img src="/images/image3.jpg" class="d-block w-100" alt="Mangas en vedette">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
@@ -46,34 +48,39 @@
         </div>
 
         <!-- Section des mangas en bas -->
-<div class="manga-list">
-    <% tomes.forEach(tome => { %>
+
+        <div class="manga-list">
+            <% tomes.forEach(tome=> { %>
+                <div class="manga-card">
+                    <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
+                    <p class="title">
+                        <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
+                    </p>
+                    <p class="price">
+                        <%= tome.prix %>$
+                    </p>
+                </div>
+                <% }) %>
+        </div>
+        <!-- section a enlever, discution a avoir en debut de cours avec coequipier -->
+         <!--
         <div class="manga-card">
-            <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
-            <p class="title"><%= tome.titre_serie %> Tome <%= tome.numero_volume %></p>
-            <p class="price"><%= tome.prix %>$</p>
+            <img src="/images/naruto.jpeg" alt="Naruto Tome 1">
+            <p class="title">Naruto Tome 1</p>
+            <p class="price">15,50$</p>
         </div>
-    <% }) %>
-</div>
-                    <!-- section a enlever, discution a avoir en debut de cours avec coequipier -->
 
-    <!--        <div class="manga-card">
-                <img src="/images/naruto.jpeg" alt="Naruto Tome 1">
-                <p class="title">Naruto Tome 1</p>
-                <p class="price">15,50$</p>
-            </div>
-
-            <div class="manga-card">
-                <img src="/images/dbz.jpg" alt="Dragon Ball Tome 1">
-                <p class="title">Dragon Ball Tome 1</p>
-                <p class="price">13,45$</p>
-            </div>
-
-            <div class="manga-card">
-                <img src="/images/climber.jpg" alt="Ascension Tome 1">
-                <p class="title">Ascension Tome 1</p>
-                <p class="price">18,99$</p>
-            </div>-->
+        <div class="manga-card">
+            <img src="/images/dbz.jpg" alt="Dragon Ball Tome 1">
+            <p class="title">Dragon Ball Tome 1</p>
+            <p class="price">13,45$</p>
         </div>
+
+        <div class="manga-card">
+            <img src="/images/climber.jpg" alt="Ascension Tome 1">
+            <p class="title">Ascension Tome 1</p>
+            <p class="price">18,99$</p>
+        </div>-->
+    </div>
     </div>
 </section>

@@ -315,6 +315,17 @@ VALUES (
     'Rejoignez Goku dans sa quête des Dragon Balls.'
 );
 
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Ascencion', 
+    '/images/climber.jpg',
+    'Shin''ichi Sakamoto', 
+    'Shūeisha', 
+    'Buntaro Mori, jeune lycéen solitaire et renfermé, est défié par un camarade de classe fan d''escalade. Le défi ? Escalader le lycée. C''est alors que, en grimpant le long d''une gouttière bien placée, Buntaro se découvre une passion et un don. Après avoir escaladé sans trop de mal le lycée, ce dernier est tout de suite repéré par son professeur d''anglais, lui-même fan de grimpe extrême. Grâce à l''escalade, Buntaro va se découvrir un but dans la vie, et se perfectionner dans ce domaine, jusqu''à atteindre les cieux.', 
+    2,
+    'Suivez Buntaro dans son ascencion vers les sommets les plus hauts.'
+);
+
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9791032705544, 
@@ -324,4 +335,59 @@ VALUES (
     16.00, 
     '/images/imgtome_jjk1.jpg', 
     5
+);
+
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782723488525,  
+    1, 
+    '2003-09-02',  
+    2,              
+    12.95,          
+    '/images/imgtome_onepiece1.webp',  
+    10              
+);
+
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782756016641,  
+    1, 
+    '2010-11-11',   
+    9,              
+    15.00,          
+    '/images/imgtome_ascencion1.jpg',  
+    8               
+);
+
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782876952058,  
+    1, 
+    '1998-12-03',   
+    8,             
+    14.99,         
+    '/images/imgtome_dragonball1.jpg', 
+    12            
+);
+
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782871294146,  
+    1, 
+    '2002-01-01',   
+    3,              
+    12.50,          
+    '/images/imgtome_naruto1.jpeg',  
+    15              
+);
+
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782723442275,  
+    1, 
+    '2003-02-07',   
+    7,              
+    13.99,          
+    '/images/imgtome_bleach1.jpg',  
+    7               
 );
