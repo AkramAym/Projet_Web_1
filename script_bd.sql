@@ -18,7 +18,7 @@ CREATE TABLE adresse (
     ville                               VARCHAR(20) NOT NULL,
     pays                                VARCHAR(20) NOT NULL,
     province                            VARCHAR(20) NOT NULL,
-    utilisateur_identifiant_utilisateur VARCHAR(10) NOT NULL,
+    utilisateur_identifiant VARCHAR(10) NOT NULL,
     PRIMARY KEY (id_adresse) 
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE commande (
     id_commande                         INT AUTO_INCREMENT NOT NULL,
     date_commande                       DATE NOT NULL,
     montant_total                       DECIMAL(10,2) NOT NULL,
-    utilisateur_identifiant_utilisateur VARCHAR(10) NOT NULL,
+    utilisateur_identifiant VARCHAR(10) NOT NULL,
     adresse_id_adresse                  INT NOT NULL,
     PRIMARY KEY (id_commande) 
 );
@@ -59,7 +59,7 @@ CREATE TABLE emprunt (
     date_emprunt                        DATE NOT NULL,
     date_retour                         DATE NOT NULL,
     statut                              VARCHAR(20) NOT NULL,
-    utilisateur_identifiant_utilisateur VARCHAR(10) NOT NULL,
+    utilisateur_identifiant VARCHAR(10) NOT NULL,
     tome_isbn                           INT NOT NULL,
     adresse_id_adresse                  INT,
     date_retournee                      DATE,
@@ -72,14 +72,14 @@ CREATE TABLE evaluation (
     commentaire             VARCHAR(200),
     date_note               DATE NOT NULL,
     tome_isbn               INT NOT NULL,
-    identifiant_utilisateur VARCHAR(20) NOT NULL,
+    identifiant VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_evaluation) 
 );
 
 CREATE TABLE historique (
     id_historique                       INT AUTO_INCREMENT NOT NULL,
     `type`                              VARCHAR(10) NOT NULL,
-    utilisateur_identifiant_utilisateur VARCHAR(10) NOT NULL,
+    utilisateur_identifiant VARCHAR(10) NOT NULL,
     commande_id_commande                INT NOT NULL,
     emprunt_id_emprunt                  INT NOT NULL,
     PRIMARY KEY (id_historique) 
@@ -116,20 +116,20 @@ CREATE TABLE tome (
 );
 
 CREATE TABLE utilisateur (
-    identifiant_utilisateur VARCHAR(10) NOT NULL, 
+    identifiant VARCHAR(10) NOT NULL, 
     nom                     VARCHAR(10) NOT NULL,
     prenom                  VARCHAR(10) NOT NULL,
     mot_de_passe            VARCHAR(20) NOT NULL,
-    adresse_electronique    VARCHAR(25) NOT NULL,
+    email    VARCHAR(25) NOT NULL,
     telephone               VARCHAR(15),
-    PRIMARY KEY (identifiant_utilisateur) 
+    PRIMARY KEY (identifiant) 
 );
 
 
 ALTER TABLE adresse
     ADD CONSTRAINT adresse_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant_utilisateur) 
-    REFERENCES utilisateur(identifiant_utilisateur);
+    FOREIGN KEY (utilisateur_identifiant) 
+    REFERENCES utilisateur(identifiant);
 
 ALTER TABLE article_commande
     ADD CONSTRAINT article_commande_commande_fk 
@@ -158,8 +158,8 @@ ALTER TABLE commande
 
 ALTER TABLE commande
     ADD CONSTRAINT commande_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant_utilisateur) 
-    REFERENCES utilisateur(identifiant_utilisateur);
+    FOREIGN KEY (utilisateur_identifiant) 
+    REFERENCES utilisateur(identifiant);
 
 ALTER TABLE emprunt
     ADD CONSTRAINT emprunt_adresse_fk 
@@ -173,8 +173,8 @@ ALTER TABLE emprunt
 
 ALTER TABLE emprunt
     ADD CONSTRAINT emprunt_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant_utilisateur) 
-    REFERENCES utilisateur(identifiant_utilisateur);
+    FOREIGN KEY (utilisateur_identifiant) 
+    REFERENCES utilisateur(identifiant);
 
 ALTER TABLE evaluation
     ADD CONSTRAINT evaluation_tome_fk 
@@ -183,8 +183,8 @@ ALTER TABLE evaluation
 
 ALTER TABLE evaluation
     ADD CONSTRAINT evaluation_utilisateur_fk 
-    FOREIGN KEY (identifiant_utilisateur) 
-    REFERENCES utilisateur(identifiant_utilisateur);
+    FOREIGN KEY (identifiant) 
+    REFERENCES utilisateur(identifiant);
 
 ALTER TABLE historique
     ADD CONSTRAINT historique_commande_fk 
@@ -198,13 +198,13 @@ ALTER TABLE historique
 
 ALTER TABLE historique
     ADD CONSTRAINT historique_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant_utilisateur) 
-    REFERENCES utilisateur(identifiant_utilisateur);
+    FOREIGN KEY (utilisateur_identifiant) 
+    REFERENCES utilisateur(identifiant);
 
 ALTER TABLE panier
     ADD CONSTRAINT panier_utilisateur_fk 
     FOREIGN KEY (u_identifiant_utilisateur) 
-    REFERENCES utilisateur(identifiant_utilisateur);
+    REFERENCES utilisateur(identifiant);
 
 ALTER TABLE serie
     ADD CONSTRAINT serie_categorie_fk 
@@ -318,7 +318,7 @@ VALUES (
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
     'Ascencion', 
-    '/images/climber.jpg',
+    '/images/imgserie_ascencion.webp',
     'Shin''ichi Sakamoto', 
     'Shūeisha', 
     'Buntaro Mori, jeune lycéen solitaire et renfermé, est défié par un camarade de classe fan d''escalade. Le défi ? Escalader le lycée. C''est alors que, en grimpant le long d''une gouttière bien placée, Buntaro se découvre une passion et un don. Après avoir escaladé sans trop de mal le lycée, ce dernier est tout de suite repéré par son professeur d''anglais, lui-même fan de grimpe extrême. Grâce à l''escalade, Buntaro va se découvrir un but dans la vie, et se perfectionner dans ce domaine, jusqu''à atteindre les cieux.', 
