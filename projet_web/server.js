@@ -17,9 +17,34 @@ app.set('views', path.join(__dirname, 'views'));
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
 
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "scott",
+    password: "oracle",
+    database: "mybd"
+});
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("connected!");
+});
+
 // Route principale (Page d'accueil)
-app.get('/', (req, res) => {
-    res.render('pages/index');
+app.get('/', function (req, res) {
+    const query = `
+        SELECT t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
+        FROM tome t
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE t.isbn = 9791032705544
+    `;
+
+    con.query(query, function (err, result) {
+        if (err) throw err;
+
+        // Passer les données au template
+        res.render("pages/index", {
+            tome: result[0] // On suppose que la requête retourne un seul résultat
+        });
+    });
 });
 
 // Route pour afficher la page d'inscription
