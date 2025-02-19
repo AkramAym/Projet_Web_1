@@ -21,7 +21,7 @@ const con = mysql.createConnection({
     host: "localhost",
     user: "scott",
     password: "oracle",
-    database: "mybd"
+    database: "MangathequeBD"
 });
 con.connect(function (err) {
     if (err) throw err;
@@ -31,18 +31,16 @@ con.connect(function (err) {
 // Route principale (Page d'accueil)
 app.get('/', function (req, res) {
     const query = `
-        SELECT t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
+        SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
         FROM tome t
         JOIN serie s ON t.serie_id_serie = s.id_serie
-        WHERE t.isbn = 9791032705544
     `;
 
     con.query(query, function (err, result) {
         if (err) throw err;
 
-        // Passer les données au template
         res.render("pages/index", {
-            tome: result[0] // On suppose que la requête retourne un seul résultat
+            tomes: result 
         });
     });
 });
@@ -58,8 +56,19 @@ app.get('/connexion', (req, res) => {
 });
 
 // Route pour afficher la page "Nos séries"
-app.get('/nos-series', (req, res) => {
-    res.render('pages/nos-series'); // Assurez-vous que le fichier `nos-series.ejs` existe dans le dossier `views/pages`
+app.get('/nos-series', function (req, res) {
+    const query = `
+        SELECT titre_serie, image_serie, aguicheur
+        FROM serie
+    `;
+
+    con.query(query, function (err, result) {
+        if (err) throw err;
+
+        res.render("pages/nos-series", {
+            series: result
+        });
+    });
 });
 
 // Route pour gérer l'inscription (POST)

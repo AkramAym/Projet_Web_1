@@ -13,78 +13,15 @@
     <section class="nos-series-section">
         <div class="container">
             <div class="series-list">
-                <!-- Naruto -->
-                <a href="/series/naruto" class="series-card">
-                    <img src="/images/naruto.jpg" alt="Naruto" class="series-image">
-                    <div class="series-content">
-                        <h2>Naruto</h2>
-                        <p>Découvrez l'histoire de Naruto Uzumaki.</p>
-                    </div>
-                </a>
-            
-                <!-- One Piece -->
-                <a href="/series/onepiece" class="series-card">
-                    <img src="/images/onepiece.webp" alt="One Piece" class="series-image">
-                    <div class="series-content">
-                        <h2>One Piece</h2>
-                        <p>Suivez les aventures de Luffy et son équipage.</p>
-                    </div>
-                </a>
-            
-                <!-- Dragon Ball -->
-                <a href="/series/dragonball" class="series-card">
-                    <img src="/images/goku-db-vol-5.avif" alt="Dragon Ball" class="series-image">
-                    <div class="series-content">
-                        <h2>Dragon Ball</h2>
-                        <p>Rejoignez Goku dans sa quête des Dragon Balls.</p>
-                    </div>
-                </a>
-            
-                <!-- Bleach -->
-                <a href="/series/bleach" class="series-card">
-                    <img src="/images/bleach.webp" alt="Bleach" class="series-image">
-                    <div class="series-content">
-                        <h2>Bleach</h2>
-                        <p>Plongez dans l'univers des Shinigami.</p>
-                    </div>
-                </a>
-            
-                <!-- Kagurabachi -->
-                <a href="/series/kagurabachi" class="series-card">
-                    <img src="/images/zycj3gy4lr8d1.webp" alt="Kagurabachi" class="series-image">
-                    <div class="series-content">
-                        <h2>Kagurabachi</h2>
-                        <p>Explorez un monde mystérieux et magique.</p>
-                    </div>
-                </a>
-            
-                <!-- Sakamoto Days -->
-                <a href="/series/sakamoto" class="series-card">
-                    <img src="/images/SAKADAYSCover.png" alt="Sakamoto Days" class="series-image">
-                    <div class="series-content">
-                        <h2>Sakamoto Days</h2>
-                        <p>Suivez les missions de Sakamoto.</p>
-                    </div>
-                </a>
-            
-                <!-- Jujutsu Kaisen -->
-                <a href="/series/jujutsu" class="series-card">
-                    <img src="/images/Capture-décran-2024-01-11-à-17.57.59.png" alt="Jujutsu Kaisen" class="series-image">
-                    <div class="series-content">
-                        <h2>Jujutsu Kaisen</h2>
-                        <p>Combattre les malédictions avec Yuji Itadori.</p>
-                    </div>
-                </a>
-            
-                <!-- Demon Slayer -->
-                <a href="/series/demonslayer" class="series-card">
-                    <img src="/images/Couv1ed.webp" alt="Demon Slayer" class="series-image">
-                    <div class="series-content">
-                        <h2>Demon Slayer</h2>
-                        <p>Rejoignez Tanjiro dans sa quête pour sauver sa sœur.</p>
-                    </div>
-                </a>
-            </div>
+                <% series.forEach(serie => { %>
+                    <a href="/series/<%= serie.titre_serie %>" class="series-card">
+                        <img src="<%= serie.image_serie %>" alt="<%= serie.titre_serie %>" class="series-image">
+                        <div class="series-content">
+                            <h2><%= serie.titre_serie %></h2>
+                            <p><%= serie.aguicheur %></p>
+                        </div>
+                    </a>
+                <% }) %>
             
 </div>
 </div>
