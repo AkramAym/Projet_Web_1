@@ -247,6 +247,8 @@ hr {
 .series-card:hover {
     transform: scale(1.05); /* Légère mise à l'échelle au survol */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre portée */
+    background-color: #111111; /* Couleur plus foncée au survol */
+
 }
 
 /* Style pour les images des séries */
@@ -272,7 +274,7 @@ hr {
 /* Description */
 .series-content p {
     font-size: 16px;
-    color: #ddd; /* Couleur du texte */
+    color: #ffffff; /* Couleur du texte */
 }
 
 footer {
@@ -427,3 +429,8 @@ html, body {
 }
 
 
+.series-card {
+    display: block;
+    text-decoration: none;
+    color: inherit; /* Garde la couleur par défaut */
+}
