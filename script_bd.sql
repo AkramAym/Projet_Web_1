@@ -234,7 +234,85 @@ VALUES (
     'Gege Akutami', 
     'Shūeisha', 
     'Plus de 10 000 morts et disparus sont recensés chaque année au Japon. Les sentiments négatifs que relâchent les êtres humains sont en cause. Souffrance, regrets, humiliation : leur concentration dans un même endroit engendre des malédictions souvent mortelles... C''est ce que va découvrir Yuji Itadori, lycéen et membre du club d''occultisme. Il ne croit pas aux fantômes, mais il est doté d''une force physique hors norme qui représente un véritable atout pour les missions du groupe... jusqu''à ce que l''une d''elles prenne une mauvaise tournure. La relique qu''ils dénichent, le doigt découpé d''un démon millénaire, attire les monstres ! Sans réfléchir : le jeune homme avale la relique pour briser la malédiction ! Maintenant, il se trouve possédé par Ryômen Sukuna, le célèbre démon à deux visages. Cependant, contre toute attente, Yuji est toujours capable de garder le contrôle de son corps. Mais en dépit de cela, il est condamné à mort par l''organisation des exorcistes... Une décision qui ne pourra être repoussée qu''à une seule condition : trouver tous les doigts de Sukuna afin d''écarter la menace une bonne fois pour toutes !', 
-    1
+    1,
+    'Combattre les malédictions avec Yuji Itadori.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'One Piece', 
+    '/images/imgserie_onepiece.webp',
+    'Eiichiro Oda', 
+    'Shūeisha', 
+    'One Piece suit les aventures de Monkey D. Luffy, un jeune pirate dont le corps a acquis les propriétés du caoutchouc après avoir mangé un fruit du démon. Avec son équipage, les Straw Hat Pirates, Luffy explore Grand Line à la recherche du trésor ultime connu sous le nom de "One Piece" afin de devenir le prochain Roi des Pirates.', 
+    1,
+    'Suivez les aventures de Luffy et son équipage.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Naruto', 
+    '/images/imgserie_naruto.jpg',
+    'Masashi Kishimoto', 
+    'Shūeisha', 
+    'Naruto Uzumaki est un jeune ninja du village de Konoha qui rêve de devenir Hokage, le chef de son village. Rejeté par les autres villageois à cause du démon renard à neuf queues scellé en lui, Naruto travaille dur pour gagner le respect et la reconnaissance de ses pairs tout en protégeant son village des menaces extérieures.', 
+    1,
+    'Découvrez l''histoire de Naruto Uzumaki.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Kagurabachi', 
+    '/images/imgserie_kagurabachi.webp',
+    'Takeru Hokazono', 
+    'Shūeisha', 
+    'Kagurabachi est une série qui suit les aventures d''un jeune garçon nommé Chihiro, qui possède une épée magique capable de couper les malédictions. Il voyage à travers un monde rempli de dangers pour venger la mort de son père et protéger les innocents des forces maléfiques.', 
+    1,
+    'Explorez un monde mystérieux et magique.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Sakamoto Days', 
+    '/images/imgserie_sakamoto.png',
+    'Yuto Suzuki', 
+    'Shūeisha', 
+    'Sakamoto Days raconte l''histoire de Taro Sakamoto, un ancien tueur à gages légendaire qui a pris sa retraite pour vivre une vie paisible avec sa famille. Cependant, son passé finit par le rattraper, et il doit utiliser ses compétences pour protéger ses proches tout en essayant de maintenir une vie normale.', 
+    1,
+    'Suivez les missions de Sakamoto.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Demon Slayer', 
+    '/images/imgserie_demonslayer.webp',
+    'Koyoharu Gotouge', 
+    'Shūeisha', 
+    'Demon Slayer suit l''histoire de Tanjiro Kamado, un jeune garçon dont la famille est massacrée par des démons, à l''exception de sa sœur Nezuko, qui est transformée en démon. Tanjiro se lance alors dans une quête pour venger sa famille et trouver un moyen de rendre à Nezuko son humanité.', 
+    1,
+    'Rejoignez Tanjiro dans sa quête pour sauver sa sœur.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Bleach', 
+    '/images/imgserie_bleach.webp',
+    'Tite Kubo', 
+    'Shūeisha', 
+    'Bleach raconte l''histoire d''Ichigo Kurosaki, un adolescent qui acquiert les pouvoirs d''un Shinigami (dieu de la mort) après avoir rencontré Rukia Kuchiki. Avec ses nouveaux pouvoirs, Ichigo doit protéger les vivants des esprits maléfiques appelés Hollows et guider les âmes errantes vers l''au-delà.', 
+    1,
+    'Plongez dans l''univers des Shinigami.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Dragon Ball', 
+    '/images/imgserie_dragonball.avif',
+    'Akira Toriyama', 
+    'Shūeisha', 
+    'Dragon Ball suit les aventures de Son Goku, un jeune garçon doté d''une force surhumaine, qui part à la recherche des Dragon Balls, des artefacts magiques capables d''exaucer n''importe quel souhait. Au fil de son voyage, Goku affronte de nombreux ennemis et devient l''un des combattants les plus puissants de l''univers.', 
+    1,
+    'Rejoignez Goku dans sa quête des Dragon Balls.'
 );
 
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
