@@ -16,12 +16,15 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 const con = mysql.createConnection({
     host: "localhost",
     user: "scott",
     password: "oracle",
-    database: "MangathequeBD"
+    database: "MangathequeBD",
+    charset: 'utf8mb4'
 });
 con.connect(function (err) {
     if (err) throw err;
@@ -40,14 +43,16 @@ app.get('/', function (req, res) {
         if (err) throw err;
 
         res.render("pages/index", {
-            tomes: result 
+            tomes: result
         });
     });
 });
 
 // Route pour afficher la page d'inscription
 app.get('/inscription', (req, res) => {
-    res.render('pages/inscription');
+    res.render('pages/inscription', {
+        message: null
+    });
 });
 
 // Route pour afficher la page de connexion
@@ -73,26 +78,36 @@ app.get('/nos-series', function (req, res) {
 
 // Route pour gérer l'inscription (POST)
 app.post("/inscription", function (req, res) {
-    const parametres = [
-        req.body.identifiant,
-        req.body.prenom,
-        req.body.nom,
-        req.body.email,
-        req.body.telephone,
-        req.body.mot_de_passe
-    ];
-    
-    const [utilisateurExiste] = db.query(
-        'SELECT * FROM utilisateur WHERE email = ? OR identifiant = ?',
-        [email, identifiant]
-    );
-    
-    if (utilisateurExiste.length > 0) {
-        return res.status(409).json({
-            success: false,
-            message: "Cet email ou identifiant est déjà utilisé"
-        });
-    }
+    console.log(req.body);
+    const { identifiant, prenom, nom, email, telephone, mot_de_passe, motDePasseConfirme } = req.body;
+
+    con.query('Select email FROM utilisateur WHERE email = ?', [email], (error, results) => { 
+        if(error) {
+            console.log(error);
+        }
+
+        if(results.length > 0){
+            return res.render('pages/inscription', {
+                message: 'Email deja utilise'
+            })
+        }else if(mot_de_passe != motDePasseConfirme){
+            return res.render('pages/inscription', {
+                message: 'Le mots de passe ne sont pas pareils'
+            })
+        }
+    })
+
+    con.query('INSERT INTO utilisateur SET ?', {identifiant, prenom, nom, mot_de_passe, email, telephone}, (error, results) =>{
+        if (error){
+            console.log(error);
+        } else {
+            console.log(results, {
+                message: 'Utilisateur enregistre'
+            });
+        }
+    })
+
+ 
 });
 
 // Démarrer le serveur
@@ -101,19 +116,3 @@ app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
 
-//page d'acceuil
-app.get('/', function (req, res) {
-    const query = `
-        SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
-        FROM tome t
-        JOIN serie s ON t.serie_id_serie = s.id_serie
-    `;
-
-    con.query(query, function (err, result) {
-        if (err) throw err;
-
-        res.render("pages/index", {
-            tomes: result 
-        });
-    });
-});

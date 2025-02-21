@@ -44,7 +44,15 @@
 
                     <label for="password">Mot de passe</label>
                     <div class="password-container">
-                        <input type="password" id="password" name="password" required>
+                        <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+                        <span class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+
+                    <label for="passwordConfirme">Confirmer le Mot de passe</label>
+                    <div class="password-container">
+                        <input type="password" id="motDePasseConfirme" name="motDePasseConfirme" required>
                         <span class="toggle-password">
                             <i class="fas fa-eye"></i>
                         </span>
@@ -55,6 +63,11 @@
                 </form>
             </div>
         </div>
+        <% if (message) { %>
+            <div>
+                <%= message %>
+            </div>
+        <% } %>
     </div>
 
     <!-- Footer en bas -->
