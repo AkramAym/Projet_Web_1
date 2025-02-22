@@ -317,7 +317,7 @@ VALUES (
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
-    'Ascencion', 
+    'Ascension', 
     '/images/imgserie_ascencion.webp',
     'Shin''ichi Sakamoto', 
     'Shūeisha', 
