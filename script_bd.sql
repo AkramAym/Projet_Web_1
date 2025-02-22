@@ -326,6 +326,39 @@ VALUES (
     'Suivez Buntaro dans son ascencion vers les sommets les plus hauts.'
 );
 
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Nana', 
+    '/images/imgserie_nana.jpg',
+    'Ai Yazawa', 
+    'Shūeisha', 
+    'Dans le Japon contemporain, deux jeunes femmes se rencontrent dans le train les conduisant à Tokyo. L''une va rejoindre son petit ami tandis que l''autre veut devenir chanteuse professionnelle. Inconsciemment, cette dernière est également à la poursuite de son petit ami parti faire carrière dans la musique deux ans plus tôt. Leur destination n''est pas leur seul point commun car elles ont le même âge (20 ans), mais aussi le même prénom : Nana. Elles se séparent finalement à la descente du train. Plus tard, elles se retrouvent par hasard, alors qu''elles cherchaient toutes les deux un appartement. Trouvant avantageux de partager les frais de loyer, elles décident de vivre en colocation dans l''appartement 707 (c''est une autre coïncidence car leur prénom, Nana, représente le chiffre 7 en japonais). Aussi différentes d''apparence que de caractère, Nana Ōsaki et Nana Komatsu vont se lier d''une profonde et fusionnelle amitié, se complétant et se soutenant mutuellement à travers les différentes épreuves qu''elles seront amenées à traverser.', 
+    3,
+    'Découvrez l''histoire de deux femmes liées par le destin et un prénom.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Kingdom', 
+    '/images/imgserie_kingdom.webp', 
+    'Yasuhisa Hara', 
+    'Shūeisha', 
+    'En pleine période des Royaumes combattants en Chine, Xin, un jeune orphelin, rêve de devenir le plus grand général de l''histoire. Aux côtés de son ami d''enfance, Zheng, qui aspire à unifier la Chine et à devenir roi, Xin se lance dans une quête épique pour réaliser leurs ambitions. À travers des batailles stratégiques, des alliances complexes et des sacrifices personnels, Kingdom explore l''ascension de ces deux héros dans un monde déchiré par la guerre.', 
+    2,
+    'Plongez dans l''épopée guerrière de la Chine ancienne avec Xin et Zheng.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Vagabond', 
+    '/images/imgserie_vagabond.jpg', 
+    'Takehiko Inoue', 
+    'Kodansha', 
+    'Inspiré de la vie du légendaire samouraï Miyamoto Musashi, Vagabond raconte l''histoire de Takezō Shinmen, un jeune homme violent et ambitieux qui cherche à devenir le plus grand samouraï de tous les temps. Après avoir survécu à la bataille de Sekigahara, Takezō parcourt le Japon, affrontant des adversaires redoutables et cherchant à comprendre le véritable sens de la force et de l''honneur. Ce récit introspectif et visuellement somptueux explore la quête de perfection et la nature humaine.', 
+    2, 
+    'Suivez le voyage intérieur et extérieur de Miyamoto Musashi, le plus grand samouraï de l''histoire.'
+);
+
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9791032705544, 
@@ -390,4 +423,20 @@ VALUES (
     13.99,          
     '/images/imgtome_bleach1.jpg',  
     7               
+);
+
+INSERT INTO utilisateur (
+    identifiant,
+    nom,
+    prenom,
+    mot_de_passe,
+    email,
+    telephone
+) VALUES (
+    'scott',          
+    'scott',              
+    'John',             
+    'oracle',    
+    'scott@gmail.com',   
+    '5141231234'      
 );
