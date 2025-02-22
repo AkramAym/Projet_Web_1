@@ -119,7 +119,7 @@ CREATE TABLE utilisateur (
     identifiant VARCHAR(10) NOT NULL, 
     nom                     VARCHAR(10) NOT NULL,
     prenom                  VARCHAR(10) NOT NULL,
-    mot_de_passe            VARCHAR(20) NOT NULL,
+    mot_de_passe            VARCHAR(200) NOT NULL,
     email    VARCHAR(25) NOT NULL,
     telephone               VARCHAR(15),
     PRIMARY KEY (identifiant) 

@@ -10,7 +10,9 @@
   "description": "",
   "type": "module",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.3",
+    "cookieparser": "^0.1.0",
     "dateformat": "^5.0.3",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
