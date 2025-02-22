@@ -33,6 +33,11 @@
             <button type="submit" class="signup-button">Ouvrir une session</button>
         </form>
     </div>
+    <% if (message) { %>
+        <div>
+            <%= message %>
+        </div>
+    <% } %>
 </div>
 
 <!-- Footer en dehors du conteneur pour qu'il se place en bas -->
