@@ -139,8 +139,7 @@ routeur.get('/profil', function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
     console.log("profil");
-
-    if (!req.session.user.identifiant){
+    if (!req.session.user?.identifiant){
         return res.redirect("/connexion");
     }
         const identifiant = req.session.user.identifiant;

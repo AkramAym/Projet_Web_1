@@ -15,14 +15,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Servir les fichiers statiques
-app.use(session({
-    secret: "yahou",
-    saveUninitialized: false, //ne sauvegarde pa la session si l'utilisateur n'a rien fait
-    resave: false, //ne sauvegarde pas la session si elle n'a pas ete sauvegarde
-    cookie: {
-        maxAge: 60000* 60,
-    }
-}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -38,6 +30,15 @@ con.connect(function (err) {
     if (err) throw err;
     console.log("connected!");
 });
+
+app.use(session({
+    secret: "yahou",
+    saveUninitialized: false, //ne sauvegarde pa la session si l'utilisateur n'a rien fait
+    resave: false, //ne sauvegarde pas la session si elle n'a pas ete sauvegarde
+    cookie: {
+        maxAge: 60000* 60,
+    }
+}));
 
 app.use(utilisateurRouteur);
 
@@ -62,14 +63,12 @@ app.get('/', function (req, res) {
     });
 });
 
-
-
 // Route pour afficher la page "Nos séries"
 app.get('/nos-series', function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
     const query = `
-        SELECT titre_serie, image_serie, aguicheur
+        SELECT id_serie, titre_serie, image_serie, aguicheur
         FROM serie
     `;
 
@@ -81,6 +80,27 @@ app.get('/nos-series', function (req, res) {
         });
     });
 });
+
+app.get('/series/:id', async function (req, res) {
+    const serieID = req.params.id; 
+    console.log(req.session);
+    console.log(req.sessionID);
+    const query = `
+        SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
+        FROM tome t
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE t.serie_id_serie = ?
+    `;
+
+    con.query(query, [serieID], (err, result) =>{
+        if (err) throw err;
+
+        res.render("pages/serieTomes", {
+            tomes: result
+        });
+    });
+});
+
 
 
 
