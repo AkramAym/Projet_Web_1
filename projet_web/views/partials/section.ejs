@@ -49,19 +49,7 @@
 
         <!-- Section des mangas en bas -->
 
-        <div class="manga-list">
-            <% tomes.forEach(tome=> { %>
-                <div class="manga-card">
-                    <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
-                    <p class="title">
-                        <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
-                    </p>
-                    <p class="price">
-                        <%= tome.prix %>$
-                    </p>
-                </div>
-                <% }) %>
-        </div>
+        <%- include('./tomes') %>
     </div>
     </div>
 </section>
