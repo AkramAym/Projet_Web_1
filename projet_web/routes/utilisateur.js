@@ -26,44 +26,6 @@ routeur.get('/inscription', (req, res) => {
         message: null
     });
 });
-
-// Route pour afficher la page de connexion
-routeur.get('/connexion', (req, res) => {
-    res.render('pages/connexion',{
-        message: null
-    });
-});
-
-routeur.post("/connexion", function (req, res) {
-    const { identifiant, mot_de_passe } = req.body;
-
-    con.query('SELECT * FROM utilisateur WHERE identifiant = ?', [identifiant], (error, results) => {
-        if (error) {
-            console.log(error);
-            throw error;
-        }
-
-        if (results.length <= 0) {
-            return res.render('pages/connexion', {
-                message: 'Identifiant inexistant'
-            })
-        } else {
-            const utilisateur = results[0];
-            const motDePasseValide = bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
-            if (!motDePasseValide) {
-                return res.render('pages/connexion', {
-                    message: 'Mauvais mot de passe'
-                })
-            }else{
-                req.session.user = {
-                    identifiant: identifiant
-                };
-                res.redirect('/');
-                console.log(utilisateur);
-            }
-        }
-    })
-});
 // Route pour gérer l'inscription (POST)
 routeur.post("/inscription", function (req, res) {
     console.log(req.body);
@@ -129,9 +91,70 @@ routeur.post("/inscription", function (req, res) {
         })
 });
 
-routeur.get('/status', (req, res) => {
-    return request.session.user ? res.status(200).send(request.session.user) :
-    res.status(401).send({message: "Non authentifie"});
+// Route pour afficher la page de connexion
+routeur.get('/connexion', (req, res) => {
+    res.render('pages/connexion', {
+        message: null
+    });
 });
+
+routeur.post("/connexion", function (req, res) {
+    const { identifiant, mot_de_passe } = req.body;
+
+    con.query('SELECT * FROM utilisateur WHERE identifiant = ?', [identifiant], (error, results) => {
+        if (error) {
+            console.log(error);
+            throw error;
+        }
+
+        if (results.length <= 0) {
+            return res.render('pages/connexion', {
+                message: 'Identifiant inexistant'
+            })
+        } else {
+            const utilisateur = results[0];
+            const motDePasseValide = bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
+            if (!motDePasseValide) {
+                return res.render('pages/connexion', {
+                    message: 'Mauvais mot de passe'
+                })
+            } else {
+                req.session.user = {
+                    identifiant: identifiant
+                };
+                res.redirect('/profil');
+                console.log(utilisateur);
+            }
+        }
+    })
+});
+
+routeur.get('/status', (req, res) => {
+    return req.session.user ? res.status(200).send(request.session.user) :
+        res.status(401).send({ message: "Non authentifie" });
+});
+
+
+routeur.get('/profil', function (req, res) {
+    console.log(req.session);
+    console.log(req.sessionID);
+    console.log("profil");
+
+    if (!req.session.user.identifiant){
+        return res.redirect("/connexion");
+    }
+        const identifiant = req.session.user.identifiant;
+        con.query('SELECT * FROM utilisateur WHERE identifiant = ?', [identifiant], (error, results) => {
+            if (error) {
+                console.log(error);
+                throw error;
+            }
+
+            res.render("pages/profil", {
+                utilisateur: results[0]
+            });
+        })
+});
+
 export default routeur;
 

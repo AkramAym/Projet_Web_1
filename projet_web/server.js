@@ -45,6 +45,7 @@ app.use(utilisateurRouteur);
 app.get('/', function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
+    console.log("accueil")
     req.session.visited = true;
     const query = `
         SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
@@ -65,6 +66,8 @@ app.get('/', function (req, res) {
 
 // Route pour afficher la page "Nos séries"
 app.get('/nos-series', function (req, res) {
+    console.log(req.session);
+    console.log(req.sessionID);
     const query = `
         SELECT titre_serie, image_serie, aguicheur
         FROM serie
