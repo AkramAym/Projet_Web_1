@@ -56,42 +56,39 @@ routeur.post("/inscription", function (req, res) {
             return res.render('pages/inscription', {
                 message: 'Email déjà utilisé'
             });
-        }
-
-        if (identifiantExiste) {
+        } else if (identifiantExiste) {
             return res.render('pages/inscription', {
                 message: 'Identifiant déjà utilisé'
             });
-        }
-
-        if (mot_de_passe !== motDePasseConfirme) {
+        } else if (mot_de_passe !== motDePasseConfirme) {
             return res.render('pages/inscription', {
                 message: 'Les mots de passe ne correspondent pas'
             });
+        } else {
+            const motDePasseEncrypte = bcrypt.hashSync(mot_de_passe, 10);
+            con.query('INSERT INTO utilisateur SET ?',
+                {
+                    identifiant: identifiant,
+                    nom: nom,
+                    prenom: prenom,
+                    mot_de_passe: motDePasseEncrypte,
+                    email: email,
+                    telephone: telephone || null
+                }, (error, results) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(results, {
+                            message: 'Utilisateur enregistre'
+                        });
+                        req.session.user = {
+                            identifiant: identifiant
+                        };
+                        return res.redirect("/");
+                    }
+                })
         }
     })
-    const motDePasseEncrypte = bcrypt.hashSync(mot_de_passe, 10);
-    con.query('INSERT INTO utilisateur SET ?',
-        {
-            identifiant: identifiant,
-            nom: nom,
-            prenom: prenom,
-            mot_de_passe: motDePasseEncrypte,
-            email: email,
-            telephone: telephone || null
-        }, (error, results) => {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log(results, {
-                    message: 'Utilisateur enregistre'
-                });
-                req.session.user = {
-                    identifiant: identifiant
-                };
-                return res.redirect("/");
-            }
-        })
 });
 
 // Route pour afficher la page de connexion
@@ -157,7 +154,7 @@ routeur.get('/profil', function (req, res) {
 
         res.render("pages/profil", {
             utilisateur: results[0],
-            connecte : true
+            connecte: true
         });
     })
 });
@@ -208,7 +205,7 @@ routeur.get('/panier', function (req, res) {
 
         res.render("pages/panier", {
             articles: results,
-            connecte : true
+            connecte: true
         });
     })
 });
