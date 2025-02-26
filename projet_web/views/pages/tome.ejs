@@ -5,38 +5,46 @@
     <%- include('../partials/header') %> <!-- Inclusion du header -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AffichageSerie</title>
+    <title><%= tome.titre_serie %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+  
 </head>
 
-
-<div class="container">
-    <div class="book-container">
-        <!-- Image du tome -->
-        <div class="book-image">
-            <img src="<%= tome.image %>" alt="Couverture de <%= tome.titre_serie %>">
-        </div>
-        
-        <!-- Infos du tome -->
-        <div class="book-details">
-            <h1><%= tome.titre_serie %></h1>
-            <h2><%= tome.auteur %></h2>
-            <p class="price">Prix: <strong><%= tome.prix %> $</strong></p>
-            <p><strong>ISBN:</strong> <%= tome.isbn %></p>
-            <p><strong>Année de publication:</strong> <%= tome.annee_publication %></p>
-            <p><strong>Éditeur:</strong> <%= tome.editeur %></p>
+<body class="tome-page">
+    <div class="container">
+        <div class="book-container">
+            <!-- Image du tome -->
+            <div class="book-image">
+                <img src="<%= tome.image %>" alt="Couverture de <%= tome.titre_serie %>">
+            </div>
             
-            <div class="buttons">
-                <button class="btn add-to-cart" action="/panier" method="POST">Ajouter au panier</button>
-                <button class="btn borrow">Emprunter</button>
+            <!-- Infos du tome -->
+            <div class="book-details">
+                <h1><%= tome.titre_serie %></h1>
+                <h2><%= tome.auteur %></h2>
+                <p class="price">Prix: <strong><%= tome.prix %> $</strong></p>
+                <p><strong>ISBN:</strong> <%= tome.isbn %></p>
+                <p><strong>Année de publication:</strong> <%= tome.annee_publication %></p>
+                <p><strong>Éditeur:</strong> <%= tome.editeur %></p>
+                
+                <div class="buttons">
+                    <form action="/panier" method="POST">
+                        <button class="btn add-to-cart" type="submit">Ajouter au panier</button>
+                    </form>
+                    <form action="/emprunter" method="POST">
+                        <button class="btn borrow" type="submit">Emprunter</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Description du tome -->
-    <div class="description">
-        <h3>Description</h3>
-        <p><%= tome.synopsis %></p>
+        <!-- Description du tome -->
+        <div class="description">
+            <h3>Description</h3>
+            <p><%= tome.synopsis %></p>
+        </div>
     </div>
-</div>
+</body>
+</html>
