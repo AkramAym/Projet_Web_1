@@ -54,11 +54,16 @@ app.get('/', function (req, res) {
         JOIN serie s ON t.serie_id_serie = s.id_serie
     `;
 
+    var utilisateurConnecte = false;
+        if (req.session.user?.identifiant){
+            utilisateurConnecte = true;
+        }
+
     con.query(query, function (err, result) {
         if (err) throw err;
-
         res.render("pages/index", {
-            tomes: result
+            tomes: result,
+            connecte: utilisateurConnecte
         });
     });
 });
@@ -75,8 +80,13 @@ app.get('/nos-series', function (req, res) {
     con.query(query, function (err, result) {
         if (err) throw err;
 
+        var utilisateurConnecte = false;
+        if (req.session.user?.identifiant){
+            utilisateurConnecte = true;
+        }
         res.render("pages/nos-series", {
-            series: result
+            series: result,
+            connecte: utilisateurConnecte
         });
     });
 });
@@ -91,12 +101,15 @@ app.get('/series/:id', async function (req, res) {
         JOIN serie s ON t.serie_id_serie = s.id_serie
         WHERE t.serie_id_serie = ?
     `;
-
+    var utilisateurConnecte = false;
+        if (req.session.user?.identifiant){
+            utilisateurConnecte = true;
+        }
     con.query(query, [serieID], (err, result) =>{
         if (err) throw err;
-
         res.render("pages/serieTomes", {
-            tomes: result
+            tomes: result,
+            connecte: utilisateurConnecte
         });
     });
 });
@@ -121,12 +134,15 @@ app.get('/tomes/:isbn', function (req, res) {
         JOIN serie s ON t.serie_id_serie = s.id_serie
         WHERE t.isbn = ?
     `;
-
+    var utilisateurConnecte = false;
+        if (req.session.user?.identifiant){
+            utilisateurConnecte = true;
+        }
     con.query(query, [tomeISBN], (err, result) =>{
         if (err) throw err;
-
         res.render("pages/tome", {
-            tome: result[0]
+            tome: result[0],
+            connecte: utilisateurConnecte
         });
     });
 });

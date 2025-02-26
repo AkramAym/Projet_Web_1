@@ -22,6 +22,9 @@ con.connect(function (err) {
 
 // Route pour afficher la page d'inscription
 routeur.get('/inscription', (req, res) => {
+    if (req.session.user?.identifiant) {
+        return res.redirect("/profil");
+    }
     res.render('pages/inscription', {
         message: null
     });
@@ -93,6 +96,9 @@ routeur.post("/inscription", function (req, res) {
 
 // Route pour afficher la page de connexion
 routeur.get('/connexion', (req, res) => {
+    if (req.session.user?.identifiant) {
+        return res.redirect("/profil");
+    }
     res.render('pages/connexion', {
         message: null
     });
@@ -150,7 +156,8 @@ routeur.get('/profil', function (req, res) {
         }
 
         res.render("pages/profil", {
-            utilisateur: results[0]
+            utilisateur: results[0],
+            connecte : true
         });
     })
 });
@@ -200,9 +207,16 @@ routeur.get('/panier', function (req, res) {
         }
 
         res.render("pages/panier", {
-            articles: results
+            articles: results,
+            connecte : true
         });
     })
+});
+
+routeur.post("/panier", function (req, res) {
+    if (!req.session.user?.identifiant) {
+        return res.redirect("/connexion");
+    }
 });
 
 export default routeur;
