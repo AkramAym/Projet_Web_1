@@ -91,7 +91,7 @@ app.get('/nos-series', function (req, res) {
     });
 });
 
-app.get('/series/:id', async function (req, res) {
+app.get('/series/:id', function (req, res) {
     const serieID = req.params.id; 
     console.log(req.session);
     console.log(req.sessionID);
@@ -109,6 +109,28 @@ app.get('/series/:id', async function (req, res) {
         if (err) throw err;
         res.render("pages/serieTomes", {
             tomes: result,
+            connecte: utilisateurConnecte
+        });
+    });
+});
+
+app.get('/categories/:id', function (req, res) {
+    const categorieID = req.params.id; 
+    console.log(req.session);
+    console.log(req.sessionID);
+    const query = `
+    SELECT id_serie, titre_serie, image_serie, aguicheur
+    FROM serie
+    WHERE categorie_id_categorie = ?
+`;
+    var utilisateurConnecte = false;
+        if (req.session.user?.identifiant){
+            utilisateurConnecte = true;
+        }
+    con.query(query, [categorieID], (err, result) =>{
+        if (err) throw err;
+        res.render("pages/categorie", {
+            series: result,
             connecte: utilisateurConnecte
         });
     });

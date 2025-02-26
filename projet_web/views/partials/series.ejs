@@ -1,0 +1,15 @@
+<div class="series-list">
+    <% series.forEach(serie=> { %>
+        <a href="/series/<%= serie.id_serie %>" class="series-card">
+            <img src="<%= serie.image_serie %>" alt="<%= serie.titre_serie %>" class="series-image">
+            <div class="series-content">
+                <h2>
+                    <%= serie.titre_serie %>
+                </h2>
+                <p>
+                    <%= serie.aguicheur %>
+                </p>
+            </div>
+        </a>
+        <% }) %>
+</div>
