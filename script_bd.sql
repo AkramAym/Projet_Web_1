@@ -26,13 +26,13 @@ CREATE TABLE article_commande (
     id_article           INT AUTO_INCREMENT NOT NULL, 
     quantite             INT NOT NULL,
     commande_id_commande INT NOT NULL,
-    tome_isbn            INT NOT NULL,
+    tome_isbn            DECIMAL(13) NOT NULL, 
     PRIMARY KEY (id_article)
 );
 
 CREATE TABLE article_panier (
     id_article_panier INT AUTO_INCREMENT NOT NULL, 
-    tome_isbn         INT NOT NULL,
+    tome_isbn         DECIMAL(13) NOT NULL, 
     panier_id_panier  INT NOT NULL,
     quantite          INT,
     PRIMARY KEY (id_article_panier) 
@@ -60,7 +60,7 @@ CREATE TABLE emprunt (
     date_retour                         DATE NOT NULL,
     statut                              VARCHAR(20) NOT NULL,
     utilisateur_identifiant VARCHAR(10) NOT NULL,
-    tome_isbn                           INT NOT NULL,
+    tome_isbn                           DECIMAL(13) NOT NULL, 
     adresse_id_adresse                  INT,
     date_retournee                      DATE,
     PRIMARY KEY (id_emprunt) 
@@ -71,7 +71,7 @@ CREATE TABLE evaluation (
     note                    INT NOT NULL,
     commentaire             VARCHAR(200),
     date_note               DATE NOT NULL,
-    tome_isbn               INT NOT NULL,
+    tome_isbn               DECIMAL(13) NOT NULL, 
     identifiant VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_evaluation) 
 );
@@ -88,7 +88,7 @@ CREATE TABLE historique (
 CREATE TABLE panier (
     id_panier                           INT AUTO_INCREMENT NOT NULL, 
     date_creation                       DATE NOT NULL,
-    u_identifiant_utilisateur           VARCHAR(10) NOT NULL,
+    utilisateur_identifiant           VARCHAR(10) NOT NULL,
     PRIMARY KEY (id_panier) 
 );
 
@@ -203,7 +203,7 @@ ALTER TABLE historique
 
 ALTER TABLE panier
     ADD CONSTRAINT panier_utilisateur_fk 
-    FOREIGN KEY (u_identifiant_utilisateur) 
+    FOREIGN KEY (utilisateur_identifiant) 
     REFERENCES utilisateur(identifiant);
 
 ALTER TABLE serie
@@ -223,9 +223,9 @@ FLUSH PRIVILEGES;
 
 INSERT INTO categorie (nom_categorie, description)
 VALUES 
-    ('Shonen', 'Le Shonen est un genre de manga principalement destiné à un public jeune masculin. Il se caractérise par des histoires dynamiques, souvent axées sur l\'action, l\'aventure, l\'amitié et la persévérance. Exemples populaires : "Naruto", "Dragon Ball", "One Piece".'),
+    ('Shonen', 'Le Shonen est un genre de manga principalement destiné à un public jeune masculin. Il se caractérise par des histoires dynamiques, souvent axées sur l''action, l''aventure, l''amitié et la persévérance. Exemples populaires : "Naruto", "Dragon Ball", "One Piece".'),
     ('Seinen', 'Le Seinen est un genre de manga ciblant un public adulte masculin. Les thèmes abordés sont souvent plus matures et complexes, incluant la psychologie, la politique, la violence ou la science-fiction. Exemples populaires : "Berserk", "Tokyo Ghoul", "Ghost in the Shell".'),
-    ('Shojo', 'Le Shojo est un genre de manga destiné à un public jeune féminin. Il met souvent l\'accent sur les relations interpersonnelles, les romances, les drames et les émotions. Le style artistique est généralement plus raffiné et expressif. Exemples populaires : "Fruits Basket", "Nana", "Sailor Moon".');
+    ('Shojo', 'Le Shojo est un genre de manga destiné à un public jeune féminin. Il met souvent l''accent sur les relations interpersonnelles, les romances, les drames et les émotions. Le style artistique est généralement plus raffiné et expressif. Exemples populaires : "Fruits Basket", "Nana", "Sailor Moon".');
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
@@ -433,10 +433,17 @@ INSERT INTO utilisateur (
     email,
     telephone
 ) VALUES (
-    'scott',          
-    'scott',              
-    'John',             
-    'oracle',    
-    'scott@gmail.com',   
-    '5141231234'      
+    'okunay',          
+    'oku',              
+    'nay',             
+    '$2b$10$soemKXga3Y8YxCvvQK.JX.wfJCn70RcJL61MA7UvftLpdtqJm.gU2',    
+    'ravless21@gmail.com',   
+    '5147099684'      
 );
+
+
+INSERT INTO panier (date_creation, utilisateur_identifiant)
+VALUES (CURDATE(), 'okunay');
+
+INSERT INTO article_panier (tome_isbn, panier_id_panier, quantite)
+VALUES (9782723488525, 1, 1);

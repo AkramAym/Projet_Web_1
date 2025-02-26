@@ -139,20 +139,70 @@ routeur.get('/profil', function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
     console.log("profil");
-    if (!req.session.user?.identifiant){
+    if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
-        const identifiant = req.session.user.identifiant;
-        con.query('SELECT * FROM utilisateur WHERE identifiant = ?', [identifiant], (error, results) => {
-            if (error) {
-                console.log(error);
-                throw error;
-            }
+    const identifiant = req.session.user.identifiant;
+    con.query('SELECT * FROM utilisateur WHERE identifiant = ?', [identifiant], (error, results) => {
+        if (error) {
+            console.log(error);
+            throw error;
+        }
 
-            res.render("pages/profil", {
-                utilisateur: results[0]
-            });
-        })
+        res.render("pages/profil", {
+            utilisateur: results[0]
+        });
+    })
+});
+
+routeur.get('/panier', function (req, res) {
+    console.log(req.session);
+    console.log(req.sessionID);
+    console.log("profil");
+    if (!req.session.user?.identifiant) {
+        return res.redirect("/connexion");
+    }
+    const identifiant = req.session.user.identifiant;
+
+    const query = `
+       SELECT 
+            t.isbn AS isbn,
+            t.numero_volume AS numero_volume,
+            t.image AS image,
+            s.titre_serie AS titre_serie,
+            t.prix AS prix_unitaire,
+            ap.quantite AS quantite,
+            (t.prix * ap.quantite) AS sous_total
+        FROM 
+            utilisateur u
+        JOIN 
+            panier p ON u.identifiant = p.utilisateur_identifiant
+        JOIN 
+            article_panier ap ON p.id_panier = ap.panier_id_panier
+        JOIN 
+            tome t ON ap.tome_isbn = t.isbn
+        JOIN 
+            serie s ON t.serie_id_serie = s.id_serie
+        WHERE 
+            u.identifiant = ? 
+            AND p.id_panier = (
+                SELECT id_panier 
+                FROM panier 
+                WHERE utilisateur_identifiant = u.identifiant
+                ORDER BY date_creation DESC 
+                LIMIT 1)
+        `;
+
+    con.query(query, [identifiant], (error, results) => {
+        if (error) {
+            console.log(error);
+            throw error;
+        }
+
+        res.render("pages/panier", {
+            articles: results
+        });
+    })
 });
 
 export default routeur;

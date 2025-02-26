@@ -101,17 +101,6 @@ app.get('/series/:id', async function (req, res) {
     });
 });
 
-
-
-
-// Démarrer le serveur
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur http://localhost:${PORT}`);
-});
-
-
-
 app.get('/tomes/:isbn', function (req, res) {
     const tomeISBN = req.params.isbn; 
     console.log(req.session);
@@ -140,4 +129,11 @@ app.get('/tomes/:isbn', function (req, res) {
             tome: result[0]
         });
     });
+});
+
+
+// Démarrer le serveur
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
