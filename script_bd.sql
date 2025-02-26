@@ -262,35 +262,24 @@ VALUES (
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
-    'Kagurabachi', 
-    '/images/imgserie_kagurabachi.webp',
-    'Takeru Hokazono', 
+    'Ascension', 
+    '/images/imgserie_ascencion.webp',
+    'Shin''ichi Sakamoto', 
     'Shūeisha', 
-    'Kagurabachi est une série qui suit les aventures d''un jeune garçon nommé Chihiro, qui possède une épée magique capable de couper les malédictions. Il voyage à travers un monde rempli de dangers pour venger la mort de son père et protéger les innocents des forces maléfiques.', 
-    1,
-    'Explorez un monde mystérieux et magique.'
+    'Buntaro Mori, jeune lycéen solitaire et renfermé, est défié par un camarade de classe fan d''escalade. Le défi ? Escalader le lycée. C''est alors que, en grimpant le long d''une gouttière bien placée, Buntaro se découvre une passion et un don. Après avoir escaladé sans trop de mal le lycée, ce dernier est tout de suite repéré par son professeur d''anglais, lui-même fan de grimpe extrême. Grâce à l''escalade, Buntaro va se découvrir un but dans la vie, et se perfectionner dans ce domaine, jusqu''à atteindre les cieux.', 
+    2,
+    'Suivez Buntaro dans son ascencion vers les sommets les plus hauts.'
 );
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
-    'Sakamoto Days', 
-    '/images/imgserie_sakamoto.png',
-    'Yuto Suzuki', 
+    'Nana', 
+    '/images/imgserie_nana.jpg',
+    'Ai Yazawa', 
     'Shūeisha', 
-    'Sakamoto Days raconte l''histoire de Taro Sakamoto, un ancien tueur à gages légendaire qui a pris sa retraite pour vivre une vie paisible avec sa famille. Cependant, son passé finit par le rattraper, et il doit utiliser ses compétences pour protéger ses proches tout en essayant de maintenir une vie normale.', 
-    1,
-    'Suivez les missions de Sakamoto.'
-);
-
-INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
-VALUES (
-    'Demon Slayer', 
-    '/images/imgserie_demonslayer.webp',
-    'Koyoharu Gotouge', 
-    'Shūeisha', 
-    'Demon Slayer suit l''histoire de Tanjiro Kamado, un jeune garçon dont la famille est massacrée par des démons, à l''exception de sa sœur Nezuko, qui est transformée en démon. Tanjiro se lance alors dans une quête pour venger sa famille et trouver un moyen de rendre à Nezuko son humanité.', 
-    1,
-    'Rejoignez Tanjiro dans sa quete pour sauver sa sœur.'
+    'Dans le Japon contemporain, deux jeunes femmes se rencontrent dans le train les conduisant à Tokyo. L''une va rejoindre son petit ami tandis que l''autre veut devenir chanteuse professionnelle. Inconsciemment, cette dernière est également à la poursuite de son petit ami parti faire carrière dans la musique deux ans plus tôt. Leur destination n''est pas leur seul point commun car elles ont le même âge (20 ans), mais aussi le même prénom : Nana. Elles se séparent finalement à la descente du train. Plus tard, elles se retrouvent par hasard, alors qu''elles cherchaient toutes les deux un appartement. Trouvant avantageux de partager les frais de loyer, elles décident de vivre en colocation dans l''appartement 707 (c''est une autre coïncidence car leur prénom, Nana, représente le chiffre 7 en japonais). Aussi différentes d''apparence que de caractère, Nana Ōsaki et Nana Komatsu vont se lier d''une profonde et fusionnelle amitié, se complétant et se soutenant mutuellement à travers les différentes épreuves qu''elles seront amenées à traverser.', 
+    3,
+    'Découvrez l''histoire de deux femmes liées par le destin et un prénom.'
 );
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
@@ -317,28 +306,6 @@ VALUES (
 
 INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
-    'Ascension', 
-    '/images/imgserie_ascencion.webp',
-    'Shin''ichi Sakamoto', 
-    'Shūeisha', 
-    'Buntaro Mori, jeune lycéen solitaire et renfermé, est défié par un camarade de classe fan d''escalade. Le défi ? Escalader le lycée. C''est alors que, en grimpant le long d''une gouttière bien placée, Buntaro se découvre une passion et un don. Après avoir escaladé sans trop de mal le lycée, ce dernier est tout de suite repéré par son professeur d''anglais, lui-même fan de grimpe extrême. Grâce à l''escalade, Buntaro va se découvrir un but dans la vie, et se perfectionner dans ce domaine, jusqu''à atteindre les cieux.', 
-    2,
-    'Suivez Buntaro dans son ascencion vers les sommets les plus hauts.'
-);
-
-INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
-VALUES (
-    'Nana', 
-    '/images/imgserie_nana.jpg',
-    'Ai Yazawa', 
-    'Shūeisha', 
-    'Dans le Japon contemporain, deux jeunes femmes se rencontrent dans le train les conduisant à Tokyo. L''une va rejoindre son petit ami tandis que l''autre veut devenir chanteuse professionnelle. Inconsciemment, cette dernière est également à la poursuite de son petit ami parti faire carrière dans la musique deux ans plus tôt. Leur destination n''est pas leur seul point commun car elles ont le même âge (20 ans), mais aussi le même prénom : Nana. Elles se séparent finalement à la descente du train. Plus tard, elles se retrouvent par hasard, alors qu''elles cherchaient toutes les deux un appartement. Trouvant avantageux de partager les frais de loyer, elles décident de vivre en colocation dans l''appartement 707 (c''est une autre coïncidence car leur prénom, Nana, représente le chiffre 7 en japonais). Aussi différentes d''apparence que de caractère, Nana Ōsaki et Nana Komatsu vont se lier d''une profonde et fusionnelle amitié, se complétant et se soutenant mutuellement à travers les différentes épreuves qu''elles seront amenées à traverser.', 
-    3,
-    'Découvrez l''histoire de deux femmes liées par le destin et un prénom.'
-);
-
-INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
-VALUES (
     'Kingdom', 
     '/images/imgserie_kingdom.webp', 
     'Yasuhisa Hara', 
@@ -357,6 +324,39 @@ VALUES (
     'Inspiré de la vie du légendaire samouraï Miyamoto Musashi, Vagabond raconte l''histoire de Takezō Shinmen, un jeune homme violent et ambitieux qui cherche à devenir le plus grand samouraï de tous les temps. Après avoir survécu à la bataille de Sekigahara, Takezō parcourt le Japon, affrontant des adversaires redoutables et cherchant à comprendre le véritable sens de la force et de l''honneur. Ce récit introspectif et visuellement somptueux explore la quête de perfection et la nature humaine.', 
     2, 
     'Suivez le voyage intérieur et extérieur de Miyamoto Musashi, le plus grand samouraï de l''histoire.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Sakamoto Days', 
+    '/images/imgserie_sakamoto.png',
+    'Yuto Suzuki', 
+    'Shūeisha', 
+    'Sakamoto Days raconte l''histoire de Taro Sakamoto, un ancien tueur à gages légendaire qui a pris sa retraite pour vivre une vie paisible avec sa famille. Cependant, son passé finit par le rattraper, et il doit utiliser ses compétences pour protéger ses proches tout en essayant de maintenir une vie normale.', 
+    1,
+    'Suivez les missions de Sakamoto.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Demon Slayer', 
+    '/images/imgserie_demonslayer.webp',
+    'Koyoharu Gotouge', 
+    'Shūeisha', 
+    'Demon Slayer suit l''histoire de Tanjiro Kamado, un jeune garçon dont la famille est massacrée par des démons, à l''exception de sa sœur Nezuko, qui est transformée en démon. Tanjiro se lance alors dans une quête pour venger sa famille et trouver un moyen de rendre à Nezuko son humanité.', 
+    1,
+    'Rejoignez Tanjiro dans sa quete pour sauver sa sœur.'
+);
+
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+VALUES (
+    'Kagurabachi', 
+    '/images/imgserie_kagurabachi.webp',
+    'Takeru Hokazono', 
+    'Shūeisha', 
+    'Kagurabachi est une série qui suit les aventures d''un jeune garçon nommé Chihiro, qui possède une épée magique capable de couper les malédictions. Il voyage à travers un monde rempli de dangers pour venger la mort de son père et protéger les innocents des forces maléfiques.', 
+    1,
+    'Explorez un monde mystérieux et magique.'
 );
 
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
@@ -386,7 +386,7 @@ VALUES (
     9782756016641,  
     1, 
     '2010-11-11',   
-    9,              
+    4,              
     15.00,          
     '/images/imgtome_ascencion1.jpg',  
     8               
@@ -397,7 +397,7 @@ VALUES (
     9782876952058,  
     1, 
     '1998-12-03',   
-    8,             
+    7,             
     14.99,         
     '/images/imgtome_dragonball1.jpg', 
     12            
@@ -419,7 +419,7 @@ VALUES (
     9782723442275,  
     1, 
     '2003-02-07',   
-    7,              
+    6,              
     13.99,          
     '/images/imgtome_bleach1.jpg',  
     7               
