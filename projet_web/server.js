@@ -110,3 +110,34 @@ app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
 
+
+
+app.get('/tomes/:isbn', function (req, res) {
+    const tomeISBN = req.params.isbn; 
+    console.log(req.session);
+    console.log(req.sessionID);
+    const query = `
+        SELECT t.isbn, 
+        t.numero_volume, 
+        t.prix, 
+        t.image, 
+        t.serie_id_serie, 
+        t.annee_publication,
+        s.titre_serie, 
+        s.auteur,
+        s.synopsis,
+        s.editeur,
+        s.categorie_id_categorie
+        FROM tome t
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE t.isbn = ?
+    `;
+
+    con.query(query, [tomeISBN], (err, result) =>{
+        if (err) throw err;
+
+        res.render("pages/tome", {
+            tome: result[0]
+        });
+    });
+});
