@@ -1,6 +1,6 @@
 <div class="manga-list">
-    <% tomes.forEach(tome=> { %>
-        <a href="/tomes/<%= tome.isbn%>" div class="manga-card">
+    <% tomes.forEach(tome => { %>
+        <a href="/tomes/<%= tome.isbn %>" class="manga-card">
             <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
             <p class="title">
                 <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
@@ -8,6 +8,6 @@
             <p class="price">
                 <%= tome.prix %>$
             </p>
-        </div>
-        <% }) %>
+        </a> <!-- FERMETURE CORRIGÉE -->
+    <% }) %>
 </div>
