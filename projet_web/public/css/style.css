@@ -1,55 +1,44 @@
-/* Réduit la hauteur de la navbar pour éviter trop d'espace */
-.navbar {
-    padding: 10px 20px;
+ /* Ajustement de la navbar */
+ .navbar {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Ajustement du logo */
+/* Logo */
 .logo-img {
-    width: 240Px; /* Ajuste la taille */
+    width: 200px;
     height: auto;
 }
 
-/* Ajustement du logo */
-.logolong-img {
-    width: 550Px; /* Ajuste la taille */
-    height: auto;
-}
-
-/* Centrer la barre de recherche et les catégories */
-.search-menu-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-/* Ajustement de la barre de recherche */
+/* Barre de recherche */
 .search-bar {
-    display: flex;
-    justify-content: center;
-    width: 700px; /* Taille idéale */
-    margin-bottom: 5px; /* Rapproche la recherche des catégories */
+    width: 500px;
 }
 
-/* Ajustement du menu des catégories */
-.menu-categories {
-    display: flex;
-    justify-content: center;
-    gap: 15px; /* Espacement uniforme */
+/* Icônes alignées à droite */
+.icons-container a {
+    text-decoration: none;
 }
-/* Barre grise (se connecter, s'inscrire) */
+
+/* Barre des catégories */
+.category-bar {
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+.category-bar .category-link {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+    margin: 0 15px;
+    padding: 5px 0;
+}
+.category-bar .category-link:hover {
+    border-bottom: 2px solid black;
+}
+
+/* Fond gris clair pour la barre de connexion */
 .top-bar {
-    background-color: #dad9d9;
-    font-size: 14px;
-    padding: 5px 15px;
-}
-/* Barre de séparation sous le header */
-.header-separator {
-    background-color: #d1d1d1;  /* Gris clair */
-    height: 2px;  /* Barre plus fine */
-    width: 100vw; /* 100% de la largeur de l'écran */
-    position: absolute;
-    left: 0;
+    background-color: #cfcfcf !important;
 }
 /* Alignement des icônes à droite */
 .icons-container {

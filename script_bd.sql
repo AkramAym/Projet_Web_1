@@ -95,7 +95,6 @@ CREATE TABLE panier (
 CREATE TABLE serie (
     id_serie               INT AUTO_INCREMENT NOT NULL,
     image_serie            VARCHAR(255) NOT NULL,
-    imageLong_serie         VARCHAR(255) NOT NULL,
     titre_serie            VARCHAR(20) NOT NULL,
     auteur                 VARCHAR(20) NOT NULL,
     editeur                VARCHAR(20) NOT NULL,
@@ -229,11 +228,10 @@ VALUES
     ('Seinen', 'Le Seinen est un genre de manga ciblant un public adulte masculin. Les thèmes abordés sont souvent plus matures et complexes, incluant la psychologie, la politique, la violence ou la science-fiction. Exemples populaires : "Berserk", "Tokyo Ghoul", "Ghost in the Shell".'),
     ('Shojo', 'Le Shojo est un genre de manga destiné à un public jeune féminin. Il met souvent l''accent sur les relations interpersonnelles, les romances, les drames et les émotions. Le style artistique est généralement plus raffiné et expressif. Exemples populaires : "Fruits Basket", "Nana", "Sailor Moon".');
 
-INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
+INSERT INTO serie (titre_serie, image_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
 VALUES (
     'Jujutsu Kaisen', 
     '/images/imgserie_jjk.png',
-    '/images/imgserie_jjkLong.png',
     'Gege Akutami', 
     'Shūeisha', 
     'Plus de 10 000 morts et disparus sont recensés chaque année au Japon. Les sentiments négatifs que relâchent les êtres humains sont en cause. Souffrance, regrets, humiliation : leur concentration dans un même endroit engendre des malédictions souvent mortelles... C''est ce que va découvrir Yuji Itadori, lycéen et membre du club d''occultisme. Il ne croit pas aux fantômes, mais il est doté d''une force physique hors norme qui représente un véritable atout pour les missions du groupe... jusqu''à ce que l''une d''elles prenne une mauvaise tournure. La relique qu''ils dénichent, le doigt découpé d''un démon millénaire, attire les monstres ! Sans réfléchir : le jeune homme avale la relique pour briser la malédiction ! Maintenant, il se trouve possédé par Ryômen Sukuna, le célèbre démon à deux visages. Cependant, contre toute attente, Yuji est toujours capable de garder le contrôle de son corps. Mais en dépit de cela, il est condamné à mort par l''organisation des exorcistes... Une décision qui ne pourra être repoussée qu''à une seule condition : trouver tous les doigts de Sukuna afin d''écarter la menace une bonne fois pour toutes !', 
