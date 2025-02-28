@@ -54,6 +54,7 @@ app.get('/', function (req, res) {
         SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
         FROM tome t
         JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE t.numero_volume = 1
     `;
 
     var utilisateurConnecte = false;
