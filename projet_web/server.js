@@ -7,6 +7,7 @@ import { body, validationResult } from "express-validator";
 import dateFormat from "dateformat";
 import cookieParser from "cookieparser";
 import utilisateurRouteur from "./routes/utilisateur.js";
+import mangasRouteur from "./routes/mangas.js";
 const app = express();
 // Définition du dossier contenant les vues
 const __filename = fileURLToPath(import.meta.url);
@@ -41,6 +42,7 @@ app.use(session({
 }));
 
 app.use(utilisateurRouteur);
+app.use(mangasRouteur);
 
 // Route principale (Page d'accueil)
 app.get('/', function (req, res) {
@@ -67,108 +69,6 @@ app.get('/', function (req, res) {
         });
     });
 });
-
-// Route pour afficher la page "Nos séries"
-app.get('/nos-series', function (req, res) {
-    console.log(req.session);
-    console.log(req.sessionID);
-    const query = `
-        SELECT id_serie, titre_serie, image_serie, aguicheur
-        FROM serie
-    `;
-
-    con.query(query, function (err, result) {
-        if (err) throw err;
-
-        var utilisateurConnecte = false;
-        if (req.session.user?.identifiant){
-            utilisateurConnecte = true;
-        }
-        res.render("pages/nos-series", {
-            series: result,
-            connecte: utilisateurConnecte
-        });
-    });
-});
-
-app.get('/series/:id', function (req, res) {
-    const serieID = req.params.id; 
-    console.log(req.session);
-    console.log(req.sessionID);
-    const query = `
-        SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
-        FROM tome t
-        JOIN serie s ON t.serie_id_serie = s.id_serie
-        WHERE t.serie_id_serie = ?
-    `;
-    var utilisateurConnecte = false;
-        if (req.session.user?.identifiant){
-            utilisateurConnecte = true;
-        }
-    con.query(query, [serieID], (err, result) =>{
-        if (err) throw err;
-        res.render("pages/serieTomes", {
-            tomes: result,
-            connecte: utilisateurConnecte
-        });
-    });
-});
-
-app.get('/categories/:id', function (req, res) {
-    const categorieID = req.params.id; 
-    console.log(req.session);
-    console.log(req.sessionID);
-    const query = `
-    SELECT id_serie, titre_serie, image_serie, aguicheur
-    FROM serie
-    WHERE categorie_id_categorie = ?
-`;
-    var utilisateurConnecte = false;
-        if (req.session.user?.identifiant){
-            utilisateurConnecte = true;
-        }
-    con.query(query, [categorieID], (err, result) =>{
-        if (err) throw err;
-        res.render("pages/categorie", {
-            series: result,
-            connecte: utilisateurConnecte
-        });
-    });
-});
-
-app.get('/tomes/:isbn', function (req, res) {
-    const tomeISBN = req.params.isbn; 
-    console.log(req.session);
-    console.log(req.sessionID);
-    const query = `
-        SELECT t.isbn, 
-        t.numero_volume, 
-        t.prix, 
-        t.image, 
-        t.serie_id_serie, 
-        t.annee_publication,
-        s.titre_serie, 
-        s.auteur,
-        s.synopsis,
-        s.editeur,
-        s.categorie_id_categorie
-        FROM tome t
-        JOIN serie s ON t.serie_id_serie = s.id_serie
-        WHERE t.isbn = ?
-    `;
-    var utilisateurConnecte = false;
-        if (req.session.user?.identifiant){
-            utilisateurConnecte = true;
-        }
-    con.query(query, [tomeISBN], (err, result) =>{
-        if (err) throw err;
-        res.render("pages/tome", {
-            tome: result[0],
-            connecte: utilisateurConnecte
-        });
-    });
-});
-
 
 // Démarrer le serveur
 const PORT = 3000;

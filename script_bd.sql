@@ -310,7 +310,7 @@ VALUES (
     'Shūeisha', 
     'Dragon Ball suit les aventures de Son Goku, un jeune garçon doté d''une force surhumaine, qui part à la recherche des Dragon Balls, des artefacts magiques capables d''exaucer n''importe quel souhait. Au fil de son voyage, Goku affronte de nombreux ennemis et devient l''un des combattants les plus puissants de l''univers.', 
     1,
-    'Rejoignez Goku dans sa quete des Dragon Balls.'
+    'Rejoignez Goku dans sa quête des Dragon Balls.'
 );
 
 INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
@@ -322,7 +322,7 @@ VALUES (
     'Shūeisha', 
     'En pleine période des Royaumes combattants en Chine, Xin, un jeune orphelin, rêve de devenir le plus grand général de l''histoire. Aux côtés de son ami d''enfance, Zheng, qui aspire à unifier la Chine et à devenir roi, Xin se lance dans une quête épique pour réaliser leurs ambitions. À travers des batailles stratégiques, des alliances complexes et des sacrifices personnels, Kingdom explore l''ascension de ces deux héros dans un monde déchiré par la guerre.', 
     2,
-    'Plongez dans l''épopée guerrière de la Chine ancienne avec Xin et Zheng.'
+    'Plongez dans l''épopée guerrière de la Chine ancienne avec Shin et Sei.'
 );
 
 INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
@@ -331,7 +331,7 @@ VALUES (
     '/images/imgserie_vagabond.jpg', 
     '/images/imgLongserie_vagabond.jpg', 
     'Takehiko Inoue', 
-    'Kodansha', 
+    'Tonkam', 
     'Inspiré de la vie du légendaire samouraï Miyamoto Musashi, Vagabond raconte l''histoire de Takezō Shinmen, un jeune homme violent et ambitieux qui cherche à devenir le plus grand samouraï de tous les temps. Après avoir survécu à la bataille de Sekigahara, Takezō parcourt le Japon, affrontant des adversaires redoutables et cherchant à comprendre le véritable sens de la force et de l''honneur. Ce récit introspectif et visuellement somptueux explore la quête de perfection et la nature humaine.', 
     2, 
     'Suivez le voyage intérieur et extérieur de Miyamoto Musashi, le plus grand samouraï de l''histoire.'
@@ -358,7 +358,7 @@ VALUES (
     'Shūeisha', 
     'Demon Slayer suit l''histoire de Tanjiro Kamado, un jeune garçon dont la famille est massacrée par des démons, à l''exception de sa sœur Nezuko, qui est transformée en démon. Tanjiro se lance alors dans une quête pour venger sa famille et trouver un moyen de rendre à Nezuko son humanité.', 
     1,
-    'Rejoignez Tanjiro dans sa quete pour sauver sa sœur.'
+    'Rejoignez Tanjiro dans sa quête pour sauver sa sœur.'
 );
 
 INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, synopsis, categorie_id_categorie, aguicheur)
@@ -373,6 +373,10 @@ VALUES (
     'Explorez un monde mystérieux et magique.'
 );
 
+
+-- Tomes Jujutsu Kaisen 
+
+-- Tome 1
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9791032705544, 
@@ -384,6 +388,33 @@ VALUES (
     5
 );
 
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9791032705537,  
+    2, 
+    '2020-10-21', 
+    1, 
+    16.00, 
+    '/images/imgtome_jjk2.jpg', 
+    5
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9791032706077,  
+    3, 
+    '2021-01-21', 
+    1, 
+    16.00, 
+    '/images/imgtome_jjk3.jpg', 
+    5
+);
+
+-- Tomes One Piece
+
+-- Tome 1 
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9782723488525,  
@@ -395,6 +426,33 @@ VALUES (
     10              
 );
 
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782723489898,  
+    2, 
+    '2003-11-05',  
+    2,              
+    12.95,          
+    '/images/imgtome_onepiece2.webp',  
+    10              
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782723489904,  
+    3, 
+    '2004-01-07',  
+    2,              
+    12.95,          
+    '/images/imgtome_onepiece3.webp',  
+    10              
+);
+
+-- Tomes Ascencion
+
+-- Tome 1
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9782756016641,  
@@ -406,6 +464,33 @@ VALUES (
     8               
 );
 
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782756020433,  
+    2, 
+    '2011-02-10',   
+    4,              
+    15.00,          
+    '/images/imgtome_ascencion2.jpg',  
+    8               
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782756020440,  
+    3, 
+    '2011-05-12',   
+    4,              
+    15.00,          
+    '/images/imgtome_ascencion3.jpg',  
+    8               
+);
+
+-- Tomes DB
+
+-- Tome 1 
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9782876952058,  
@@ -417,6 +502,33 @@ VALUES (
     12            
 );
 
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782876952065,  
+    2, 
+    '1999-02-04',   
+    7,             
+    14.99,         
+    '/images/imgtome_dragonball2.jpg', 
+    12            
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782876952072,  
+    3, 
+    '1999-04-01',   
+    7,             
+    14.99,         
+    '/images/imgtome_dragonball3.jpg', 
+    12            
+);
+
+-- Tomes Naruto
+
+-- Tome 1
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9782871294146,  
@@ -428,6 +540,33 @@ VALUES (
     15              
 );
 
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782871294177,  
+    2, 
+    '2002-05-15',   
+    3,              
+    12.50,          
+    '/images/imgtome_naruto2.jpg',  
+    15              
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782871294276,  
+    3, 
+    '2002-08-15',   
+    3,              
+    12.50,          
+    '/images/imgtome_naruto3.jpg',  
+    15              
+);
+
+-- Tomes Bleach
+
+-- Tome 1
 INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
 VALUES (
     9782723442275,  
@@ -437,6 +576,242 @@ VALUES (
     13.99,          
     '/images/imgtome_bleach1.jpg',  
     7               
+);
+
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9781591164425,  
+    2, 
+    '2003-10-24',   
+    6,              
+    13.99,          
+    '/images/imgtome_bleach2.jpg',  
+    7               
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9781591164432,  
+    3, 
+    '2004-01-23',   
+    6,              
+    13.99,          
+    '/images/imgtome_bleach3.jpg',  
+    7               
+);
+
+-- Tomes Nana
+
+-- Tome 1
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782840559573,  
+    1, 
+    '2002-12-04',   
+    5,              
+    13.99,          
+    '/images/imgtome_nana1.jpg',  
+    7               
+);
+
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782840559641,  
+    2, 
+    '2003-03-05',   
+    5,              
+    13.99,          
+    '/images/imgtome_nana2.jpg',  
+    7               
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782847890259,  
+    3, 
+    '2003-04-16',   
+    5,              
+    13.99,          
+    '/images/imgtome_nana3.jpg',  
+    7               
+);
+
+-- Tomes Kingdom 
+-- Tome 1
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782368778050,  
+    1, 
+    '2024-08-19',   
+    8,              
+    14.99,          
+    '/images/imgtome_kingdom1.jpg',  
+    10              
+);
+
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782368778067,  
+    2, 
+    '2024-08-19',   
+    8,              
+    14.99,          
+    '/images/imgtome_kingdom2.jpg',  
+    10              
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782368778074,  
+    3, 
+    '2024-08-19',   
+    8,              
+    14.99,          
+    '/images/imgtome_kingdom3.jpg',  
+    10              
+);
+
+-- Tomes Vagabond
+-- Tome 1
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782845800670,  
+    1, 
+    '2002-10-23',   
+    9,              
+    15.50,          
+    '/images/imgtome_vagabond1.jpg',  
+    8               
+);
+
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782845801158,  
+    2, 
+    '2002-10-23',   
+    9,              
+    15.50,          
+    '/images/imgtome_vagabond2.jpg',  
+    8               
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782845801233,  
+    3, 
+    '2015-01-08',   
+    9,              
+    15.50,          
+    '/images/imgtome_vagabond3.jpg',  
+    8               
+);
+
+-- Tomes Sakamoto Days
+-- Tome 1
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782344050989,  
+    1, 
+    '2022-06-21',   
+    10,              
+    12.99,          
+    '/images/imgtome_sakamotodays1.jpg',  
+    12              
+);
+
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782344050996,  
+    2, 
+    '2022-06-21',   
+    10,              
+    12.99,          
+    '/images/imgtome_sakamotodays2.jpg',  
+    12              
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782344051009,  
+    3, 
+    '2022-07-26',   
+    10,              
+    12.99,          
+    '/images/imgtome_sakamotodays3.jpg',  
+    12              
+);
+
+-- Tomes Demon Slayer
+-- Tome 1
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782809482317,  
+    1, 
+    '2020-02-03',   
+    11,              
+    13.50,          
+    '/images/imgtome_demonslayer1.jpg',  
+    15              
+);
+
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782809482324,  
+    2, 
+    '2020-02-03',   
+    11,              
+    13.50,          
+    '/images/imgtome_demonslayer2.jpg',  
+    15              
+);
+
+-- Tome 3
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9782809476132,  
+    3, 
+    '2020-03-09',   
+    11,              
+    13.50,          
+    '/images/imgtome_demonslayer3.jpg',  
+    15              
+);
+
+-- Tomes Kagurabachi
+
+-- Tome 1
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9781974747245,  
+    1, 
+    '2024-11-05',   
+    12,              
+    14.99,          
+    '/images/imgtome_kagurabachi1.jpg',  
+    10              
+);
+
+-- Tome 2
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+VALUES (
+    9781974752713,  
+    2, 
+    '2025-02-04',   
+    12,              
+    14.99,          
+    '/images/imgtome_kagurabachi2.jpg',  
+    10              
 );
 
 INSERT INTO utilisateur (
