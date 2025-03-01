@@ -179,3 +179,37 @@ footer {
 .footer-bottom {
     font-size: 12px; /* Réduit la taille du texte */
 }
+.inscription-page, .connexion-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.content-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+/* Empêche le footer d'apparaître immédiatement */
+footer {
+    display: none;
+    position: relative;
+    width: 100%;
+    background-color: #d8d7d7;
+    padding: 40px 20px;
+}
+
+/* Garde le formulaire centré */
+.content-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Permet un bon centrage */
+}
+
+/* Fait apparaître le footer uniquement au scroll */
+body.scrolled footer {
+    display: block;
+}
