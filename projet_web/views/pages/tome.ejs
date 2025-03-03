@@ -2,51 +2,65 @@
 <html lang="fr">
 <head>
     <link rel="stylesheet" href="/css/style.css">
-    <%- include('../partials/header') %> <!-- Inclusion du header -->
+    <%- include('../partials/header') %>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= tome.titre_serie %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    
-  
 </head>
-
 <body class="tome-page">
     <div class="container">
         <div class="book-container">
             <!-- Image du tome -->
-            <div class="book-image">
+            <div class="book-image zoom-container">
                 <img src="<%= tome.image %>" alt="Couverture de <%= tome.titre_serie %>">
             </div>
-            
             <!-- Infos du tome -->
             <div class="book-details">
                 <h1><%= tome.titre_serie %></h1>
-                <h2><%= tome.auteur %></h2>
-                <p class="price">Prix: <strong><%= tome.prix %> $</strong></p>
-                <p><strong>ISBN:</strong> <%= tome.isbn %></p>
-                <p><strong>Année de publication:</strong> <%= tome.annee_publication %></p>
-                <p><strong>Éditeur:</strong> <%= tome.editeur %></p>
-                
-                <div class="buttons">
+                <p class="author-edition"><%= tome.auteur %>, <%= tome.editeur %></p> <!-- Auteur et maison d'édition -->
+                <p class="availability">Disponible</p>
+                <p class="price"><strong><%= tome.prix %> $</strong></p>
+                <p class="description-text"><%= tome.synopsis %></p>
+                <!-- Boutons -->
+                <div class="buttons-container">
                     <form action="/panier" method="POST">
-                        <button class="btn add-to-cart" type="submit">Ajouter au panier</button>
-                    </form>
-                    <form action="/emprunter" method="POST">
-                        <button class="btn borrow" type="submit">Emprunter</button>
+                        <button class="btn add-to-cart" type="submit">AJOUTER AU PANIER</button>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- Description du tome -->
-        <div class="description">
-            <h3>Description</h3>
-            <p><%= tome.synopsis %></p>
+        <!-- Informations supplémentaires -->
+        <div class="additional-info">
+            <h2>Informations supplémentaires</h2>
+            <ul>
+                <li><strong>ISBN:</strong> <%= tome.isbn %></li>
+                <li><strong>Nombre de tomes en stock:</strong> <%= tome.stock %></li>
+                <li><strong>Numéro de volume:</strong> <%= tome.numero_volume %></li>
+                <li><strong>Année de publication:</strong> <%= tome.annee_publication.toLocaleDateString() %></li>
+            </ul>
         </div>
     </div>
-
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const zoomContainers = document.querySelectorAll('.zoom-container');
+            zoomContainers.forEach(container => {
+                const img = container.querySelector('img');
+                container.addEventListener('mousemove', function(e) {
+                    const rect = container.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const moveX = (x / rect.width) * 100;
+                    const moveY = (y / rect.height) * 100;
+                    img.style.transformOrigin = `${moveX}% ${moveY}%`;
+                    img.style.transform = 'scale(1.5)'; // Ajuste le niveau de zoom ici
+                });
+                container.addEventListener('mouseleave', function() {
+                    img.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

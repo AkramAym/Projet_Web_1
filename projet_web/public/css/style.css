@@ -1,7 +1,9 @@
  /* Ajustement de la navbar */
- .navbar {
+ /* Ajustement de la navbar */
+.navbar {
     padding: 15px 20px;
     border-bottom: 1px solid #ddd;
+    width: 100%; /* Prend toute la largeur */
 }
 
 /* Logo */
@@ -12,7 +14,8 @@
 
 /* Barre de recherche */
 .search-bar {
-    width: 500px;
+    width: 100%; /* Prend toute la largeur */
+    max-width: 500px;
 }
 
 /* Icônes alignées à droite */
@@ -24,6 +27,7 @@
 .category-bar {
     background: white;
     border-bottom: 1px solid #ddd;
+    width: 100%; /* Prend toute la largeur */
 }
 .category-bar .category-link {
     text-decoration: none;
@@ -39,6 +43,7 @@
 /* Fond gris clair pour la barre de connexion */
 .top-bar {
     background-color: #cfcfcf !important;
+    width: 100%; /* Prend toute la largeur */
 }
 /* Alignement des icônes à droite */
 .icons-container {
@@ -52,6 +57,7 @@
 .manga-section {
     padding: 50px 0;
     background-color: #f9f9f9;
+    width: 100%; /* Prend toute la largeur */
 }
 
 /* Conteneur de la partie haute */
@@ -60,14 +66,14 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
+    width: 100%; /* Prend toute la largeur */
 }
-
-
 
 /* Texte à droite */
 .right-text {
     text-align: center;
     max-width: 400px;
+    width: 100%; /* Prend toute la largeur */
 }
 
 .big-text {
@@ -88,9 +94,6 @@ hr {
     border: 0.5px solid #ddd;
 }
 
-
-
-
 /* Nouvelle disposition pour les tomes */
 .manga-list {
     display: grid;
@@ -101,7 +104,7 @@ hr {
 }
 
 .manga-card {
-    background-color: #cfcfcf;
+    background-color: #e0e0e0;
     padding: 20px;
     text-align: center;
     width: 250px;
@@ -116,9 +119,7 @@ hr {
 .manga-card:hover {
     transform: scale(1.05);
     background-color: #acacac; /* Couleur plus foncée au survol */
-
 }
-
 
 .manga-card img {
     width: 100%;
@@ -150,10 +151,6 @@ hr {
     color: black !important;
 }
 
-
-
-
-
 .left-image {
     max-width: 700px; /* Ajustez cette valeur selon vos besoins */
     overflow: hidden; /* Pour s'assurer que les images ne dépassent pas */
@@ -170,6 +167,7 @@ hr {
     padding: 50px 0;
     color: white;
     text-align: center;
+    width: 100%; /* Prend toute la largeur */
 }
 
 /* Image de fond */
@@ -190,6 +188,7 @@ hr {
 .container {
     position: relative;
     z-index: 1;
+    width: 100%; /* Prend toute la largeur */
 }
 
 /* Liste des séries */
@@ -198,6 +197,7 @@ hr {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     padding: 30px;
+    width: 100%; /* Prend toute la largeur */
 }
 /* Style pour les cartes de série */
 .series-card {
@@ -205,7 +205,7 @@ hr {
     overflow: hidden; /* Pour s'assurer que l'image ne dépasse pas */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
-    width: 100%; /* Largeur de la carte */
+    width: 100%; /* Prend toute la largeur */
     max-width: 300px; /* Largeur maximale pour une meilleure lisibilité */
     margin: 20px; /* Espacement entre les cartes */
 }
@@ -215,7 +215,6 @@ hr {
     transform: scale(1.05); /* Légère mise à l'échelle au survol */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre portée */
     background-color: #111111; /* Couleur plus foncée au survol */
-
 }
 
 /* Style pour les images des séries */
@@ -257,10 +256,12 @@ footer {
     max-width: 1200px;
     margin: auto;
     align-items: center;
+    width: 100%; /* Prend toute la largeur */
 }
 .footer-links {
     display: flex;
     gap: 40px;
+    width: 100%; /* Prend toute la largeur */
 }
 .footer-links ul {
     list-style: none;
@@ -282,6 +283,7 @@ footer {
 .footer-logo {
     text-align: center;
     flex: 1;
+    width: 100%; /* Prend toute la largeur */
 }
 .logolong-img {
     width: 200px; /* Taille ajustée */
@@ -290,6 +292,7 @@ footer {
 
 .footer-newsletter {
     max-width: 300px;
+    width: 100%; /* Prend toute la largeur */
 }
 .footer-newsletter h3 {
     font-size: 18px;
@@ -302,12 +305,14 @@ footer {
 .footer-newsletter form {
     display: flex;
     gap: 10px;
+    width: 100%; /* Prend toute la largeur */
 }
 .footer-newsletter input {
     flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 100%; /* Prend toute la largeur */
 }
 .footer-newsletter button {
     background-color: #333;
@@ -315,8 +320,7 @@ footer {
     border: none;
     padding: 10px 15px;
     cursor: pointer;
-    border-radius: 5px;
-}
+    border-radius: 5px}
 .footer-newsletter button:hover {
     background-color: #555;
 }
@@ -419,41 +423,46 @@ html, body {
 .user-info p strong {
     color: #333;
 }
+.zoom-container {
+    overflow: hidden; /* Cache les débordements */
+    position: relative;
+}
+
+.zoom-container img {
+    transition: transform 0.3s ease; /* Ajoute une transition pour un effet de zoom fluide */
+}
+
 .tome-page {
     background: none;
     font-family: 'Arial', sans-serif;
 }
 
-/* Conteneur principal */
 .tome-page .container {
     max-width: 1100px;
     margin: 40px auto;
     padding: 20px;
 }
 
-/* Affichage du livre */
 .tome-page .book-container {
     display: flex;
     align-items: flex-start;
     gap: 60px;
 }
 
-/* Image du tome - déplacée légèrement à gauche */
 .tome-page .book-image {
-    flex: 0 0 40%; /* Ajuste la largeur */
+    flex: 0 0 40%;
     display: flex;
     justify-content: flex-end;
 }
 
 .tome-page .book-image img {
     width: 100%;
-    max-width: 380px; /* Ajustement de la taille */
+    max-width: 380px;
     height: auto;
     object-fit: contain;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Détails du tome */
 .tome-page .book-details {
     flex: 1;
     display: flex;
@@ -462,92 +471,93 @@ html, body {
 }
 
 .tome-page .book-details h1 {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-.tome-page .book-details h2 {
-    font-size: 1.2rem;
-    color: #555;
+.tome-page .author-edition {
+    font-size: 1.2rem; /* Taille de police plus petite */
+    color: #666; /* Couleur noir plus pâle */
+    margin-bottom: 20px; /* Espacement en bas de l'auteur et de la maison d'édition */
+}
+
+.tome-page .availability {
+    font-size: 1.5rem;
+    color: green;
     margin-bottom: 15px;
 }
 
 .tome-page .price {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #111;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.tome-page .buttons {
-    margin-top: 20px;
+.tome-page .description-text {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.tome-page .buttons-container {
     display: flex;
-    align-items: center;
-    gap: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 250px;
 }
 
-/* Sélecteur de quantité */
-.quantity-selector {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Boutons stylisés */
-.tome-page .btn {
-    background-color: #111;
+.tome-page .buttons-container .btn.add-to-cart {
+    background-color: red;
     color: white;
-    padding: 12px 25px;
-    font-size: 1rem;
+    padding: 15px 35px;
+    font-size: 1.2rem;
     border: none;
     cursor: pointer;
     transition: background 0.3s ease;
-    border-radius: 5px;
+    width: 450px; 
+    height: 70px;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0; /* Pas de bords arrondis */
+    margin: 0 auto; /* Centrer le bouton si nécessaire */
 }
 
-.tome-page .btn:hover {
-    background-color: #333;
+.tome-page .buttons-container .btn.add-to-cart:hover {
+    background-color: rgb(0, 0, 0);
 }
 
-/* Bouton emprunter */
-.tome-page .btn.borrow {
-    background-color: #bbb;
-    color: black;
+.additional-info {
+    margin-top: 40px; /* Ajoute un espace en haut de la section */
+    font-size: 1.1em;
+    text-align: center; /* Centre le texte dans toute la section */
 }
 
-.tome-page .btn.borrow:hover {
-    background-color: #999;
+.additional-info h2 {
+    font-size: 2.5rem; /* Taille de police plus petite pour le sous-titre */
+    font-weight: bold;
+    margin-bottom: 30px; /* Plus d'espace en bas du sous-titre */
+    color: #333;
+    text-align: center; /* Centre le sous-titre */
 }
 
-/* Bouton coup de cœur */
-.favorite-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
+.additional-info ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left; /* Aligne les informations à gauche */
+}
+
+.additional-info ul li {
+    margin-bottom: 10px;
+    font-size: 1.2rem; /* Taille de police pour les informations */
     color: #555;
 }
 
-.favorite-btn:hover {
-    color: red;
+.additional-info ul li strong {
+    color: #333;
 }
 
-/* Description en bas */
-.tome-page .description {
-    margin-top: 40px;
-    max-width: 900px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    background: #f9f9f9;
-    font-size: 1.2em;
-    opacity: 1;
-    transform: translateY(0);
-    transition: none;
-}
 
-.description h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-}
