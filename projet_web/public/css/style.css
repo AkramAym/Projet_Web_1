@@ -432,6 +432,210 @@ html, body {
     transition: transform 0.3s ease; /* Ajoute une transition pour un effet de zoom fluide */
 }
 
+.tome-page .buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 250px;
+}
+
+.add-to-cart-form, .borrow-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tome-page .quantity-selector {
+    width: 60px;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.tome-page .buttons-container .btn.add-to-cart {
+    background-color: red;
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 450px; 
+    height: 70px;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0; /* Pas de bords arrondis */
+    margin: 0 auto; /* Centrer le bouton si nécessaire */
+}
+
+.tome-page .buttons-container .btn.add-to-cart:hover {
+    background-color: darkred;
+}
+
+.tome-page .buttons-container .btn.borrow {
+    background-color: black;
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 450px; 
+    height: 70px;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0; /* Pas de bords arrondis */
+    margin: 10px auto; /* Espacement entre les boutons et centrer */
+}
+
+.tome-page .buttons-container .btn.borrow:hover {
+    background-color: #333; /* Change la couleur au survol */
+}
+
+.tome-page .buttons-container .btn.favorite {
+    background-color: white;
+    color: black;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border: 2px solid black;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border-radius: 5px; /* Bords légèrement arrondis */
+}
+
+.tome-page .buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 250px;
+}
+
+.add-to-cart-form, .borrow-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tome-page .quantity-selector {
+    width: 60px;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.tome-page .buttons-container .btn.add-to-cart {
+    background-color: red;
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 450px; 
+    height: 70px;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0; /* Pas de bords arrondis */
+    margin: 0 auto; /* Centrer le bouton si nécessaire */
+}
+
+.tome-page .buttons-container .btn.add-to-cart:hover {
+    background-color: darkred;
+}
+.tome-page .buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 250px;
+}
+
+.add-to-cart-form, .borrow-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tome-page .quantity-selector {
+    width: 60px;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.tome-page .buttons-container .btn.add-to-cart {
+    background-color: red;
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 450px; 
+    height: 70px;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0; /* Pas de bords arrondis */
+    margin: 0 auto; /* Centrer le bouton si nécessaire */
+}
+
+.tome-page .buttons-container .btn.add-to-cart:hover {
+    background-color: darkred;
+}
+
+.tome-page .buttons-container .btn.borrow {
+    background-color: black;
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 450px; 
+    height: 70px;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0; /* Pas de bords arrondis */
+    margin: 10px auto; /* Espacement entre les boutons et centrer */
+}
+
+.tome-page .buttons-container .btn.borrow:hover {
+    background-color: #333; /* Change la couleur au survol */
+}
+
+.heart-icon {
+    font-size: 1.8rem;
+    color: black;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.heart-icon:hover {
+    color: red;
+}
+
+.zoom-container {
+    overflow: hidden; /* Cache les débordements */
+    position: relative;
+}
+
+.zoom-container img {
+    transition: transform 0.3s ease; /* Ajoute une transition pour un effet de zoom fluide */
+}
+
 .tome-page {
     background: none;
     font-family: 'Arial', sans-serif;
@@ -501,35 +705,6 @@ html, body {
     margin-bottom: 30px;
 }
 
-.tome-page .buttons-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    max-width: 250px;
-}
-
-.tome-page .buttons-container .btn.add-to-cart {
-    background-color: red;
-    color: white;
-    padding: 15px 35px;
-    font-size: 1.2rem;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    width: 450px; 
-    height: 70px;
-
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 0; /* Pas de bords arrondis */
-    margin: 0 auto; /* Centrer le bouton si nécessaire */
-}
-
-.tome-page .buttons-container .btn.add-to-cart:hover {
-    background-color: rgb(0, 0, 0);
-}
-
 .additional-info {
     margin-top: 40px; /* Ajoute un espace en haut de la section */
     font-size: 1.1em;
@@ -559,5 +734,3 @@ html, body {
 .additional-info ul li strong {
     color: #333;
 }
-
-

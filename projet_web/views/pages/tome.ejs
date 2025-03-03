@@ -25,8 +25,13 @@
                 <p class="description-text"><%= tome.synopsis %></p>
                 <!-- Boutons -->
                 <div class="buttons-container">
-                    <form action="/panier" method="POST">
+                    <form action="/panier" method="POST" class="add-to-cart-form">
                         <button class="btn add-to-cart" type="submit">AJOUTER AU PANIER</button>
+                        <input type="number" name="quantity" value="1" min="1" class="quantity-selector">
+                    </form>
+                    <form action="/emprunter" method="POST" class="borrow-form">
+                        <button class="btn borrow" type="submit">EMPRUNTER</button>
+                        <i class="fas fa-heart heart-icon" title="Ajouter aux coups de cœur"></i>
                     </form>
                 </div>
             </div>
