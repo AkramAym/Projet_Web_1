@@ -1,4 +1,3 @@
-
 DROP DATABASE IF EXISTS MangathequeBD;
 
 
@@ -385,7 +384,7 @@ VALUES (
     1, 
     16.00, 
     '/images/imgtome_jjk1.jpg', 
-    5
+    0
 );
 
 -- Tome 2

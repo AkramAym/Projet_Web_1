@@ -17,7 +17,7 @@ Avant de commencer l'installation, assurez-vous d'avoir installé les éléments
 
 ### **Option 1 : Clonage via Git Bash (recommandé)**
 Ouvrez GitBash
-Aller dans le dossier où vous voulez stocker le projet (ex: `Documents`) :
+Allez dans le dossier où vous voulez stocker le projet (ex: `Documents`) :
 ```bash
 cd ~/Documents
 git clone https://github.com/AkramAym/Projet_Web_1.git
@@ -29,24 +29,25 @@ Ouvrez GitHub Desktop et connectez vous à votre compte GitHub
 Faites "Ctrl + shift + O"
 Allez dans la section URL et dans "URL or username/repository" entrez : https://github.com/AkramAym/Projet_Web_1.git
 Choisissez le dossier de destination
-Cliquer sur clone
+Cliquez sur clone
 
 ### 2 Installer les dépendances
-Assurez vous d'être dans le dossier du projet avec Github Desktop, faites clic droit sur le projet et cliquer sur "Open in command prompt", puis cd mangatheque
-Avec GitBash faites cd Projet_Web_1/mangatheque
+Assurez vous d'être dans le dossier du projet 
+avec Github Desktop, faites clic droit sur le projet et cliquez sur "Open in command prompt", puis cd projet_web
+Avec GitBash faites cd Projet_Web_1/projet_web
 Une fois que vous êtes dans le bon dossier, faites npm install
 
 ### 3 Configurer la base de données
 Assurez vous que docker est installé avec : "docker --version"
 Ensuite, entrez l'invite de commande suivant :
 docker run -d -p 3306:3306 --name mysql-server -e LANG=C.UTF-8 -e MYSQL_ROOT_PASSWORD=oracle -e MYSQL_DATABASE=scott -e MYSQL_USER=scott -e MYSQL_PASSWORD=oracle mysql/mysql-server:latest
-Ensuite ouvrez docker desktop et démarrer le container.
+Ensuite ouvrez docker desktop et démarrez le container.
 Allez dans la section "Exec" du container.
 Entrez la commande : mysql -u root -p
 Entrez le mot de passe : oracle
 Copiez le script contenu dans "script_bd.sql" et collez le dans docker en faisant clic droit puis cliquez sur "Paste"
 
-### 4 Démarrez l'application
+### 4 Démarrer l'application
 Avec le même invite de commande faites :
 npx nodemon server.js
 Puis ouvrez votre navigateur et entrez :

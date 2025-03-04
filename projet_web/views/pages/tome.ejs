@@ -18,9 +18,13 @@
             </div>
             <!-- Infos du tome -->
             <div class="book-details">
-                <h1><%= tome.titre_serie %></h1>
+                <h1><%= tome.titre_serie %> Tome <%= tome.numero_volume %></h1>
                 <p class="author-edition"><%= tome.auteur %>, <%= tome.editeur %></p> <!-- Auteur et maison d'édition -->
-                <p class="availability">Disponible</p>
+                <% if (tome.stock > 0) { %>
+                    <p class="availability">Disponible</p>
+                <% } else { %>
+                    <p class="availability">Hors de Stock</p>
+                <% } %>
                 <p class="price"><strong><%= tome.prix %> $</strong></p>
                 <p class="description-text"><%= tome.synopsis %></p>
                 <!-- Boutons -->
