@@ -304,7 +304,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Dragon Ball', 
     '/images/imgserie_dragonball.avif',
-    '/images/imgLongserie_dragonball.avif',
+    '/images/imgLongserie_dragonball.png',
     'Akira Toriyama', 
     'Shūeisha', 
     'Dragon Ball suit les aventures de Son Goku, un jeune garçon doté d''une force surhumaine, qui part à la recherche des Dragon Balls, des artefacts magiques capables d''exaucer n''importe quel souhait. Au fil de son voyage, Goku affronte de nombreux ennemis et devient l''un des combattants les plus puissants de l''univers.', 
