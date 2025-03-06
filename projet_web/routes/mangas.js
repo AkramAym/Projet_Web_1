@@ -42,12 +42,13 @@ routeur.get('/nos-series', function (req, res) {
     });
 });
 
+//Route pour afficher les tomes d'une serie
 routeur.get('/series/:id', function (req, res) {
     const serieID = req.params.id; 
     console.log(req.session);
     console.log(req.sessionID);
     const query = `
-        SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
+        SELECT t.isbn, t.numero_volume, t.prix, t.image, s.titre_serie, s.imageLong_serie
         FROM tome t
         JOIN serie s ON t.serie_id_serie = s.id_serie
         WHERE t.serie_id_serie = ?
@@ -56,15 +57,24 @@ routeur.get('/series/:id', function (req, res) {
         if (req.session.user?.identifiant){
             utilisateurConnecte = true;
         }
+
+
     con.query(query, [serieID], (err, result) =>{
         if (err) throw err;
+        const serieInfo = {
+            titre_serie: result[0].titre_serie,
+            imageLong_serie: result[0].imageLong_serie
+        };
+        console.log(result[0].titre_serie);
         res.render("pages/serieTomes", {
             tomes: result,
+            serie: serieInfo,
             connecte: utilisateurConnecte
         });
     });
 });
 
+//Route pour afficher les series d'une categorie
 routeur.get('/categories/:id', function (req, res) {
     const categorieID = req.params.id; 
     if (categorieID < 1 || categorieID > 3){
@@ -90,6 +100,7 @@ routeur.get('/categories/:id', function (req, res) {
     });
 });
 
+//Route pour afficher la page d'un tome
 routeur.get('/tomes/:isbn', function (req, res) {
     const tomeISBN = req.params.isbn; 
     console.log(req.session);

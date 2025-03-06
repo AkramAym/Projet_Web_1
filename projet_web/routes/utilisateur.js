@@ -101,6 +101,7 @@ routeur.get('/connexion', (req, res) => {
     });
 });
 
+// Route pour gerer la connexion
 routeur.post("/connexion", function (req, res) {
     const { identifiant, mot_de_passe } = req.body;
 
@@ -132,12 +133,13 @@ routeur.post("/connexion", function (req, res) {
     })
 });
 
-routeur.get('/status', (req, res) => {
+/*routeur.get('/status', (req, res) => {
     return req.session.user ? res.status(200).send(request.session.user) :
         res.status(401).send({ message: "Non authentifie" });
-});
+});*/
 
 
+//Route pour afficher le profil de l'utilisateur
 routeur.get('/profil', function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
@@ -159,6 +161,8 @@ routeur.get('/profil', function (req, res) {
     })
 });
 
+
+//Route pour afficher le panier de l'utilisateur
 routeur.get('/panier', function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
