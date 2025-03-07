@@ -97,11 +97,16 @@ hr {
 /* Nouvelle disposition pour les tomes */
 .manga-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    justify-content: center;
+    grid-template-columns: repeat(3, 1fr); /* Affiche 3 tomes par ligne */
+    gap: 140px; /* Augmente légèrement l'espace entre les tomes */
+    justify-content: center; /* Centre les tomes */
+    align-items: center; /* Centre verticalement */
     margin-top: 20px;
+    width: fit-content; /* Adapte la largeur au contenu */
+    margin-left: auto; /* Centre horizontalement */
+    margin-right: auto; /* Centre horizontalement */
 }
+
 
 .manga-card {
     background-color: #e0e0e0;
@@ -351,11 +356,13 @@ footer {
 }
 
 
-  body {
+/* Appliquer l'image de fond UNIQUEMENT à la page Nos Séries */
+.nos-series-page {
     background: url('/images/best-demon-slayer-panels-feature-image.avif') no-repeat center center fixed;
     background-size: cover;
     position: relative;
 }
+
 /* Image de fond spécifique à la page d'inscription */
 .inscription-page {
     background: url('/images/manga-better-than-its-anime.avif') no-repeat center center fixed;
@@ -733,4 +740,101 @@ html, body {
 
 .additional-info ul li strong {
     color: #333;
+}
+/* Ajustement du conteneur principal */
+.serie-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding-top: 20px; /* Ajoute un espace sous le header */
+}
+
+/* Ajustement général */
+.serie-banner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px; 
+    overflow: hidden;
+}
+
+/* Spécifique à Dragon Ball */
+.serie-banner.dragon-ball img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center top;
+    image-rendering: crisp-edges;
+}
+
+/* Spécifique à Kingdom */
+.serie-banner.kingdom img {
+    width: 100%;
+   
+    height: 450px;
+    object-fit: cover;
+    object-position: center 50%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+
+.serie-banner.naruto img {
+    width: 100%;
+   
+    height: 450px;
+    object-fit: cover;
+    object-position: center 70%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+
+.serie-banner.nana img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 60%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+
+.serie-banner.one-piece img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center top;
+    image-rendering: crisp-edges;
+}
+
+.serie-banner.demon-slayer img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 20%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+.serie-banner.jujutsu-kaisen img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 100%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+.serie-banner.ascension img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 10%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+
+.serie-banner.bleach img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 45%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+/* Liste des tomes */
+.tomes-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
 }

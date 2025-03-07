@@ -232,7 +232,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Jujutsu Kaisen', 
     '/images/imgserie_jjk.png',
-    '/images/imgLongSerie_jjk.png',
+    '/images/imgLongSerie_jjk.avif',
     'Gege Akutami', 
     'Shūeisha', 
     'Plus de 10 000 morts et disparus sont recensés chaque année au Japon. Les sentiments négatifs que relâchent les êtres humains sont en cause. Souffrance, regrets, humiliation : leur concentration dans un même endroit engendre des malédictions souvent mortelles... C''est ce que va découvrir Yuji Itadori, lycéen et membre du club d''occultisme. Il ne croit pas aux fantômes, mais il est doté d''une force physique hors norme qui représente un véritable atout pour les missions du groupe... jusqu''à ce que l''une d''elles prenne une mauvaise tournure. La relique qu''ils dénichent, le doigt découpé d''un démon millénaire, attire les monstres ! Sans réfléchir : le jeune homme avale la relique pour briser la malédiction ! Maintenant, il se trouve possédé par Ryômen Sukuna, le célèbre démon à deux visages. Cependant, contre toute attente, Yuji est toujours capable de garder le contrôle de son corps. Mais en dépit de cela, il est condamné à mort par l''organisation des exorcistes... Une décision qui ne pourra être repoussée qu''à une seule condition : trouver tous les doigts de Sukuna afin d''écarter la menace une bonne fois pour toutes !', 
@@ -244,7 +244,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'One Piece', 
     '/images/imgserie_onepiece.webp',
-    '/images/imgLongSerie_onepiece.webp',
+    '/images/imgLongSerie_onepiece.jpg',
     'Eiichiro Oda', 
     'Shūeisha', 
     'One Piece suit les aventures de Monkey D. Luffy, un jeune pirate dont le corps a acquis les propriétés du caoutchouc après avoir mangé un fruit du démon. Avec son équipage, les Straw Hat Pirates, Luffy explore Grand Line à la recherche du trésor ultime connu sous le nom de "One Piece" afin de devenir le prochain Roi des Pirates.', 
@@ -268,7 +268,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Ascension', 
     '/images/imgserie_ascencion.webp',
-    '/images/imgLongserie_ascencion.webp',
+    '/images/imgLongserie_ascencion.png',
     'Shin''ichi Sakamoto', 
     'Shūeisha', 
     'Buntaro Mori, jeune lycéen solitaire et renfermé, est défié par un camarade de classe fan d''escalade. Le défi ? Escalader le lycée. C''est alors que, en grimpant le long d''une gouttière bien placée, Buntaro se découvre une passion et un don. Après avoir escaladé sans trop de mal le lycée, ce dernier est tout de suite repéré par son professeur d''anglais, lui-même fan de grimpe extrême. Grâce à l''escalade, Buntaro va se découvrir un but dans la vie, et se perfectionner dans ce domaine, jusqu''à atteindre les cieux.', 
@@ -280,7 +280,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Nana', 
     '/images/imgserie_nana.jpg',
-    '/images/imgLongserie_nana.jpg',
+    '/images/imgLongserie_nana.avif',
     'Ai Yazawa', 
     'Shūeisha', 
     'Dans le Japon contemporain, deux jeunes femmes se rencontrent dans le train les conduisant à Tokyo. L''une va rejoindre son petit ami tandis que l''autre veut devenir chanteuse professionnelle. Inconsciemment, cette dernière est également à la poursuite de son petit ami parti faire carrière dans la musique deux ans plus tôt. Leur destination n''est pas leur seul point commun car elles ont le même âge (20 ans), mais aussi le même prénom : Nana. Elles se séparent finalement à la descente du train. Plus tard, elles se retrouvent par hasard, alors qu''elles cherchaient toutes les deux un appartement. Trouvant avantageux de partager les frais de loyer, elles décident de vivre en colocation dans l''appartement 707 (c''est une autre coïncidence car leur prénom, Nana, représente le chiffre 7 en japonais). Aussi différentes d''apparence que de caractère, Nana Ōsaki et Nana Komatsu vont se lier d''une profonde et fusionnelle amitié, se complétant et se soutenant mutuellement à travers les différentes épreuves qu''elles seront amenées à traverser.', 
@@ -292,7 +292,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Bleach', 
     '/images/imgserie_bleach.webp',
-    '/images/imgLongserie_bleach.webp',
+    '/images/imgLongserie_bleach.jpg',
     'Tite Kubo', 
     'Shūeisha', 
     'Bleach raconte l''histoire d''Ichigo Kurosaki, un adolescent qui acquiert les pouvoirs d''un Shinigami (dieu de la mort) après avoir rencontré Rukia Kuchiki. Avec ses nouveaux pouvoirs, Ichigo doit protéger les vivants des esprits maléfiques appelés Hollows et guider les âmes errantes vers l''au-delà.', 
@@ -304,7 +304,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Dragon Ball', 
     '/images/imgserie_dragonball.avif',
-    '/images/imgLongserie_dragonball.png',
+    '/images/imgLongserie_dragonball.jpg',
     'Akira Toriyama', 
     'Shūeisha', 
     'Dragon Ball suit les aventures de Son Goku, un jeune garçon doté d''une force surhumaine, qui part à la recherche des Dragon Balls, des artefacts magiques capables d''exaucer n''importe quel souhait. Au fil de son voyage, Goku affronte de nombreux ennemis et devient l''un des combattants les plus puissants de l''univers.', 
@@ -316,7 +316,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Kingdom', 
     '/images/imgserie_kingdom.webp', 
-    '/images/imgLongserie_kingdom.webp', 
+    '/images/imgLongserie_kingdom.avif', 
     'Yasuhisa Hara', 
     'Shūeisha', 
     'En pleine période des Royaumes combattants en Chine, Xin, un jeune orphelin, rêve de devenir le plus grand général de l''histoire. Aux côtés de son ami d''enfance, Zheng, qui aspire à unifier la Chine et à devenir roi, Xin se lance dans une quête épique pour réaliser leurs ambitions. À travers des batailles stratégiques, des alliances complexes et des sacrifices personnels, Kingdom explore l''ascension de ces deux héros dans un monde déchiré par la guerre.', 
@@ -352,7 +352,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Demon Slayer', 
     '/images/imgserie_demonslayer.webp',
-    '/images/imgLongserie_demonslayer.webp',
+    '/images/imgLongserie_demonslayer.avif',
     'Koyoharu Gotouge', 
     'Shūeisha', 
     'Demon Slayer suit l''histoire de Tanjiro Kamado, un jeune garçon dont la famille est massacrée par des démons, à l''exception de sa sœur Nezuko, qui est transformée en démon. Tanjiro se lance alors dans une quête pour venger sa famille et trouver un moyen de rendre à Nezuko son humanité.', 

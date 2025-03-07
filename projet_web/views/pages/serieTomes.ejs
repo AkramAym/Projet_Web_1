@@ -12,9 +12,10 @@
 <body>
     <div class="serie-container">
         <!-- Image Longue en bannière -->
-        <div class="serie-banner">
+        <div class="serie-banner <%= serie.titre_serie.toLowerCase().replace(/\s/g, '-') %>">
             <img src="<%= serie.imageLong_serie %>" alt="Bannière de <%= serie.titre_serie %>">
         </div>
+        
         
         <!-- Liste des tomes -->
         <%- include('../partials/tomes') %>
