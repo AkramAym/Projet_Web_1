@@ -340,7 +340,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Sakamoto Days', 
     '/images/imgserie_sakamoto.png',
-    '/images/imgLongserie_sakamoto.png',
+    '/images/imgLongserie_sakamoto.jpg',
     'Yuto Suzuki', 
     'Shūeisha', 
     'Sakamoto Days raconte l''histoire de Taro Sakamoto, un ancien tueur à gages légendaire qui a pris sa retraite pour vivre une vie paisible avec sa famille. Cependant, son passé finit par le rattraper, et il doit utiliser ses compétences pour protéger ses proches tout en essayant de maintenir une vie normale.', 
@@ -364,7 +364,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Kagurabachi', 
     '/images/imgserie_kagurabachi.webp',
-    '/images/imgLongserie_kagurabachi.webp',
+    '/images/imgLongserie_kagurabachi.jpg',
     'Takeru Hokazono', 
     'Shūeisha', 
     'Kagurabachi est une série qui suit les aventures d''un jeune garçon nommé Chihiro, qui possède une épée magique capable de couper les malédictions. Il voyage à travers un monde rempli de dangers pour venger la mort de son père et protéger les innocents des forces maléfiques.', 

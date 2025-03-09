@@ -830,6 +830,30 @@ html, body {
     object-position: center 45%; /* Ajuste la position verticale */
     image-rendering: crisp-edges;
 }
+
+.serie-banner.vagabond img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 45%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+
+.serie-banner.sakamoto-days img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 40%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
+
+.serie-banner.kagurabachi img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center 40%; /* Ajuste la position verticale */
+    image-rendering: crisp-edges;
+}
 /* Liste des tomes */
 .tomes-list {
     display: flex;
