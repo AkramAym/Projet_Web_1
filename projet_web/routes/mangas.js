@@ -83,9 +83,10 @@ routeur.get('/categories/:id', function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
     const query = `
-    SELECT id_serie, titre_serie, image_serie, aguicheur
-    FROM serie
-    WHERE categorie_id_categorie = ?
+    SELECT s.id_serie, s.titre_serie, s.image_serie, s.aguicheur, c.nom_categorie
+    FROM serie s
+    JOIN categorie c ON s.categorie_id_categorie = c.id_categorie
+    WHERE c.id_categorie = ?
 `;
     var utilisateurConnecte = false;
         if (req.session.user?.identifiant){
@@ -95,6 +96,7 @@ routeur.get('/categories/:id', function (req, res) {
         if (err) throw err;
         res.render("pages/categorie", {
             series: result,
+            nomCategorie : result[0].nom_categorie,
             connecte: utilisateurConnecte
         });
     });
