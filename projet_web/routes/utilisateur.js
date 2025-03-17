@@ -1,24 +1,13 @@
 import { response, Router } from "express";
 import express from "express";
 import session from "express-session";
-import mysql from "mysql";
+import con from '../mysqlbd.js';
 import bcrypt from "bcryptjs";
 
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
 
-const con = mysql.createConnection({
-    host: "localhost",
-    user: "scott",
-    password: "oracle",
-    database: "MangathequeBD",
-    charset: 'utf8mb4'
-});
-con.connect(function (err) {
-    if (err) throw err;
-    console.log("connected!");
-});
 
 // Route pour afficher la page d'inscription
 routeur.get('/inscription', (req, res) => {

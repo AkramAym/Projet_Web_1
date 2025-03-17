@@ -2,12 +2,13 @@ import express from "express";
 import session from "express-session";
 import path from "path";
 import { fileURLToPath } from "url";
-import mysql from "mysql";
 import { body, validationResult } from "express-validator";
 import dateFormat from "dateformat";
 import cookieParser from "cookieparser";
 import utilisateurRouteur from "./routes/utilisateur.js";
 import mangasRouteur from "./routes/mangas.js";
+import con from './mysqlbd.js';
+
 const app = express();
 // Définition du dossier contenant les vues
 const __filename = fileURLToPath(import.meta.url);
@@ -19,18 +20,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-const con = mysql.createConnection({
-    host: "localhost",
-    user: "scott",
-    password: "oracle",
-    database: "MangathequeBD",
-    charset: 'utf8mb4'
-});
-con.connect(function (err) {
-    if (err) throw err;
-    console.log("connected!");
-});
 
 app.use(session({
     secret: "yahou",
