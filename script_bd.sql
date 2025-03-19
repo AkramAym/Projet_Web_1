@@ -812,26 +812,3 @@ VALUES (
     '/images/imgtome_kagurabachi2.jpg',  
     10              
 );
-
-INSERT INTO utilisateur (
-    identifiant,
-    nom,
-    prenom,
-    mot_de_passe,
-    email,
-    telephone
-) VALUES (
-    'okunay',          
-    'oku',              
-    'nay',             
-    '$2b$10$soemKXga3Y8YxCvvQK.JX.wfJCn70RcJL61MA7UvftLpdtqJm.gU2',    
-    'ravless21@gmail.com',   
-    '5147099684'      
-);
-
-
-INSERT INTO panier (date_creation, utilisateur_identifiant)
-VALUES (CURDATE(), 'okunay');
-
-INSERT INTO article_panier (tome_isbn, panier_id_panier, quantite)
-VALUES (9782723488525, 1, 1);

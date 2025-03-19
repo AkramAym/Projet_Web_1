@@ -8,6 +8,7 @@ import cookieParser from "cookieparser";
 import utilisateurRouteur from "./routes/utilisateur.js";
 import mangasRouteur from "./routes/mangas.js";
 import con from './mysqlbd.js';
+import mongocon from './mongodb.js';
 
 const app = express();
 // Définition du dossier contenant les vues

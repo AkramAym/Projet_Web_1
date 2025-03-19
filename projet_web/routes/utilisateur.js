@@ -2,12 +2,15 @@ import { response, Router } from "express";
 import express from "express";
 import session from "express-session";
 import con from '../mysqlbd.js';
+import mongocon from '../mongodb.js';
 import bcrypt from "bcryptjs";
 
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
 
+const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
+const panierCollection = mongocon.db("MangathequeBD").collection("panier");
 
 // Route pour afficher la page d'inscription
 routeur.get('/inscription', (req, res) => {
@@ -19,65 +22,44 @@ routeur.get('/inscription', (req, res) => {
     });
 });
 // Route pour gérer l'inscription (POST)
-routeur.post("/inscription", function (req, res) {
+routeur.post("/inscription", async function (req, res) {
     console.log(req.body);
     const { identifiant, prenom, nom, email, telephone, mot_de_passe, motDePasseConfirme } = req.body;
+    try {
+        const utilisateurExiste = await utilisateurCollection.findOne({
+            $or: [{ email: email }, { identifiant: identifiant }]
+        });
 
-    con.query('SELECT email, identifiant FROM utilisateur WHERE email = ? OR identifiant = ?', [email, identifiant], (error, results) => {
-        if (error) {
-            console.log(error);
-            throw error;
-        }
-
-        let emailExiste = false;
-        let identifiantExiste = false;
-
-        for (const utilisateur of results) {
-            if (utilisateur.email === email) {
-                emailExiste = true;
+        if (utilisateurExiste) {
+            if (utilisateurExiste.email === email) {
+                throw new Error('Email déjà utilisé');
+            } else if (utilisateurExiste.identifiant === identifiant) {
+                throw new Error('Identifiant déjà utilisé');
             }
-            if (utilisateur.identifiant === identifiant) {
-                identifiantExiste = true;
-            }
-        }
-
-        if (emailExiste) {
-            return res.render('pages/inscription', {
-                message: 'Email déjà utilisé'
-            });
-        } else if (identifiantExiste) {
-            return res.render('pages/inscription', {
-                message: 'Identifiant déjà utilisé'
-            });
         } else if (mot_de_passe !== motDePasseConfirme) {
-            return res.render('pages/inscription', {
-                message: 'Les mots de passe ne correspondent pas'
-            });
+            throw new Error('Les mots de passe ne correspondent pas');
         } else {
             const motDePasseEncrypte = bcrypt.hashSync(mot_de_passe, 10);
-            con.query('INSERT INTO utilisateur SET ?',
-                {
-                    identifiant: identifiant,
-                    nom: nom,
-                    prenom: prenom,
-                    mot_de_passe: motDePasseEncrypte,
-                    email: email,
-                    telephone: telephone || null
-                }, (error, results) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log(results, {
-                            message: 'Utilisateur enregistre'
-                        });
-                        req.session.user = {
-                            identifiant: identifiant
-                        };
-                        return res.redirect("/");
-                    }
-                })
+            const newUser = {
+                identifiant: identifiant,
+                nom: nom,
+                prenom: prenom,
+                mot_de_passe: motDePasseEncrypte,
+                email: email,
+                telephone: telephone || null
+            };
+
+            await utilisateurCollection.insertOne(newUser);
+
+            req.session.user = { identifiant: identifiant };
+            return res.redirect("/");
         }
-    })
+    } catch (error) {
+        console.log(error);
+        return res.render('pages/inscription', {
+            message: error.message || 'Erreur lors de l\'inscription'
+        });
+    }
 });
 
 // Route pour afficher la page de connexion
@@ -91,36 +73,31 @@ routeur.get('/connexion', (req, res) => {
 });
 
 // Route pour gerer la connexion
-routeur.post("/connexion", function (req, res) {
+routeur.post("/connexion",async function (req, res) {
     const { identifiant, mot_de_passe } = req.body;
+    try {
+        const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant })
 
-    con.query('SELECT * FROM utilisateur WHERE identifiant = ?', [identifiant], (error, results) => {
-        if (error) {
-            console.log(error);
-            throw error;
+        if (!utilisateur) {
+            throw new Error('Identifiant inexistant')
         }
-
-        if (results.length <= 0) {
-            return res.render('pages/connexion', {
-                message: 'Identifiant inexistant'
-            })
+        const motDePasseValide = bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
+        if (!motDePasseValide) {
+            throw new Error('Mot de passe invalide');
         } else {
-            const utilisateur = results[0];
-            const motDePasseValide = bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
-            if (!motDePasseValide) {
-                return res.render('pages/connexion', {
-                    message: 'Mauvais mot de passe'
-                })
-            } else {
-                req.session.user = {
-                    identifiant: identifiant
-                };
-                res.redirect('/profil');
-                console.log(utilisateur);
-            }
+            req.session.user = {
+                identifiant: identifiant
+            };
+            res.redirect('/profil');
+            console.log(utilisateur);
         }
-    })
-});
+    } catch (error){
+        console.log(error);
+        return res.render('pages/connexion', {
+            message: error.message || 'Erreur lors de la connexion'
+        });
+    }
+    });
 
 /*routeur.get('/status', (req, res) => {
     return req.session.user ? res.status(200).send(request.session.user) :
