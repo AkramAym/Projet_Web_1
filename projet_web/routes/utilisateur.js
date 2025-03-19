@@ -73,7 +73,7 @@ routeur.get('/connexion', (req, res) => {
 });
 
 // Route pour gerer la connexion
-routeur.post("/connexion",async function (req, res) {
+routeur.post("/connexion", async function (req, res) {
     const { identifiant, mot_de_passe } = req.body;
     try {
         const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant })
@@ -91,13 +91,13 @@ routeur.post("/connexion",async function (req, res) {
             res.redirect('/profil');
             console.log(utilisateur);
         }
-    } catch (error){
+    } catch (error) {
         console.log(error);
         return res.render('pages/connexion', {
             message: error.message || 'Erreur lors de la connexion'
         });
     }
-    });
+});
 
 /*routeur.get('/status', (req, res) => {
     return req.session.user ? res.status(200).send(request.session.user) :
@@ -106,30 +106,35 @@ routeur.post("/connexion",async function (req, res) {
 
 
 //Route pour afficher le profil de l'utilisateur
-routeur.get('/profil', function (req, res) {
+routeur.get('/profil', async function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
     console.log("profil");
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
-    const identifiant = req.session.user.identifiant;
-    con.query('SELECT * FROM utilisateur WHERE identifiant = ?', [identifiant], (error, results) => {
-        if (error) {
-            console.log(error);
-            throw error;
+    try {
+        const identifiant = req.session.user.identifiant;
+
+        const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
+
+        if (!utilisateur) {
+            throw new Error('Utilisateur non trouvé');
         }
 
         res.render("pages/profil", {
-            utilisateur: results[0],
+            utilisateur: utilisateur,
             connecte: true
         });
-    })
+    } catch (error) {
+        console.log(error);
+        return res.redirect("/connexion");
+    }
 });
 
 
 //Route pour afficher le panier de l'utilisateur
-routeur.get('/panier', function (req, res) {
+routeur.get('/panier', async function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
     console.log("profil");
@@ -138,51 +143,110 @@ routeur.get('/panier', function (req, res) {
     }
     const identifiant = req.session.user.identifiant;
 
-    const query = `
+    try {
+        const panier = await panierCollection.findOne({ utilisateur_identifiant: identifiant });
+        if (!panier) {
+            return res.render("pages/panier", {
+                message: 'Votre panier est vide',
+                connecte: true
+            });
+        } else {
+
+            const listeIsbn = panier.articles.map(article => article.tome_isbn);
+
+            const query = `
        SELECT 
             t.isbn AS isbn,
             t.numero_volume AS numero_volume,
             t.image AS image,
             s.titre_serie AS titre_serie,
-            t.prix AS prix_unitaire,
-            ap.quantite AS quantite,
-            (t.prix * ap.quantite) AS sous_total
+            t.prix AS prix_unitaire
         FROM 
-            utilisateur u
-        JOIN 
-            panier p ON u.identifiant = p.utilisateur_identifiant
-        JOIN 
-            article_panier ap ON p.id_panier = ap.panier_id_panier
-        JOIN 
-            tome t ON ap.tome_isbn = t.isbn
-        JOIN 
-            serie s ON t.serie_id_serie = s.id_serie
-        WHERE 
-            u.identifiant = ? 
-            AND p.id_panier = (
-                SELECT id_panier 
-                FROM panier 
-                WHERE utilisateur_identifiant = u.identifiant
-                ORDER BY date_creation DESC 
-                LIMIT 1)
-        `;
+            tome t
+       JOIN 
+                serie s ON t.serie_id_serie = s.id_serie
+            WHERE 
+                t.isbn IN (?)`;
 
-    con.query(query, [identifiant], (error, results) => {
-        if (error) {
-            console.log(error);
-            throw error;
+            con.query(query, [listeIsbn], (error, results) => {
+                if (error) {
+                    console.log(error);
+                    throw error;
+                }
+
+                for (let objet of results) {
+                    const articlePanier = panier.articles.find(article => article.tome_isbn === objet.isbn);
+                    if (articlePanier) {
+                        objet.quantite = articlePanier.quantite;
+                        objet.sous_total = objet.prix_unitaire * objet.quantite;
+                    }
+                }
+
+                res.render("pages/panier", {
+                    articles: results,
+                    connecte: true
+                });
+            })
         }
-
+    } catch (error) {
+        console.log(error);
         res.render("pages/panier", {
-            articles: results,
+            message: 'Erreur lors de la récupération du panier',
             connecte: true
         });
-    })
+    }
 });
 
-routeur.post("/panier", function (req, res) {
+routeur.post("/panier/:isbn", async function (req, res) {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
+    }
+    const identifiant = req.session.user.identifiant;
+    const { quantite } = req.body;
+    const isbnTome = req.params.isbn;
+    console.log (req.body, req.params.isbn);
+    try {
+        let panier = await panierCollection.findOne({
+            utilisateur_identifiant: identifiant
+        });
+
+        if (!panier) {
+            panier = {
+                utilisateur_identifiant: identifiant,
+                date_creation: new Date(),
+                articles: [
+                    {
+                        tome_isbn: isbnTome,
+                        quantite: quantite
+                    }
+                ]
+            };
+            await panierCollection.insertOne(panier);
+        } else {
+
+            const existingArticle = panier.articles.find(article => article.tome_isbn === isbnTome);
+
+            if (existingArticle) {
+
+                existingArticle.quantite += quantite;
+            } else {
+
+                panier.articles.push({
+                    tome_isbn: isbnTome,
+                    quantite: quantite
+                });
+            }
+            await panierCollection.updateOne(
+                { _id: panier._id },
+                { $set: { articles: panier.articles } }
+            );
+        }
+    } catch (error) {
+        console.log(error);
+        res.render("pages/panier", {
+            message: 'Erreur lors de la récupération du panier',
+            connecte: true
+        });
     }
 });
 

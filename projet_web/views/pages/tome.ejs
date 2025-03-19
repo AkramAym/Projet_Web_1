@@ -38,9 +38,9 @@
                             </p>
                             <!-- Boutons -->
                             <div class="buttons-container">
-                                <form action="/panier" method="POST" class="add-to-cart-form">
+                                <form action="/panier/<%= tome.isbn %>" method="POST" class="add-to-cart-form">
                                     <button class="btn add-to-cart" type="submit">AJOUTER AU PANIER</button>
-                                    <input type="number" name="quantity" value="1" min="1" class="quantity-selector">
+                                    <input type="number" name="quantite" value="1" min="1" class="quantity-selector">
                                 </form>
                                 <form action="/emprunter" method="POST" class="borrow-form">
                                     <button class="btn borrow" type="submit">EMPRUNTER</button>
