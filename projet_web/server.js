@@ -9,6 +9,7 @@ import utilisateurRouteur from "./routes/utilisateur.js";
 import mangasRouteur from "./routes/mangas.js";
 import con from './mysqlbd.js';
 import mongocon from './mongodb.js';
+import MongoStore from "connect-mongo";
 
 const app = express();
 // Définition du dossier contenant les vues
@@ -27,8 +28,11 @@ app.use(session({
     saveUninitialized: false, //ne sauvegarde pa la session si l'utilisateur n'a rien fait
     resave: false, //ne sauvegarde pas la session si elle n'a pas ete sauvegarde
     cookie: {
-        maxAge: 60000* 60,
-    }
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    },
+    store: MongoStore.create({
+        client: mongocon
+    })
 }));
 
 app.use(utilisateurRouteur);
@@ -48,9 +52,9 @@ app.get('/', function (req, res) {
     `;
 
     var utilisateurConnecte = false;
-        if (req.session.user?.identifiant){
-            utilisateurConnecte = true;
-        }
+    if (req.session.user?.identifiant) {
+        utilisateurConnecte = true;
+    }
 
     con.query(query, function (err, result) {
         if (err) throw err;

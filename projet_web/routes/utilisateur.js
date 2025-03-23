@@ -240,6 +240,7 @@ routeur.post("/panier/:isbn", async function (req, res) {
                 { _id: panier._id },
                 { $set: { articles: panier.articles } }
             );
+            res.redirect('/panier');
         }
     } catch (error) {
         console.log(error);

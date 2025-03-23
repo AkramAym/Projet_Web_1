@@ -38,6 +38,7 @@ routeur.get('/series/:id', function (req, res) {
         FROM tome t
         JOIN serie s ON t.serie_id_serie = s.id_serie
         WHERE t.serie_id_serie = ?
+        ORDER BY t.numero_volume ASC
     `;
     var utilisateurConnecte = false;
         if (req.session.user?.identifiant){
