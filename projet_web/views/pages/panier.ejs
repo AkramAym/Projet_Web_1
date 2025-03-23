@@ -16,6 +16,9 @@
             <p class="price">
                 <%= article.prix_unitaire %>$
             </p>
+            <form action="/panier/<%= article.isbn %>/supprimer" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
         </div>
         <% }) %>
 </div>

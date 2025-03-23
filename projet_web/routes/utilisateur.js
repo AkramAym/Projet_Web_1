@@ -132,12 +132,28 @@ routeur.get('/profil', async function (req, res) {
     }
 });
 
+//Route pour deconnecter l'utilisateur
+routeur.get('/deconnexion', (req, res) => {
+    if (req.session) {
+        req.session.destroy(err => {
+            if (err) {
+                console.log(err);
+                return res.redirect('/profil');  
+            }
+            res.clearCookie('connect.sid'); //Supprime le cookie stocke dans le navigateur
+            res.redirect('/');  
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
 
 //Route pour afficher le panier de l'utilisateur
 routeur.get('/panier', async function (req, res) {
     console.log(req.session);
     console.log(req.sessionID);
-    console.log("profil");
+    console.log("panier");
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
@@ -197,12 +213,13 @@ routeur.get('/panier', async function (req, res) {
     }
 });
 
+//Ajout d'un tome dans un panier
 routeur.post("/panier/:isbn", async function (req, res) {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
     const identifiant = req.session.user.identifiant;
-    const { quantite } = req.body;
+    const quantite = parseInt(req.body.quantite, 10);
     const isbnTome = req.params.isbn;
     console.log (req.body, req.params.isbn);
     try {
@@ -251,5 +268,35 @@ routeur.post("/panier/:isbn", async function (req, res) {
     }
 });
 
+//Suppression d'un tome dans un panier
+routeur.post("/panier/:isbn/supprimer", async function (req, res) {
+    if (!req.session.user?.identifiant) {
+        return res.redirect("/connexion");
+    }
+    const identifiant = req.session.user.identifiant;
+    const isbnTome = req.params.isbn;
+    try {
+        const panier = await panierCollection.findOne({ utilisateur_identifiant: identifiant });
+
+        if (panier) {
+            // Filtrer les articles pour supprimer celui qui a cet ISBN
+            const nouveauxArticles = panier.articles.filter(article => article.tome_isbn !== isbnTome);
+
+            // Mettre à jour le panier dans la collection
+            await panierCollection.updateOne(
+                { _id: panier._id },
+                { $set: { articles: nouveauxArticles } }
+            );
+        }
+
+        res.redirect("/panier");  // Redirige l'utilisateur vers la page du panier
+    } catch (error) {
+        console.log(error);
+        res.render("pages/panier", {
+            message: 'Erreur lors de la suppression du tome du panier',
+            connecte: true
+        });
+    }
+});
 export default routeur;
 
