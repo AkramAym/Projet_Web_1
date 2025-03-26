@@ -24,7 +24,7 @@
                 <p>Vous avez déjà un compte ? <a href="/connexion">Ouvrez une session</a></p>
 
                 <!-- Formulaire -->
-                <form action="/inscription" method="POST">
+                <form action="/inscription" method="POST" onsubmit="return validerFormulaire()">
                     <label for="identifiant">Identifiant</label>
                     <input type="text" id="identifiant" name="identifiant" required>
 
@@ -56,6 +56,8 @@
                         </span>
                     </div>
 
+                    <p id="erreur-message" style="color: red; display: none;"></p>
+
                     <!-- Bouton de validation -->
                     <button type="submit" class="signup-button">Créer un compte</button>
                 </form>
@@ -68,11 +70,6 @@
         <% } %>
     </div>
 
-    <!-- Footer en bas -->
-    <footer>
-        <%- include('../partials/footer') %>
-    </footer>
-    <script src="/js/main.js"></script> 
-
+    <script src="/js/main.js" defer></script> 
 </body>
 </html>
