@@ -306,5 +306,105 @@ routeur.post("/panier/:isbn/supprimer", async function (req, res) {
         });
     }
 });
+
+routeur.post("/coupCoeur/:isbn", async function (req, res) {
+    if (!req.session.user?.identifiant) {
+        return res.redirect("/connexion");
+    }
+    const identifiant = req.session.user.identifiant;
+    const isbnTome = req.params.isbn;
+
+    try {
+        // Vérifier si le tome est déjà dans les favoris
+        const favoriExiste = await utilisateurCollection.findOne({ 
+            identifiant: identifiant,
+            favorites: isbnTome 
+        });
+        if (favoriExiste) {
+            // Retirer le favori
+            await utilisateurCollection.updateOne(
+                { identifiant: identifiant },
+                { $pull: { favorites: isbnTome } }
+            );
+        } else {
+            // Ajouter le favori
+            await utilisateurCollection.updateOne(
+                { identifiant: identifiant },
+                { $addToSet: { favorites: isbnTome } }
+            );
+        }
+
+        res.redirect('/coupCoeur'); // Redirige vers la page précédente
+
+    } catch (error) {
+        console.log(error);
+        res.render("pages/erreur", {
+            message: 'Erreur lors de la mise à jour des favoris',
+            connecte: true
+        });
+    }
+});
+
+routeur.get('/coupCoeur', async function (req, res) {
+    console.log(req.session);
+    console.log(req.sessionID);
+    console.log("coupCoeur");
+    if (!req.session.user?.identifiant) {
+        return res.redirect("/connexion");
+    }
+    const identifiant = req.session.user.identifiant;
+    try {
+        const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
+        console.log (utilisateur);
+        if (!utilisateur?.favorites?.length) {
+            return res.render("pages/coups-de-coeurs", {
+                message: 'Vous n\'avez aucun coup de cœur',
+                tomes: [],
+                connecte: true
+            });
+        } else {
+
+            const listeIsbn = utilisateur.favorites;
+            console.log("360" + listeIsbn);
+
+            const query = `
+       SELECT 
+            t.isbn AS isbn,
+            t.numero_volume AS numero_volume,
+            t.image AS image,
+            s.titre_serie AS titre_serie
+        FROM 
+            tome t
+       JOIN 
+                serie s ON t.serie_id_serie = s.id_serie
+            WHERE 
+                t.isbn IN (?)`;
+
+                if (!listeIsbn.length) {
+                    return res.render("pages/coups-de-coeurs", {
+                        message: 'Vous n\'avez aucun coup de cœur',
+                        tomes: [], 
+                        connecte: true
+                    });
+                }
+            con.query(query, [listeIsbn], (error, results) => {
+                if (error) {
+                    console.log(error);
+                    throw error;
+                }
+                res.render("pages/coups-de-coeurs", {
+                    tomes: results,
+                    connecte: true
+                });
+            })
+        }
+    } catch (error) {
+        console.log(error);
+        res.render("pages/coups-de-coeurs", {
+            message: 'Erreur lors de la récupération du panier',
+            connecte: true
+        });
+    }
+});
 export default routeur;
 
