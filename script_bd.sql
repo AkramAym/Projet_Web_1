@@ -9,33 +9,7 @@ USE MangathequeBD;
 
 DROP TABLE IF EXISTS adresse, article_commande, article_panier, categorie, commande, emprunt, evaluation, historique, panier, serie, tome, utilisateur;
 
-CREATE TABLE adresse (
-    id_adresse                          INT AUTO_INCREMENT NOT NULL, 
-    rue                                 VARCHAR(20) NOT NULL,
-    numero_adresse                      INT NOT NULL,
-    code_postal                         VARCHAR(7) NOT NULL,
-    ville                               VARCHAR(20) NOT NULL,
-    pays                                VARCHAR(20) NOT NULL,
-    province                            VARCHAR(20) NOT NULL,
-    utilisateur_identifiant VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_adresse) 
-);
 
-CREATE TABLE article_commande (
-    id_article           INT AUTO_INCREMENT NOT NULL, 
-    quantite             INT NOT NULL,
-    commande_id_commande INT NOT NULL,
-    tome_isbn            DECIMAL(13) NOT NULL, 
-    PRIMARY KEY (id_article)
-);
-
-CREATE TABLE article_panier (
-    id_article_panier INT AUTO_INCREMENT NOT NULL, 
-    tome_isbn         DECIMAL(13) NOT NULL, 
-    panier_id_panier  INT NOT NULL,
-    quantite          INT,
-    PRIMARY KEY (id_article_panier) 
-);
 
 CREATE TABLE coup_de_coeur (
     id_coup_de_coeur INT AUTO_INCREMENT NOT NULL,
@@ -260,439 +234,404 @@ VALUES (
 -- Tomes Jujutsu Kaisen 
 
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9791032705544, 
     1, 
     '2020-07-21', 
     1, 
     16.00, 
-    '/images/imgtome_jjk1.jpg', 
-    0
+    '/images/imgtome_jjk1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9791032705537,  
     2, 
     '2020-10-21', 
     1, 
     16.00, 
-    '/images/imgtome_jjk2.jpg', 
-    5
+    '/images/imgtome_jjk2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9791032706077,  
     3, 
     '2021-01-21', 
     1, 
     16.00, 
-    '/images/imgtome_jjk3.jpg', 
-    5
+    '/images/imgtome_jjk3.jpg'
 );
 
 -- Tomes One Piece
 
 -- Tome 1 
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782723488525,  
     1, 
     '2003-09-02',  
     2,              
     12.95,          
-    '/images/imgtome_onepiece1.webp',  
-    10              
+    '/images/imgtome_onepiece1.webp'       
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782723489898,  
     2, 
     '2003-11-05',  
     2,              
     12.95,          
-    '/images/imgtome_onepiece2.webp',  
-    10              
+    '/images/imgtome_onepiece2.webp'            
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782723489904,  
     3, 
     '2004-01-07',  
     2,              
     12.95,          
-    '/images/imgtome_onepiece3.webp',  
-    10              
+    '/images/imgtome_onepiece3.webp'              
 );
 
 -- Tomes Ascencion
 
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782756016641,  
     1, 
     '2010-11-11',   
     4,              
     15.00,          
-    '/images/imgtome_ascencion1.jpg',  
-    8               
+    '/images/imgtome_ascencion1.jpg'               
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782756020433,  
     2, 
     '2011-02-10',   
     4,              
     15.00,          
-    '/images/imgtome_ascencion2.jpg',  
-    8               
+    '/images/imgtome_ascencion2.jpg'               
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782756020440,  
     3, 
     '2011-05-12',   
     4,              
     15.00,          
-    '/images/imgtome_ascencion3.jpg',  
-    8               
+    '/images/imgtome_ascencion3.jpg'               
 );
 
 -- Tomes DB
 
 -- Tome 1 
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782876952058,  
     1, 
     '1998-12-03',   
     7,             
     14.99,         
-    '/images/imgtome_dragonball1.jpg', 
-    12            
+    '/images/imgtome_dragonball1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782876952065,  
     2, 
     '1999-02-04',   
     7,             
     14.99,         
-    '/images/imgtome_dragonball2.jpg', 
-    12            
+    '/images/imgtome_dragonball2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782876952072,  
     3, 
     '1999-04-01',   
     7,             
     14.99,         
-    '/images/imgtome_dragonball3.jpg', 
-    12            
+    '/images/imgtome_dragonball3.jpg'          
 );
 
 -- Tomes Naruto
 
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782871294146,  
     1, 
     '2002-01-01',   
     3,              
     12.50,          
-    '/images/imgtome_naruto1.jpeg',  
-    15              
+    '/images/imgtome_naruto1.jpeg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782871294177,  
     2, 
     '2002-05-15',   
     3,              
     12.50,          
-    '/images/imgtome_naruto2.jpg',  
-    15              
+    '/images/imgtome_naruto2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782871294276,  
     3, 
     '2002-08-15',   
     3,              
     12.50,          
-    '/images/imgtome_naruto3.jpg',  
-    15              
+    '/images/imgtome_naruto3.jpg'
 );
 
 -- Tomes Bleach
 
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782723442275,  
     1, 
     '2003-02-07',   
     6,              
     13.99,          
-    '/images/imgtome_bleach1.jpg',  
-    7               
+    '/images/imgtome_bleach1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9781591164425,  
     2, 
     '2003-10-24',   
     6,              
     13.99,          
-    '/images/imgtome_bleach2.jpg',  
-    7               
+    '/images/imgtome_bleach2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9781591164432,  
     3, 
     '2004-01-23',   
     6,              
     13.99,          
-    '/images/imgtome_bleach3.jpg',  
-    7               
+    '/images/imgtome_bleach3.jpg'
 );
 
 -- Tomes Nana
 
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782840559573,  
     1, 
     '2002-12-04',   
     5,              
     13.99,          
-    '/images/imgtome_nana1.jpg',  
-    7               
+    '/images/imgtome_nana1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782840559641,  
     2, 
     '2003-03-05',   
     5,              
     13.99,          
-    '/images/imgtome_nana2.jpg',  
-    7               
+    '/images/imgtome_nana2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782847890259,  
     3, 
     '2003-04-16',   
     5,              
     13.99,          
-    '/images/imgtome_nana3.jpg',  
-    7               
+    '/images/imgtome_nana3.jpg'
 );
 
 -- Tomes Kingdom 
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782368778050,  
     1, 
     '2024-08-19',   
     8,              
     14.99,          
-    '/images/imgtome_kingdom1.jpg',  
-    10              
+    '/images/imgtome_kingdom1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782368778067,  
     2, 
     '2024-08-19',   
     8,              
     14.99,          
-    '/images/imgtome_kingdom2.jpg',  
-    10              
+    '/images/imgtome_kingdom2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782368778074,  
     3, 
     '2024-08-19',   
     8,              
     14.99,          
-    '/images/imgtome_kingdom3.jpg',  
-    10              
+    '/images/imgtome_kingdom3.jpg'
 );
 
 -- Tomes Vagabond
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782845800670,  
     1, 
     '2002-10-23',   
     9,              
     15.50,          
-    '/images/imgtome_vagabond1.jpg',  
-    8               
+    '/images/imgtome_vagabond1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782845801158,  
     2, 
     '2002-10-23',   
     9,              
     15.50,          
-    '/images/imgtome_vagabond2.jpg',  
-    8               
+    '/images/imgtome_vagabond2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782845801233,  
     3, 
     '2015-01-08',   
     9,              
     15.50,          
-    '/images/imgtome_vagabond3.jpg',  
-    8               
+    '/images/imgtome_vagabond3.jpg'
 );
 
 -- Tomes Sakamoto Days
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782344050989,  
     1, 
     '2022-06-21',   
     10,              
     12.99,          
-    '/images/imgtome_sakamotodays1.jpg',  
-    12              
+    '/images/imgtome_sakamotodays1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782344050996,  
     2, 
     '2022-06-21',   
     10,              
     12.99,          
-    '/images/imgtome_sakamotodays2.jpg',  
-    12              
+    '/images/imgtome_sakamotodays2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782344051009,  
     3, 
     '2022-07-26',   
     10,              
     12.99,          
-    '/images/imgtome_sakamotodays3.jpg',  
-    12              
+    '/images/imgtome_sakamotodays3.jpg'
 );
 
 -- Tomes Demon Slayer
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782809482317,  
     1, 
     '2020-02-03',   
     11,              
     13.50,          
-    '/images/imgtome_demonslayer1.jpg',  
-    15              
+    '/images/imgtome_demonslayer1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782809482324,  
     2, 
     '2020-02-03',   
     11,              
     13.50,          
-    '/images/imgtome_demonslayer2.jpg',  
-    15              
+    '/images/imgtome_demonslayer2.jpg'
 );
 
 -- Tome 3
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9782809476132,  
     3, 
     '2020-03-09',   
     11,              
     13.50,          
-    '/images/imgtome_demonslayer3.jpg',  
-    15              
+    '/images/imgtome_demonslayer3.jpg'
 );
 
 -- Tomes Kagurabachi
 
 -- Tome 1
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9781974747245,  
     1, 
     '2024-11-05',   
     12,              
     14.99,          
-    '/images/imgtome_kagurabachi1.jpg',  
-    10              
+    '/images/imgtome_kagurabachi1.jpg'
 );
 
 -- Tome 2
-INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image, stock)
+INSERT INTO tome (isbn, numero_volume, annee_publication, serie_id_serie, prix, image)
 VALUES (
     9781974752713,  
     2, 
     '2025-02-04',   
     12,              
     14.99,          
-    '/images/imgtome_kagurabachi2.jpg',  
-    10              
+    '/images/imgtome_kagurabachi2.jpg'
 );

@@ -168,7 +168,13 @@ routeur.get('/panier', async function (req, res) {
             });
         } else {
             const listeIsbn = panier.articles.map(article => article.tome_isbn);
-
+            if (listeIsbn.length === 0) {
+                return res.render("pages/panier", {
+                    message: 'Votre panier est vide',
+                    articles: [],
+                    connecte: true
+                });
+            }
             const query = `
                 SELECT 
                     t.isbn AS isbn,
