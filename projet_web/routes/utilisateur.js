@@ -164,6 +164,7 @@ routeur.get('/panier', async function (req, res) {
         if (!panier) {
             return res.render("pages/panier", {
                 message: 'Votre panier est vide',
+                articles: [],
                 connecte: true
             });
         } else {
@@ -347,7 +348,7 @@ routeur.get('/coupCoeur', async function (req, res) {
     const identifiant = req.session.user.identifiant;
     try {
         const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
-        console.log (utilisateur);
+        console.log ("350, Utilisateur trouvé : " + utilisateur);
         if (!utilisateur?.favorites?.length) {
             return res.render("pages/coups-de-coeurs", {
                 message: 'Vous n\'avez aucun coup de cœur',
@@ -357,7 +358,7 @@ routeur.get('/coupCoeur', async function (req, res) {
         } else {
 
             const listeIsbn = utilisateur.favorites;
-            console.log("360" + listeIsbn);
+            console.log("360, liste de favoris : " + listeIsbn);
 
             const query = `
        SELECT 

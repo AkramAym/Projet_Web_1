@@ -875,3 +875,13 @@ html, body {
     gap: 20px;
     padding: 20px;
 }
+
+.panier-vide {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh; 
+    text-align: center;
+    padding-top: 30px;
+}

@@ -3,26 +3,36 @@
 
 <head>
     <%- include('../partials/head') %>
-    <title>Coups de cœur</title>
+        <%- include('../partials/header') %>
+            <title>Coups de cœur</title>
 </head>
 
 <body>
-    <%- include('../partials/header') %>
-
-    <div class="coups-de-coeur-container">
-        <h1>Vos coups de cœur</h1>
-        <div class="coups-de-coeur-list">
-            <% tomes.forEach(function(tome) { %>
-                <div class="tome-item">
-                    <h3><%= tome.titre_serie %> Tome <%= tome.numero_volume %></h3>
-                    <img src="<%= tome.image %>" alt="<%= tome.titre_serie %>">
-                    <p><%= tome.synopsis %></p>
-                </div>
-            <% }); %>
+    <% if (tomes.length===0) { %>
+        <div class="panier-vide">
+            <p>Vous n'avez aucun coups de Coeur.</p>
+            <a href="/" class="btn btn-primary">Retour à l'accueil</a>
         </div>
-    </div>
+        <% } else { %>
+            <div class="coups-de-coeur-container">
+                <h1>Vos coups de cœur</h1>
+                <div class="coups-de-coeur-list">
+                    <% tomes.forEach(function(tome) { %>
+                        <div class="manga-card">
+                            <p class="title">
+                                <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
+                            <p>
+                            <img src="<%= tome.image %>" alt="<%= tome.titre_serie %>">
+                            <p>
+                                <%= tome.synopsis %>
+                            </p>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } %>
+            </div>
 
-    <%- include('../partials/footer') %>
+            <%- include('../partials/footer') %>
 </body>
 
 </html>
