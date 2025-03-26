@@ -58,6 +58,11 @@ app.get('/', function (req, res) {
 
     con.query(query, function (err, result) {
         if (err) throw err;
+
+        result.forEach(objet => {
+            objet.prix = objet.prix.toFixed(2);
+        });
+        
         res.render("pages/index", {
             tomes: result,
             connecte: utilisateurConnecte

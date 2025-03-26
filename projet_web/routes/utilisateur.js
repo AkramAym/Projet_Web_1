@@ -193,7 +193,8 @@ routeur.get('/panier', async function (req, res) {
                 results.forEach(objet => {
                     const articlePanier = panier.articles.find(article => article.tome_isbn === objet.isbn);
                     if (articlePanier) {
-                        objet.quantite = articlePanier.quantite || 1;;
+                        objet.prix_unitaire = objet.prix_unitaire.toFixed(2);
+                        objet.quantite = articlePanier.quantite || 1;
                         objet.sous_total = (objet.prix_unitaire * articlePanier.quantite).toFixed(2); // Calcul du sous-total avec deux décimales
                     }
                 });

@@ -52,6 +52,10 @@ routeur.get('/series/:id', function (req, res) {
             titre_serie: result[0].titre_serie,
             imageLong_serie: result[0].imageLong_serie
         };
+        result.forEach(objet => {
+            objet.prix = objet.prix.toFixed(2);
+        });
+
         console.log(result[0].titre_serie);
         res.render("pages/serieTomes", {
             tomes: result,
@@ -116,6 +120,7 @@ routeur.get('/tomes/:isbn', function (req, res) {
             utilisateurConnecte = true;
         }
     con.query(query, [tomeISBN], (err, result) =>{
+        result[0].prix =  result[0].prix.toFixed(2);
         if (err) throw err;
         res.render("pages/tome", {
             tome: result[0],
