@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <%- include('../partials/head') %>
-    <%- include('../partials/header') %>
+    <link rel="stylesheet" target=_blank href="/styles.css">
     <title>Panier</title>
 </head>
 <body>
     <%- include('../partials/header') %>
-
-<div class="manga-list">
-    <% articles.forEach(article=> { %>
-        <div class="manga-card">
-            <img src="<%= article.image %>" alt="<%= article.titre_serie %> Tome <%= article.numero_volume %>">
-            <p class="title">
-                <%= article.titre_serie %> Tome <%= article.numero_volume %>
-            </p>
-            <p class="price">
-                <%= article.prix_unitaire %>$
-            </p>
-            <form action="/panier/<%= article.isbn %>/supprimer" method="POST" style="display: inline;">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
-            </form>
+    <% if (articles.length===0) { %>
+        <div class="panier-vide">
+            <p>Votre panier est vide.</p>
+            <a href="/" class="btn btn-primary">Retour à l'accueil</a>
         </div>
-        <% }) %>
-</div>
+        <% } else { %>
+    <div class="cart-container">
+        <!-- Colonne de gauche avec les mangas -->
+        <div class="manga-list">
+            <% articles.forEach(article => { %>
+                <div class="manga-card">
+                    <div class="manga-info">
+                        <img src="<%= article.image %>" alt="<%= article.titre_serie %> Tome <%= article.numero_volume %>" class="manga-image">
+                        <div>
+                            <p class="manga-title"><%= article.titre_serie %> - Tome <%= article.numero_volume %></p>
+                            <p class="manga-author"><%= article.auteur %></p>
+                            <p class="manga-price"><%= article.prix_unitaire %> $</p>
+                            <p class="manga-quantity">Quantité: <%= article.quantite %></p>
+                            <!-- Vérification si sous_total est défini avant d'essayer de l'afficher -->
+                            <p class="manga-subtotal">Sous-total: <%= article.sous_total ? article.sous_total : '0.00' %> $</p>
+                        </div>
+                    </div>
+                    <div class="remove-button">
+                        <form action="/panier/<%= article.isbn %>/supprimer" method="POST">
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+       
+        <!-- Colonne de droite avec le récapitulatif des prix -->
+        <div class="order-summary">
+            <h3>Récapitulatif</h3>
+            <p><strong>Total des mangas:</strong> <%= totalPrice %> $</p>
+            <p><strong>Expédition:</strong> TBD</p>
+            <p><strong>Total estimé:</strong> <%= totalPrice %> + Expédition</p>
+            <button class="btn checkout-btn">Procéder au paiement</button>
+        </div>
+    </div>
+    <% } %>
+    <%- include('../partials/footer') %>
+
+    <script src="/main.js"></script>
+</body>
+</html>
