@@ -54,27 +54,6 @@ CREATE TABLE categorie (
     PRIMARY KEY (id_categorie) 
 );
 
-CREATE TABLE commande (
-    id_commande                         INT AUTO_INCREMENT NOT NULL,
-    date_commande                       DATE NOT NULL,
-    montant_total                       DECIMAL(10,2) NOT NULL,
-    utilisateur_identifiant VARCHAR(10) NOT NULL,
-    adresse_id_adresse                  INT NOT NULL,
-    PRIMARY KEY (id_commande) 
-);
-
-CREATE TABLE emprunt (
-    id_emprunt                          INT AUTO_INCREMENT NOT NULL,
-    date_emprunt                        DATE NOT NULL,
-    date_retour                         DATE NOT NULL,
-    statut                              VARCHAR(20) NOT NULL,
-    utilisateur_identifiant VARCHAR(10) NOT NULL,
-    tome_isbn                           DECIMAL(13) NOT NULL, 
-    adresse_id_adresse                  INT,
-    date_retournee                      DATE,
-    PRIMARY KEY (id_emprunt) 
-);
-
 CREATE TABLE evaluation (
     id_evaluation           INT AUTO_INCREMENT NOT NULL, 
     note                    INT NOT NULL,
@@ -85,21 +64,6 @@ CREATE TABLE evaluation (
     PRIMARY KEY (id_evaluation) 
 );
 
-CREATE TABLE historique (
-    id_historique                       INT AUTO_INCREMENT NOT NULL,
-    `type`                              VARCHAR(10) NOT NULL,
-    utilisateur_identifiant VARCHAR(10) NOT NULL,
-    commande_id_commande                INT NOT NULL,
-    emprunt_id_emprunt                  INT NOT NULL,
-    PRIMARY KEY (id_historique) 
-);
-
-CREATE TABLE panier (
-    id_panier                           INT AUTO_INCREMENT NOT NULL, 
-    date_creation                       DATE NOT NULL,
-    utilisateur_identifiant           VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id_panier) 
-);
 
 CREATE TABLE serie (
     id_serie               INT AUTO_INCREMENT NOT NULL,
@@ -125,97 +89,7 @@ CREATE TABLE tome (
     PRIMARY KEY (isbn) 
 );
 
-CREATE TABLE utilisateur (
-    identifiant VARCHAR(10) NOT NULL, 
-    nom                     VARCHAR(10) NOT NULL,
-    prenom                  VARCHAR(10) NOT NULL,
-    mot_de_passe            VARCHAR(200) NOT NULL,
-    email    VARCHAR(25) NOT NULL,
-    telephone               VARCHAR(15),
-    solde              DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    PRIMARY KEY (identifiant) 
-);
 
-
-ALTER TABLE adresse
-    ADD CONSTRAINT adresse_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant) 
-    REFERENCES utilisateur(identifiant);
-
-ALTER TABLE article_commande
-    ADD CONSTRAINT article_commande_commande_fk 
-    FOREIGN KEY (commande_id_commande) 
-    REFERENCES commande(id_commande);
-
-ALTER TABLE article_commande
-    ADD CONSTRAINT article_commande_tome_fk 
-    FOREIGN KEY (tome_isbn) 
-    REFERENCES tome(isbn);
-
-ALTER TABLE article_panier
-    ADD CONSTRAINT article_panier_panier_fk 
-    FOREIGN KEY (panier_id_panier) 
-    REFERENCES panier(id_panier);
-
-ALTER TABLE article_panier
-    ADD CONSTRAINT article_panier_tome_fk 
-    FOREIGN KEY (tome_isbn) 
-    REFERENCES tome(isbn);
-
-ALTER TABLE commande
-    ADD CONSTRAINT commande_adresse_fk 
-    FOREIGN KEY (adresse_id_adresse) 
-    REFERENCES adresse(id_adresse);
-
-ALTER TABLE commande
-    ADD CONSTRAINT commande_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant) 
-    REFERENCES utilisateur(identifiant);
-
-ALTER TABLE emprunt
-    ADD CONSTRAINT emprunt_adresse_fk 
-    FOREIGN KEY (adresse_id_adresse) 
-    REFERENCES adresse(id_adresse);
-
-ALTER TABLE emprunt
-    ADD CONSTRAINT emprunt_tome_fk 
-    FOREIGN KEY (tome_isbn) 
-    REFERENCES tome(isbn);
-
-ALTER TABLE emprunt
-    ADD CONSTRAINT emprunt_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant) 
-    REFERENCES utilisateur(identifiant);
-
-ALTER TABLE evaluation
-    ADD CONSTRAINT evaluation_tome_fk 
-    FOREIGN KEY (tome_isbn) 
-    REFERENCES tome(isbn);
-
-ALTER TABLE evaluation
-    ADD CONSTRAINT evaluation_utilisateur_fk 
-    FOREIGN KEY (identifiant) 
-    REFERENCES utilisateur(identifiant);
-
-ALTER TABLE historique
-    ADD CONSTRAINT historique_commande_fk 
-    FOREIGN KEY (commande_id_commande) 
-    REFERENCES commande(id_commande);
-
-ALTER TABLE historique
-    ADD CONSTRAINT historique_emprunt_fk 
-    FOREIGN KEY (emprunt_id_emprunt) 
-    REFERENCES emprunt(id_emprunt);
-
-ALTER TABLE historique
-    ADD CONSTRAINT historique_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant) 
-    REFERENCES utilisateur(identifiant);
-
-ALTER TABLE panier
-    ADD CONSTRAINT panier_utilisateur_fk 
-    FOREIGN KEY (utilisateur_identifiant) 
-    REFERENCES utilisateur(identifiant);
 
 ALTER TABLE serie
     ADD CONSTRAINT serie_categorie_fk 
