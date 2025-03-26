@@ -151,16 +151,15 @@ routeur.get('/deconnexion', (req, res) => {
 
 //Route pour afficher le panier de l'utilisateur
 routeur.get('/panier', async function (req, res) {
-    console.log(req.session);
-    console.log(req.sessionID);
-    console.log("panier");
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
+
     const identifiant = req.session.user.identifiant;
 
     try {
         const panier = await panierCollection.findOne({ utilisateur_identifiant: identifiant });
+
         if (!panier) {
             return res.render("pages/panier", {
                 message: 'Votre panier est vide',
@@ -168,22 +167,21 @@ routeur.get('/panier', async function (req, res) {
                 connecte: true
             });
         } else {
-
             const listeIsbn = panier.articles.map(article => article.tome_isbn);
 
             const query = `
-       SELECT 
-            t.isbn AS isbn,
-            t.numero_volume AS numero_volume,
-            t.image AS image,
-            s.titre_serie AS titre_serie,
-            t.prix AS prix_unitaire
-        FROM 
-            tome t
-       JOIN 
-                serie s ON t.serie_id_serie = s.id_serie
-            WHERE 
-                t.isbn IN (?)`;
+                SELECT 
+                    t.isbn AS isbn,
+                    t.numero_volume AS numero_volume,
+                    t.image AS image,
+                    s.titre_serie AS titre_serie,
+                    t.prix AS prix_unitaire
+                FROM 
+                    tome t
+                JOIN 
+                    serie s ON t.serie_id_serie = s.id_serie
+                WHERE 
+                    t.isbn IN (?)`;
 
             con.query(query, [listeIsbn], (error, results) => {
                 if (error) {
@@ -191,19 +189,27 @@ routeur.get('/panier', async function (req, res) {
                     throw error;
                 }
 
-                for (let objet of results) {
+                // Calcul du sous-total pour chaque article
+                results.forEach(objet => {
                     const articlePanier = panier.articles.find(article => article.tome_isbn === objet.isbn);
                     if (articlePanier) {
                         objet.quantite = articlePanier.quantite;
-                        objet.sous_total = objet.prix_unitaire * objet.quantite;
+                        objet.sous_total = (objet.prix_unitaire * articlePanier.quantite).toFixed(2); // Calcul du sous-total avec deux décimales
                     }
-                }
+                });
+
+                // Calcul du total du panier
+                let totalPrice = 0;
+                results.forEach(article => {
+                    totalPrice += parseFloat(article.sous_total); // Additionner tous les sous-totaux
+                });
 
                 res.render("pages/panier", {
                     articles: results,
+                    totalPrice: totalPrice.toFixed(2),  // Total avec deux décimales
                     connecte: true
                 });
-            })
+            });
         }
     } catch (error) {
         console.log(error);
@@ -213,6 +219,8 @@ routeur.get('/panier', async function (req, res) {
         });
     }
 });
+
+
 
 //Ajout d'un tome dans un panier
 routeur.post("/panier/:isbn", async function (req, res) {

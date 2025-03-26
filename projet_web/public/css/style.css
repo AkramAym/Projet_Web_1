@@ -875,6 +875,90 @@ html, body {
     gap: 20px;
     padding: 20px;
 }
+/* Police améliorée */
+body {
+    font-family: 'Arial', sans-serif; /* Police plus moderne et lisible */
+}
+
+/* CSS spécifique au panier */
+.cart-container {
+    display: flex;
+    flex-direction: row; /* Utilise une ligne pour les mangas et le récapitulatif */
+    justify-content: space-between;
+    gap: 30px; /* Espacement entre les mangas et le récapitulatif */
+    padding: 20px;
+}
+
+.manga-list {
+    flex: 1; /* Occupe tout l'espace disponible */
+}
+
+.manga-card {
+    display: flex;
+    margin-bottom: 15px; /* Espacement entre les mangas */
+    width: 100%; /* Prend toute la largeur disponible */
+    border: 1px solid #ddd; /* Ajoute une bordure autour des mangas */
+    padding: 15px;
+    background-color: #f9f9f9; /* Fond clair */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère autour du manga */
+}
+
+.manga-info {
+    flex: 1; /* L'image prend la partie gauche et les infos prennent la partie droite */
+    display: flex;
+    align-items: center;
+}
+
+.manga-image {
+    max-width: 150px; /* Limite la largeur de l'image */
+    margin-right: 20px;
+}
+
+.manga-title,
+.manga-author,
+.manga-price,
+.manga-quantity,
+.manga-subtotal {
+    margin: 5px 0;
+    font-size: 16px; /* Taille de la police améliorée */
+    line-height: 1.5;
+}
+
+.order-summary {
+    flex-basis: 30%; /* Prend environ 30% de l'espace pour le récapitulatif */
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-btn {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.checkout-btn:hover {
+    background-color: #45a049;
+}
+/* Ajoutez cette section dans votre CSS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
+
+/* Appliquer la police au panier */
+.manga-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem; /* Ajuster la taille du titre */
+    font-weight: 700; /* Gras pour le titre */
+}
+
+.manga-author, .manga-price, .manga-quantity, .manga-subtotal {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem; /* Taille du texte des informations */
+    font-weight: 400; /* Poids normal pour les infos */
+}
 
 .panier-vide {
     display: flex;

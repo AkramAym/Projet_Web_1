@@ -3,35 +3,25 @@
 
 <head>
     <%- include('../partials/head') %>
-        <%- include('../partials/header') %>
-            <title>Panier</title>
+    <%- include('../partials/header') %>
+    <title>Panier</title>
 </head>
-
 <body>
-    <% if (articles.length===0) { %>
-        <div class="panier-vide">
-            <p>Votre panier est vide.</p>
-            <a href="/" class="btn btn-primary">Retour à l'accueil</a>
-        </div>
-        <% } else { %>
-            <div class="manga-list">
-                <% articles.forEach(article=> { %>
-                    <div class="manga-card">
-                        <img src="<%= article.image %>"
-                            alt="<%= article.titre_serie %> Tome <%= article.numero_volume %>">
-                        <p class="title">
-                            <%= article.titre_serie %> Tome <%= article.numero_volume %>
-                        </p>
-                        <p class="price">
-                            <%= article.prix_unitaire %>$
-                        </p>
-                        <form action="/panier/<%= article.isbn %>/supprimer" method="POST" style="display: inline;">
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                        </form>
-                    </div>
-                    <% }) %>
-            </div>
-            <% } %>
-</body>
+    <%- include('../partials/header') %>
 
-</html>
+<div class="manga-list">
+    <% articles.forEach(article=> { %>
+        <div class="manga-card">
+            <img src="<%= article.image %>" alt="<%= article.titre_serie %> Tome <%= article.numero_volume %>">
+            <p class="title">
+                <%= article.titre_serie %> Tome <%= article.numero_volume %>
+            </p>
+            <p class="price">
+                <%= article.prix_unitaire %>$
+            </p>
+            <form action="/panier/<%= article.isbn %>/supprimer" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+        </div>
+        <% }) %>
+</div>
