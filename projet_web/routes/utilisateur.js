@@ -188,25 +188,25 @@ routeur.get('/panier', async function (req, res) {
                     console.log(error);
                     throw error;
                 }
-
+                console.log("191 Résultats de la requête:", results);
                 // Calcul du sous-total pour chaque article
                 results.forEach(objet => {
                     const articlePanier = panier.articles.find(article => article.tome_isbn === objet.isbn);
                     if (articlePanier) {
-                        objet.quantite = articlePanier.quantite;
+                        objet.quantite = articlePanier.quantite || 1;;
                         objet.sous_total = (objet.prix_unitaire * articlePanier.quantite).toFixed(2); // Calcul du sous-total avec deux décimales
                     }
                 });
-
+                console.log("200 Résultats de l'attachament quantité+sous-total:", results);
                 // Calcul du total du panier
-                let totalPrice = 0;
+                let prixTotal = 0;
                 results.forEach(article => {
-                    totalPrice += parseFloat(article.sous_total); // Additionner tous les sous-totaux
+                    prixTotal += parseFloat(article.sous_total); // Additionner tous les sous-totaux
                 });
 
                 res.render("pages/panier", {
                     articles: results,
-                    totalPrice: totalPrice.toFixed(2),  // Total avec deux décimales
+                    prixTotal: prixTotal.toFixed(2),  // Total avec deux décimales
                     connecte: true
                 });
             });
@@ -229,7 +229,7 @@ routeur.post("/panier/:isbn", async function (req, res) {
     }
     const identifiant = req.session.user.identifiant;
     const quantite = parseInt(req.body.quantite, 10);
-    const isbnTome = req.params.isbn;
+    const isbnTome = parseFloat(req.params.isbn);
     console.log (req.body, req.params.isbn);
     try {
         let panier = await panierCollection.findOne({
@@ -283,7 +283,7 @@ routeur.post("/panier/:isbn/supprimer", async function (req, res) {
         return res.redirect("/connexion");
     }
     const identifiant = req.session.user.identifiant;
-    const isbnTome = req.params.isbn;
+    const isbnTome = parseFloat(req.params.isbn);
     try {
         const panier = await panierCollection.findOne({ utilisateur_identifiant: identifiant });
 
