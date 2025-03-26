@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('../partials/head') %>
+    <title>Coups de cœur</title>
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="coups-de-coeur-container">
+        <h1>Vos coups de cœur</h1>
+        <div class="coups-de-coeur-list">
+            <% tomes.forEach(function(tome) { %>
+                <div class="tome-item">
+                    <h3><%= tome.titre_serie %> Tome <%= tome.numero_volume %></h3>
+                    <img src="<%= tome.image %>" alt="<%= tome.titre_serie %>">
+                    <p><%= tome.synopsis %></p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

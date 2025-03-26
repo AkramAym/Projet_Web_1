@@ -71,3 +71,52 @@ app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
 
+// Route pour ajouter un coup de cœur
+app.post('/ajouter-coup-de-coeur/:isbn', (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).send('Connectez-vous pour ajouter aux coups de cœur');
+    }
+
+    const { isbn } = req.params;
+    const userId = req.session.user.identifiant;
+
+    const query = 'INSERT INTO coup_de_coeur (utilisateur_identifiant, tome_isbn, date_ajout) VALUES (?, ?, CURDATE())';
+    
+    con.query(query, [userId, isbn], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Erreur lors de l\'ajout aux coups de cœur');
+        }
+        res.redirect('back');
+    });
+});
+
+// Route pour afficher la page des coups de cœur
+app.get('/coups-de-coeur', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/connexion');
+    }
+
+    const userId = req.session.user.identifiant;
+    
+    const query = `
+        SELECT t.*, s.titre_serie 
+        FROM coup_de_coeur c
+        JOIN tome t ON c.tome_isbn = t.isbn
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE c.utilisateur_identifiant = ?
+    `;
+    
+    con.query(query, [userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Erreur lors de la récupération des coups de cœur.");
+        }
+        res.render('pages/coups-de-coeur', { 
+            tomes: result,
+            connecte: true
+        });
+    });
+});
+console.log(path.join(__dirname, 'views'));
+console.log('Vérification de la vue coups-de-coeur.ejs');

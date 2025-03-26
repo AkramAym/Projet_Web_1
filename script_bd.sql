@@ -37,6 +37,16 @@ CREATE TABLE article_panier (
     PRIMARY KEY (id_article_panier) 
 );
 
+CREATE TABLE coup_de_coeur (
+    id_coup_de_coeur INT AUTO_INCREMENT NOT NULL,
+    utilisateur_identifiant VARCHAR(10) NOT NULL,
+    tome_isbn DECIMAL(13) NOT NULL,
+    date_ajout DATE NOT NULL,
+    PRIMARY KEY (id_coup_de_coeur),
+    FOREIGN KEY (utilisateur_identifiant) REFERENCES utilisateur(identifiant),
+    FOREIGN KEY (tome_isbn) REFERENCES tome(isbn)
+);
+
 CREATE TABLE categorie (
     id_categorie  INT AUTO_INCREMENT NOT NULL, 
     nom_categorie VARCHAR(20) NOT NULL,

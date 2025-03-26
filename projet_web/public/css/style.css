@@ -554,6 +554,19 @@ html, body {
     border-radius: 0; /* Pas de bords arrondis */
     margin: 0 auto; /* Centrer le bouton si nécessaire */
 }
+.btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.fa-heart {
+    margin-right: 5px;
+}
 
 .tome-page .buttons-container .btn.add-to-cart:hover {
     background-color: darkred;

@@ -42,10 +42,16 @@
                                     <button class="btn add-to-cart" type="submit">AJOUTER AU PANIER</button>
                                     <input type="number" name="quantite" value="1" min="1" class="quantity-selector">
                                 </form>
+                                <form action="/ajouter-coup-de-coeur/<%= tome.isbn %>" method="POST" class="add-to-heart-form">
+                                    <button type="submit" class="btn add-to-heart">
+                                        <i class="fas fa-heart heart-icon" title="Ajouter aux coups de cœur"></i>
+                                    </button>
+                                </form>
                                 <form action="/emprunter" method="POST" class="borrow-form">
                                     <button class="btn borrow" type="submit">EMPRUNTER</button>
-                                    <i class="fas fa-heart heart-icon" title="Ajouter aux coups de cœur"></i>
                                 </form>
+                                
+                                
                             </div>
             </div>
         </div>
