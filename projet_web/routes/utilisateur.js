@@ -125,6 +125,10 @@ routeur.get('/profil', async function (req, res) {
             throw new Error('Utilisateur non trouvé');
         }
 
+        if (!req.session.adresseTemp && utilisateur.adresse) {
+            req.session.adresseTemp = utilisateur.adresse;
+        }
+        
         res.render("pages/profil", {
             utilisateur: utilisateur,
             connecte: true
