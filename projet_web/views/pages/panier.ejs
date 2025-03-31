@@ -44,7 +44,9 @@
             <p><strong>Total des mangas:</strong> <%= prixTotal %> $</p>
             <p><strong>Expédition:</strong> TBD</p>
             <p><strong>Total estimé:</strong> <%= prixTotal %> + Expédition</p>
-            <button class="btn checkout-btn">Procéder au paiement</button>
+            <form action="/caisse/livraison" method="GET">
+                <button type="submit" class="btn checkout-btn">Procéder au paiement</button>
+              </form>
         </div>
     </div>
     <% } %>

@@ -4,13 +4,16 @@ import session from "express-session";
 import con from '../mysqlbd.js';
 import mongocon from '../mongodb.js';
 import bcrypt from "bcryptjs";
+import Stripe from "stripe";
 
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
+const stripe = new Stripe('sk_test_51R8orP8qQxkurE6iWJhRpfNwWjb6NaRILqlS8wJLB1mzMz6IrNVdx1emfSINurQLUGbkKfF18q48ThBoiUZDRXOP002NidRVO0');
 
 const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
 const panierCollection = mongocon.db("MangathequeBD").collection("panier");
+const commandesCollection = mongocon.db("MangathequeBD").collection("commande");
 
 // Route pour afficher la page d'inscription
 routeur.get('/inscription', (req, res) => {
@@ -210,6 +213,10 @@ routeur.get('/panier', async function (req, res) {
                 results.forEach(article => {
                     prixTotal += parseFloat(article.sous_total); // Additionner tous les sous-totaux
                 });
+                req.session.panierData = {
+                    articles: results,
+                    prixTotal: prixTotal.toFixed(2)
+                };
 
                 res.render("pages/panier", {
                     articles: results,
@@ -255,12 +262,12 @@ routeur.post("/panier/:isbn", async function (req, res) {
                 ]
             };
             await panierCollection.insertOne(panier);
+            res.redirect('/panier');
         } else {
 
             const existingArticle = panier.articles.find(article => article.tome_isbn === isbnTome);
 
             if (existingArticle) {
-
                 existingArticle.quantite += quantite;
             } else {
 
@@ -414,5 +421,125 @@ routeur.get('/coupCoeur', async function (req, res) {
         });
     }
 });
+
+routeur.get('/livraison', async function (req, res) {
+    console.log(req.session);
+    console.log(req.sessionID);
+    if (!req.session.user?.identifiant) {
+        return res.redirect('/connexion');
+    }
+
+    if ( req.session.adresseTemp) {
+        return res.redirect('/paiement');
+    }
+
+    const identifiant = req.session.user.identifiant;
+
+    if (req.session.panierData) {
+        const { articles, prixTotal } = req.session.panierData;
+        return res.render('pages/livraison', {
+            articles,
+            prixTotal,
+            connecte: true
+        });
+    }
+
+    try {
+        const panier = await panierCollection.findOne({ utilisateur_identifiant: identifiant });
+        if (!panier || panier.articles.length === 0) {
+            return res.redirect('/panier');
+        }
+
+        const listeIsbn = panier.articles.map(article => article.tome_isbn);
+        const query = `
+            SELECT t.isbn, t.numero_volume, t.image, s.titre_serie, t.prix
+            FROM tome t
+            JOIN serie s ON t.serie_id_serie = s.id_serie
+            WHERE t.isbn IN (?)`;
+
+        con.query(query, [listeIsbn], (error, results) => {
+            if (error) throw error;
+
+            results.forEach(obj => {
+                const item = panier.articles.find(a => a.tome_isbn === obj.isbn);
+                obj.quantite = item.quantite || 1;
+                obj.prix = obj.prix.toFixed(2);
+                obj.sous_total = (obj.quantite * parseFloat(obj.prix)).toFixed(2);
+            });
+
+            const prixTotal = results.reduce((acc, a) => acc + parseFloat(a.sous_total), 0);
+
+            req.session.panierData = {
+                articles: results,
+                prixTotal: prixTotal.toFixed(2)
+            };
+            res.redirect('/livraison');
+        });
+    } catch (err) {
+        console.error(err);
+        res.redirect('/panier');
+    }
+});
+
+//Route qui ajoute l'adresse de l'utilisateur dans la base de donnée et dans les informations de session
+routeur.post('/livraison', async function (req, res) {
+    if (!req.session.user?.identifiant) return res.redirect('/connexion');
+    const identifiant = req.session.user.identifiant;
+
+    const { prenom, nom, adresse, ville, code_postal, telephone } = req.body;
+    const adresseObj = { prenom, nom, adresse, ville, code_postal, telephone };
+
+    try {
+        await utilisateurCollection.updateOne(
+            { identifiant: identifiant },
+            { $set: { adresse: adresseObj } }
+        );
+
+        req.session.adresseTemp = adresseObj;
+        return res.redirect('/paiement');
+    } catch (err) {
+        console.error(err);
+        res.redirect('/livraison');
+    }
+});
+
+routeur.get('/paiement', async (req, res) => {
+    if (!req.session.user?.identifiant) return res.redirect('/connexion');
+
+    const identifiant = req.session.user.identifiant;
+    const { articles, prixTotal } = req.session.panierData;
+
+    if (!articles || !prixTotal) {
+        return res.redirect('/panier');
+    }
+
+    try {
+        const line_items = articles.map(article => ({
+            price_data: {
+                currency: 'cad',
+                product_data: {
+                    name: `${article.titre_serie} - Tome ${article.numero_volume}`
+                },
+                unit_amount: Math.round(parseFloat(article.prix_unitaire) * 100),
+            },
+            quantity: article.quantite,
+        }));
+
+        const sessionStripe = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            mode: 'payment',
+            line_items,
+            success_url: `${req.protocol}://${req.get('host')}/confirmation`,
+            cancel_url: `${req.protocol}://${req.get('host')}/panier`,
+            metadata: { identifiant },
+        });
+
+        return res.redirect(303, sessionStripe.url);
+    } catch (err) {
+        console.error('Stripe Session Error:', err);
+        return res.redirect('/panier');
+    }
+});
+
 export default routeur;
 
