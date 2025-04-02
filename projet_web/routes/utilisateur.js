@@ -128,7 +128,7 @@ routeur.get('/profil', async function (req, res) {
         if (!req.session.adresseTemp && utilisateur.adresse) {
             req.session.adresseTemp = utilisateur.adresse;
         }
-        
+
         res.render("pages/profil", {
             utilisateur: utilisateur,
             connecte: true
@@ -145,10 +145,10 @@ routeur.get('/deconnexion', (req, res) => {
         req.session.destroy(err => {
             if (err) {
                 console.log(err);
-                return res.redirect('/profil');  
+                return res.redirect('/profil');
             }
             res.clearCookie('connect.sid'); //Supprime le cookie stocke dans le navigateur
-            res.redirect('/');  
+            res.redirect('/');
         });
     } else {
         res.redirect('/');
@@ -248,7 +248,7 @@ routeur.post("/panier/:isbn", async function (req, res) {
     const identifiant = req.session.user.identifiant;
     const quantite = parseInt(req.body.quantite, 10);
     const isbnTome = parseFloat(req.params.isbn);
-    console.log (req.body, req.params.isbn);
+    console.log(req.body, req.params.isbn);
     try {
         let panier = await panierCollection.findOne({
             utilisateur_identifiant: identifiant
@@ -335,9 +335,9 @@ routeur.post("/coupCoeur/:isbn", async function (req, res) {
 
     try {
         // Vérifier si le tome est déjà dans les favoris
-        const favoriExiste = await utilisateurCollection.findOne({ 
+        const favoriExiste = await utilisateurCollection.findOne({
             identifiant: identifiant,
-            favorites: isbnTome 
+            favorites: isbnTome
         });
         if (favoriExiste) {
             // Retirer le favori
@@ -374,7 +374,7 @@ routeur.get('/coupCoeur', async function (req, res) {
     const identifiant = req.session.user.identifiant;
     try {
         const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
-        console.log ("350, Utilisateur trouvé : " + utilisateur);
+        console.log("350, Utilisateur trouvé : " + utilisateur);
         if (!utilisateur?.favorites?.length) {
             return res.render("pages/coups-de-coeurs", {
                 message: 'Vous n\'avez aucun coup de cœur',
@@ -399,13 +399,13 @@ routeur.get('/coupCoeur', async function (req, res) {
             WHERE 
                 t.isbn IN (?)`;
 
-                if (!listeIsbn.length) {
-                    return res.render("pages/coups-de-coeurs", {
-                        message: 'Vous n\'avez aucun coup de cœur',
-                        tomes: [], 
-                        connecte: true
-                    });
-                }
+            if (!listeIsbn.length) {
+                return res.render("pages/coups-de-coeurs", {
+                    message: 'Vous n\'avez aucun coup de cœur',
+                    tomes: [],
+                    connecte: true
+                });
+            }
             con.query(query, [listeIsbn], (error, results) => {
                 if (error) {
                     console.log(error);
@@ -433,7 +433,7 @@ routeur.get('/livraison', async function (req, res) {
         return res.redirect('/connexion');
     }
 
-    if ( req.session.adresseTemp) {
+    if (req.session.adresseTemp) {
         return res.redirect('/paiement');
     }
 
@@ -512,6 +512,15 @@ routeur.get('/paiement', async (req, res) => {
 
     const identifiant = req.session.user.identifiant;
     const { articles, prixTotal } = req.session.panierData;
+    const adresse = req.session.adresseTemp;
+
+    req.session.paiementData = {
+        identifiant,
+        adresse,
+        articles,
+        prixTotal
+    };
+    console.log(req.session.paiementData);
 
     if (!articles || !prixTotal) {
         return res.redirect('/panier');
@@ -533,9 +542,8 @@ routeur.get('/paiement', async (req, res) => {
             payment_method_types: ['card'],
             mode: 'payment',
             line_items,
-            success_url: `${req.protocol}://${req.get('host')}/confirmation`,
-            cancel_url: `${req.protocol}://${req.get('host')}/panier`,
-            metadata: { identifiant },
+            success_url: `http://localhost:3000/confirmation`,
+            cancel_url: `http://localhost:3000/panier`
         });
 
         return res.redirect(303, sessionStripe.url);
@@ -544,6 +552,45 @@ routeur.get('/paiement', async (req, res) => {
         return res.redirect('/panier');
     }
 });
+
+routeur.get('/confirmation', async (req, res) => {
+    if (!req.session.user?.identifiant) return res.redirect('/connexion');
+
+    const { identifiant, adresse, articles, prixTotal } = req.session.paiementData;
+
+    if (!articles || !prixTotal) {
+        return res.redirect('/panier');
+    }
+
+    try {
+        const nouvelleCommande = {
+            utilisateur_identifiant: identifiant,
+            adresse : adresse,
+            date_commande: new Date(),
+            articles: articles,
+            total: prixTotal
+        };
+
+        await commandesCollection.insertOne(nouvelleCommande);
+
+        await panierCollection.deleteOne({ utilisateur_identifiant: identifiant });
+
+        delete req.session.paiementData;
+
+        res.render('pages/confirmation', {
+            message: "Paiement réussi ! Votre commande a été enregistrée.",
+            connecte: true
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.render("pages/confirmation", {
+            message: "Une erreur s'est produite.",
+            connecte: true
+        });
+    }
+});
+
 
 export default routeur;
 
