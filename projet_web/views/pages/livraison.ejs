@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/styles.css">
+    <title>Livraison</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="checkout-page">
+        <div class="shipping-form">
+            <h2>Adresse de livraison</h2>
+            <form action="/caisse/livraison" method="POST">
+                <div class="form-row">
+                    <input type="text" name="prenom" placeholder="Prénom" required>
+                    <input type="text" name="nom" placeholder="Nom" required>
+                </div>
+                <input type="text" name="adresse1" placeholder="Adresse ligne 1" required>
+                <div class="form-row">
+                    <input type="text" name="ville" placeholder="Ville" required>
+                    <input type="text" name="code_postal" placeholder="Code postal" required>
+                </div>
+                <input type="tel" name="telephone" placeholder="Téléphone" required>
+                <button type="submit" class="btn black">Continuer vers le paiement</button>
+            </form>
+        </div>
+
+        <div class="order-summary">
+            <h3>Résumé</h3>
+            <p><strong>Sous-total:</strong> <%= prixTotal %> $</p>
+            <p><strong>Livraison:</strong> TBD</p>
+            <p><strong>Total:</strong> <%= prixTotal %> + Livraison</p>
+
+            <div class="cart-preview">
+                <% articles.forEach(article => { %>
+                    <div class="cart-item">
+                        <img src="<%= article.image %>" alt="<%= article.titre_serie %>">
+                        <div>
+                            <p><strong><%= article.titre_serie %></strong> - Tome <%= article.numero_volume %></p>
+                            <p><%= article.sous_total %> $</p>
+                        </div>
+                    </div>
+                <% }) %>
+                <a href="/panier" class="btn edit-bag">Modifier</a>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

@@ -78,4 +78,3 @@ app.listen(PORT, () => {
 
 
 console.log(path.join(__dirname, 'views'));
-console.log('Vérification de la vue coups-de-coeur.ejs');
