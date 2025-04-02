@@ -579,6 +579,7 @@ routeur.get('/confirmation', async (req, res) => {
 
         res.render('pages/confirmation', {
             message: "Paiement réussi ! Votre commande a été enregistrée.",
+            commande: nouvelleCommande,
             connecte: true
         });
 
@@ -586,6 +587,7 @@ routeur.get('/confirmation', async (req, res) => {
         console.error(error);
         res.render("pages/confirmation", {
             message: "Une erreur s'est produite.",
+            commande: null,
             connecte: true
         });
     }

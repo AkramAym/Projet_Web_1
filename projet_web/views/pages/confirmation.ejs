@@ -6,11 +6,33 @@
 </head>
 <body>
     <%- include('../partials/header') %>
+
     <div class="confirmation-container">
         <h1>Merci pour votre commande ! 🎉</h1>
         <p><%= message %></p>
+
+        <% if (commande) { %>
+            <h2>Détails de votre commande :</h2>
+            
+            <p><strong>Adresse de livraison :</strong></p>
+            <p><%= commande.adresse.prenom %> <%= commande.adresse.nom %></p>
+            <p><%= commande.adresse.adresse ? commande.adresse.adresse : "Adresse non fournie" %></p>
+            <p><%= commande.adresse.ville %>, <%= commande.adresse.code_postal %></p>
+            <p>Téléphone : <%= commande.adresse.telephone %></p>
+
+            <h3>Articles commandés :</h3>
+            <ul>
+                <% commande.articles.forEach(article => { %>
+                    <li><%= article.titre_serie %> - Tome <%= article.numero_volume %> - <%= article.quantite %> x <%= article.prix_unitaire %>€</li>
+                <% }); %>
+            </ul>
+
+            <p><strong>Total :</strong> <%= commande.total %>€</p>
+        <% } %>
+
         <a href="/" class="btn btn-primary">Retour à l'accueil</a>
     </div>
+
     <%- include('../partials/footer') %>
 </body>
 </html>
