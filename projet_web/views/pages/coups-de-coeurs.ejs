@@ -3,36 +3,42 @@
 
 <head>
     <%- include('../partials/head') %>
-        <%- include('../partials/header') %>
-            <title>Coups de cœur</title>
+    <link rel="stylesheet" href="/styles.css">
+    <title>Vos coups de cœur</title>
 </head>
 
 <body>
-    <% if (tomes.length===0) { %>
-        <div class="panier-vide">
-            <p>Vous n'avez aucun coups de Coeur.</p>
-            <a href="/" class="btn btn-primary">Retour à l'accueil</a>
-        </div>
-        <% } else { %>
-            <div class="coups-de-coeur-container">
-                <h1>Vos coups de cœur</h1>
-                <div class="coups-de-coeur-list">
-                    <% tomes.forEach(function(tome) { %>
-                        <div class="manga-card">
-                            <p class="title">
-                                <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
-                            <p>
-                            <img src="<%= tome.image %>" alt="<%= tome.titre_serie %>">
-                            <p>
-                                <%= tome.synopsis %>
-                            </p>
-                        </div>
-                        <% }); %>
-                </div>
-                <% } %>
-            </div>
+    <%- include('../partials/header') %>
+    
+    <div class="coups-de-coeur-container">
+        <h1>Vos coups de cœur</h1>
+        <div class="coups-de-coeur-list">
+            <% tomes.forEach(function(tome) { %>
+                <div class="manga-card">
+                    <!-- Image à gauche -->
+                    <a href="/tome/<%= tome.isbn %>">
+                        <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> - Tome <%= tome.numero_volume %>">
+                    </a>
 
-            <%- include('../partials/footer') %>
+                    <!-- Informations du manga -->
+                    <div class="manga-info">
+                        <p class="title"><%= tome.titre_serie %> - Tome <%= tome.numero_volume %></p>
+                        <p class="author">Auteur : <%= tome.auteur %></p>
+                    </div>
+
+                    <!-- Prix et Bouton -->
+                    <div class="manga-actions">
+                        <p class="price"><%= tome.prix %> $</p>
+                        <form action="/panier/<%= tome.isbn %>/ajouter" method="POST">
+                            <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
 </body>
 
 </html>
