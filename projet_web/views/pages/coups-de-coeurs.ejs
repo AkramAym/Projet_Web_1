@@ -25,20 +25,15 @@
                     <div class="manga-info">
                         <p><strong>Titre :</strong> <%= tome.titre_serie || 'Titre indisponible' %> - Tome <%= tome.numero_volume || 'N/A' %></p>
                         <p><strong>ISBN :</strong> <%= tome.isbn || 'Indisponible' %></p>
-                        </p>
                     </div>
-                    
-                    
 
                     <!-- Bouton pour ajouter au panier -->
                     <div class="manga-actions">
                         <form action="/panier/<%= tome.isbn %>" method="POST">
+                            <input type="hidden" name="quantite" value="1">
                             <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
                         </form>
                     </div>
-                    
-                    
-                    
                 </div>
             <% }) %>
         </div>
