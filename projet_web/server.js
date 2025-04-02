@@ -78,3 +78,36 @@ app.listen(PORT, () => {
 
 
 console.log(path.join(__dirname, 'views'));
+
+
+// Route pour afficher la page d'un manga (tome)
+app.get('/tome/:isbn', (req, res) => {
+    const isbn = req.params.isbn;
+    const query = `
+        SELECT t.isbn, t.numero_volume, t.annee_publication, t.prix, t.image, t.stock, s.titre_serie, s.auteur, s.synopsis 
+        FROM tome t
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE t.isbn = ?`;
+
+    con.query(query, [isbn], (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send("Erreur serveur");
+        }
+
+        if (result.length === 0) {
+            return res.status(404).send("Manga non trouvé");
+        }
+
+        const tome = result[0];
+        tome.prix = tome.prix.toFixed(2); // Formater le prix à deux décimales
+
+        const utilisateurConnecte = req.session.user?.identifiant ? true : false;
+
+        // Rendu de la page avec les informations du manga et la variable 'connecte'
+        res.render("pages/tome", {
+            tome: tome,
+            connecte: utilisateurConnecte // Envoi de la variable 'connecte'
+        });
+    });
+});
