@@ -10,29 +10,35 @@
 <body>
     <%- include('../partials/header') %>
     
+    <!-- Section "Coups-de-coeur" -->
     <div class="coups-de-coeur-container">
         <h1>Vos coups de cœur</h1>
         <div class="coups-de-coeur-list">
             <% tomes.forEach(function(tome) { %>
                 <div class="manga-card">
-                    <!-- Image à gauche -->
+                    <!-- Image du manga -->
                     <a href="/tome/<%= tome.isbn %>">
                         <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> - Tome <%= tome.numero_volume %>">
                     </a>
 
-                    <!-- Informations du manga -->
+                    <!-- Informations principales -->
                     <div class="manga-info">
-                        <p class="title"><%= tome.titre_serie %> - Tome <%= tome.numero_volume %></p>
-                        <p class="author">Auteur : <%= tome.auteur %></p>
+                        <p><strong>Titre :</strong> <%= tome.titre_serie || 'Titre indisponible' %> - Tome <%= tome.numero_volume || 'N/A' %></p>
+                        <p><strong>ISBN :</strong> <%= tome.isbn || 'Indisponible' %></p>
+                        </p>
                     </div>
+                    
+                    
 
-                    <!-- Prix et Bouton -->
+                    <!-- Bouton pour ajouter au panier -->
                     <div class="manga-actions">
-                        <p class="price"><%= tome.prix %> $</p>
-                        <form action="/panier/<%= tome.isbn %>/ajouter" method="POST">
+                        <form action="/panier/<%= tome.isbn %>" method="POST">
                             <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
                         </form>
                     </div>
+                    
+                    
+                    
                 </div>
             <% }) %>
         </div>

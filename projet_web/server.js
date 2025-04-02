@@ -111,3 +111,50 @@ app.get('/tome/:isbn', (req, res) => {
         });
     });
 });
+
+
+// Ajouter un tome au panier
+app.post('/panier/:isbn', (req, res) => {
+    console.log(`Ajout au panier : ISBN = ${req.params.isbn}, Quantité = ${req.body.quantite}`);
+    const isbn = req.params.isbn;
+    const quantite = parseInt(req.body.quantite) || 1; // Quantité par défaut = 1
+
+    // Vérifier si l'utilisateur est connecté
+    if (!req.session.user) {
+        console.log("Utilisateur non connecté");
+        return res.status(401).send("Vous devez être connecté pour ajouter un article au panier.");
+    }
+
+    const utilisateurId = req.session.user.identifiant;
+
+    // Vérifier si le panier de l'utilisateur existe (ou le créer si nécessaire)
+    const queryCheckPanier = `
+        INSERT IGNORE INTO panier (utilisateur_identifiant)
+        VALUES (?)
+    `;
+
+    con.query(queryCheckPanier, [utilisateurId], (err) => {
+        if (err) {
+            console.error("Erreur lors de la vérification/création du panier :", err);
+            return res.status(500).send("Erreur lors de la vérification/création du panier.");
+        }
+
+        // Ajouter ou mettre à jour l'article dans le panier
+        const queryAjoutArticle = `
+            INSERT INTO article_panier (panier_utilisateur_identifiant, tome_isbn, quantite)
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE quantite = quantite + ?
+        `;
+
+        con.query(queryAjoutArticle, [utilisateurId, isbn, quantite, quantite], (err) => {
+            if (err) {
+                console.error("Erreur lors de l'ajout au panier :", err);
+                return res.status(500).send("Erreur lors de l'ajout au panier.");
+            }
+
+            console.log(`Article ISBN ${isbn} ajouté au panier pour l'utilisateur ${utilisateurId}, quantité : ${quantite}`);
+            res.redirect('/panier'); // Redirige vers la page du panier après l'ajout
+        });
+    });
+});
+
