@@ -1088,3 +1088,92 @@ body {
 .edit-bag:hover {
     background-color: #f0f0f0;
 }
+/* Conteneur principal pour la section "Coups-de-coeur" */
+.coups-de-coeur-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Liste des mangas */
+.coups-de-coeur-list {
+    width: 50%; /* Taille réduite pour un design compact */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacement entre chaque manga */
+}
+
+/* Titre : utilisation de la police pour tous vos titres */
+.coups-de-coeur-container h1 {
+    font-family: 'VotrePoliceTitre', sans-serif; /* Remplacez 'VotrePoliceTitre' par le nom réel de la police */
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Carte de manga */
+.coups-de-coeur-list .manga-card {
+    display: flex;
+    border: 1px solid #d3d3d3;
+    padding: 15px;
+    background-color: #ffffff;
+    align-items: center;
+}
+
+/* Image du manga complètement à gauche */
+.coups-de-coeur-list .manga-card img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 15px; /* Espace entre l'image et le reste */
+    flex-shrink: 0;
+}
+
+/* Section d'informations du manga (au-dessus du bouton) */
+.coups-de-coeur-list .manga-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start; /* Alignement à gauche */
+}
+
+.coups-de-coeur-list .manga-info .title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.coups-de-coeur-list .manga-info .author {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Bouton et prix à droite */
+.coups-de-coeur-list .manga-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Alignement à droite */
+    text-align: right;
+    flex: 1;
+}
+
+.coups-de-coeur-list .manga-actions .price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.coups-de-coeur-list .manga-actions .add-to-cart-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
