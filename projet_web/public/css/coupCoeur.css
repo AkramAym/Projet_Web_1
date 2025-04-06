@@ -1,0 +1,103 @@
+/* Conteneur global centré */
+.coups-coeur-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Titre de la page */
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: left;
+    color: #111;
+}
+
+/* Une ligne par manga */
+.ligne-manga {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid #858585;
+}
+
+/* Image du manga */
+.image-container img {
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Informations du manga */
+.infos-container {
+    flex: 1;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.infos-container .titre {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.infos-container .auteur-editeur {
+    color: #666;
+}
+
+/* Prix + boutons */
+.actions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.actions-container .prix {
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+/* Boutons */
+.btn-panier,
+.btn-supprimer {
+    background-color: #111;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-panier:hover {
+    background-color: #333;
+}
+
+.btn-supprimer {
+    background-color: #b70000;
+}
+
+.btn-supprimer:hover {
+    background-color: #8c0000;
+}
+.infos-container .auteur,
+.infos-container .editeur {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 2px;
+}
+.infos-container .tome {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: #333;
+}
