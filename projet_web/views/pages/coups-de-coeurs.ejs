@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <%- include('../partials/head') %>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/coupCoeur.css">
     <title>Vos coups de cœur</title>
 </head>
-
 <body>
     <%- include('../partials/header') %>
+
+    <main class="coups-coeur-container">
+        <h1 class="page-title">Vos coups de cœur</h1>
     
-    <!-- Section "Coups-de-coeur" -->
-    <div class="coups-de-coeur-container">
-        <h1>Vos coups de cœur</h1>
-        <div class="coups-de-coeur-list">
-            <% tomes.forEach(function(tome) { %>
-                <div class="manga-card">
-                    <!-- Image du manga -->
-                    <a href="/tome/<%= tome.isbn %>">
-                        <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> - Tome <%= tome.numero_volume %>">
-                    </a>
-
-                    <!-- Informations principales -->
-                    <div class="manga-info">
-                        <p><strong>Titre :</strong> <%= tome.titre_serie || 'Titre indisponible' %> - Tome <%= tome.numero_volume || 'N/A' %></p>
-                        <p><strong>ISBN :</strong> <%= tome.isbn || 'Indisponible' %></p>
+        <% if (tomes.length === 0) { %>
+            <p class="aucun-coup-de-coeur">Vous n'avez aucun coup de cœur pour le moment.</p>
+        <% } else { %>
+            <% tomes.forEach(tome => { %>
+                <div class="ligne-manga">
+                    <!-- Image -->
+                    <div class="image-container">
+                        <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
                     </div>
-
-                    <!-- Bouton pour ajouter au panier -->
-                    <div class="manga-actions">
+    
+                    <!-- Infos -->
+                    <div class="infos-container">
+                        <p class="titre"><%= tome.titre_serie %></p>
+                        <p class="tome">Tome <%= tome.numero_volume %></p>
+                        <p class="auteur"><%= tome.auteur %></p>
+                        <p class="editeur"><%= tome.editeur %></p>
+                    </div>
+    
+                    <!-- Prix et boutons -->
+                    <div class="actions-container">
+                        <p class="prix"><%= tome.prix ? tome.prix.toFixed(2) : 'Prix inconnu' %> $</p>
                         <form action="/panier/<%= tome.isbn %>" method="POST">
-                            <input type="hidden" name="quantite" value="1">
-                            <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
+                            <button type="submit" class="btn-panier">Ajouter au panier</button>
+                        </form>
+                        <form action="/coupCoeur/<%= tome.isbn %>/supprimer" method="POST">
+                            <button type="submit" class="btn-supprimer">Supprimer</button>
                         </form>
                     </div>
                 </div>
             <% }) %>
-        </div>
-    </div>
+        <% } %>
+    </main>
+    
+    
 
     <%- include('../partials/footer') %>
 </body>
-
 </html>
