@@ -644,7 +644,7 @@ routeur.get('/commandes/:id', async (req, res) => {
     }
 });
 
- HEAD
+ 
 routeur.post("/coupCoeur/:isbn/supprimer", async (req, res) => {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
@@ -736,3 +736,4 @@ routeur.post("/panier/:isbn/modifier", async function (req, res) {
 });
 
 
+export default routeur;

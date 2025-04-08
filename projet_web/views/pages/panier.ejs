@@ -2,56 +2,149 @@
 <html lang="fr">
 <head>
     <%- include('../partials/head') %>
-    <link rel="stylesheet" target=_blank href="/styles.css">
+    <link rel="stylesheet" href="/css/panier.css">
     <title>Panier</title>
 </head>
 <body>
     <%- include('../partials/header') %>
-    <% if (articles.length===0) { %>
-        <div class="panier-vide">
-            <p>Votre panier est vide.</p>
-            <a href="/" class="btn btn-primary">Retour à l'accueil</a>
-        </div>
+    
+    <main class="container">
+        <% if (articles.length === 0) { %>
+            <div class="panier-vide">
+                <p>Votre panier est vide.</p>
+                <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+            </div>
         <% } else { %>
-    <div class="cart-container">
-        <!-- Colonne de gauche avec les mangas -->
-        <div class="manga-list">
-            <% articles.forEach(article => { %>
-                <div class="manga-card">
-                    <div class="manga-info">
-                        <img src="<%= article.image %>" alt="<%= article.titre_serie %> Tome <%= article.numero_volume %>" class="manga-image">
-                        <div>
-                            <p class="manga-title"><%= article.titre_serie %> - Tome <%= article.numero_volume %></p>
-                            <p class="manga-author"><%= article.auteur %></p>
-                            <p class="manga-price"><%= article.prix_unitaire %> $</p>
-                            <p class="manga-quantity">Quantité: <%= article.quantite %></p>
-                            <!-- Vérification si sous_total est défini avant d'essayer de l'afficher -->
-                            <p class="manga-subtotal">Sous-total: <%= article.sous_total ? article.sous_total : '0.00' %> $</p>
-                        </div>
-                    </div>
-                    <div class="remove-button">
-                        <form action="/panier/<%= article.isbn %>/supprimer" method="POST">
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                        </form>
+            <h1 class="cart-title">Mon panier (<%= articles.length %>)</h1>
+            
+            <div class="cart-layout">
+                <div class="cart-main">
+                    
+                    <!-- Liste des articles -->
+                    <div class="cart-items">
+                        <% articles.forEach(article => { %>
+                            <div class="cart-item">
+                                <div class="item-image">
+                                    <img src="<%= article.image %>" alt="<%= article.titre_serie %> Tome <%= article.numero_volume %>">
+                                </div>
+                                <div class="item-details">
+                                    <h3 class="item-title">
+                                        <a href="/tomes/<%= article.isbn %>" class="manga-title-link">
+                                            <%= article.titre_serie %>, Vol. <%= article.numero_volume %>
+                                        </a>
+                                    </h3>
+                                    <% if (article.auteur) { %>
+                                        <p class="item-author"><%= article.auteur %></p>
+                                    <% } %>
+                                    <p class="item-format">Format: Couverture souple</p>
+                                    
+                                    <div class="item-actions">
+                                        <div class="quantity-selector">
+                                            <form action="/panier/<%= article.isbn %>/modifier" method="POST" class="quantity-form">
+                                                <select name="quantite" onchange="this.form.submit()">
+                                                    <% for(let i = 1; i <= 10; i++) { %>
+                                                        <option value="<%= i %>" <%= article.quantite === i ? 'selected' : '' %>><%= i %></option>
+                                                    <% } %>
+                                                </select>
+                                            </form>
+                                        </div>
+                                        <div class="item-links">
+                                            <form action="/panier/<%= article.isbn %>/supprimer" method="POST" class="inline-form">
+                                                <button type="submit" class="trash-button" title="Supprimer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="trash-icon">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-price">
+                                    <%= typeof article.prix_unitaire === 'string' ? article.prix_unitaire : article.prix_unitaire.toFixed(2) %> $
+                                </div>
+                            </div>
+                            <hr class="item-divider">
+                        <% }) %>
                     </div>
                 </div>
-            <% }) %>
-        </div>
-       
-        <!-- Colonne de droite avec le récapitulatif des prix -->
-        <div class="order-summary">
-            <h3>Récapitulatif</h3>
-            <p><strong>Total des mangas:</strong> <%= prixTotal %> $</p>
-            <p><strong>Expédition:</strong> TBD</p>
-            <p><strong>Total estimé:</strong> <%= prixTotal %> + Expédition</p>
-            <form action="/livraison" method="GET">
-                <button type="submit" class="btn checkout-btn">Procéder au paiement</button>
-              </form>
-        </div>
-    </div>
-    <% } %>
+                
+                <!-- Récapitulatif de la commande -->
+                <div class="order-summary">
+                    <h2>Sommaire de la commande</h2>
+                    
+                    <div class="summary-row">
+                        <span>Total partiel</span>
+                        <span class="price"><%= typeof prixTotal === 'string' ? prixTotal : prixTotal.toFixed(2) %> $</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Frais d'expédition</span>
+                        <span class="price" id="shipping-cost">
+                            <%
+                                let nombreTotalMangas = 0;
+                                articles.forEach(article => {
+                                    nombreTotalMangas += article.quantite || 1;
+                                });
+                    
+                                let fraisExpedition = (nombreTotalMangas >= 2) ? 0 : 5;
+                            %>
+                            <%= fraisExpedition === 0 ? 'GRATUIT' : fraisExpedition.toFixed(2) + ' $' %>
+                        </span>
+                    </div>
+                    
+                    
+                    <div class="summary-row">
+                        <span>Taxes</span>
+                        <span class="price" id="taxes">
+                            <% 
+                                let taxAmount = 0;
+                                if (typeof prixTotal === 'string') {
+                                    taxAmount = parseFloat(prixTotal) * 0.15;
+                                } else if (typeof prixTotal === 'number') {
+                                    taxAmount = prixTotal * 0.15;
+                                }
+                            %>
+                            <%= taxAmount.toFixed(2) %> $
+                        </span>
+                    </div>
+                    
+                    <hr class="summary-divider">
+                    
+                    <div class="summary-row total">
+                        <span>Total approximatif</span>
+                        <span class="price" id="total-price">
+                            <% 
+                                let totalPrice = 0;
+                                let prixTotalNum = typeof prixTotal === 'string' ? parseFloat(prixTotal) : prixTotal;
+                                
+                                if (!isNaN(prixTotalNum)) {
+                                    let shipping = prixTotalNum >= 50 ? 0 : 5;
+                                    totalPrice = prixTotalNum + shipping + (prixTotalNum * 0.15);
+                                }
+                            %>
+                            <%= totalPrice.toFixed(2) %> $
+                        </span>
+                    </div>
+                    
+                    <form action="/livraison" method="GET">
+                        <button type="submit" class="checkout-btn">Passer à la caisse</button>
+                    </form>
+                    
+                    <div class="promo-code">
+                        <button class="promo-toggle">
+                            <span>Entrez le code promo</span>
+                            <span class="toggle-icon">▼</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+    
     <%- include('../partials/footer') %>
-
     <script src="/main.js"></script>
 </body>
 </html>

@@ -85,3 +85,51 @@ style.innerHTML = `
     }
 `;
 document.head.appendChild(style);
+// Calculate totals on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all item prices and quantities
+    const items = document.querySelectorAll('.cart-item');
+    let subtotal = 0;
+    
+    items.forEach(item => {
+      const priceText = item.querySelector('.item-price').textContent.trim();
+      const price = parseFloat(priceText.replace('$', '').trim());
+      
+      const quantitySelect = item.querySelector('select');
+      const quantity = parseInt(quantitySelect.value);
+      
+      subtotal += price * quantity;
+      
+      // Update quantity change event
+      quantitySelect.addEventListener('change', function() {
+        location.reload(); // Reload to recalculate server-side
+        // Alternatively, you could implement AJAX to update without reload
+      });
+    });
+    
+    // Calculate shipping (free if over 50$, otherwise 5$)
+    const shipping = subtotal >= 50 ? 0 : 5;
+    
+    // Calculate taxes (assume 15%)
+    const taxes = subtotal * 0.15;
+    
+    // Calculate total
+    const total = subtotal + shipping + taxes;
+    
+    // Update summary
+    const summaryRows = document.querySelectorAll('.summary-row');
+    if (summaryRows.length >= 4) {
+      // Update subtotal
+      summaryRows[0].querySelector('.price').textContent = subtotal.toFixed(2) + ' $';
+      
+      // Update shipping
+      const shippingText = shipping === 0 ? 'GRATUIT' : shipping.toFixed(2) + ' $';
+      summaryRows[1].querySelector('.price').textContent = shippingText;
+      
+      // Update taxes
+      summaryRows[2].querySelector('.price').textContent = taxes.toFixed(2) + ' $';
+      
+      // Update total
+      summaryRows[3].querySelector('.price').textContent = total.toFixed(2) + ' $';
+    }
+  });
