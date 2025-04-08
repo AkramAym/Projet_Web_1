@@ -5,6 +5,7 @@ import con from '../mysqlbd.js';
 import mongocon from '../mongodb.js';
 import bcrypt from "bcryptjs";
 import Stripe from "stripe";
+import { ObjectId}  from 'mongodb';
 
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
@@ -589,6 +590,63 @@ routeur.get('/confirmation', async (req, res) => {
         res.render("pages/confirmation", {
             message: "Une erreur s'est produite.",
             commande: null,
+            connecte: true
+        });
+    }
+});
+
+routeur.get('/commandes', async (req, res) => {
+    if (!req.session.user?.identifiant) return res.redirect('/connexion');
+
+    const identifiant = req.session.user.identifiant;
+
+    try {
+        const commandes = await commandesCollection
+            .find({ utilisateur_identifiant: identifiant })
+            .sort({ date_commande: -1 })
+            .toArray();
+
+        res.render('pages/commandes', {
+            commandes,
+            connecte: true
+        });
+    } catch (error) {
+        console.error("Erreur récupération commandes :", error);
+        res.render('pages/commandes', {
+            commandes: [],
+            message: 'Erreur lors de la récupération des commandes.',
+            connecte: true
+        });
+    }
+});
+
+routeur.get('/commandes/:id', async (req, res) => {
+    if (!req.session.user?.identifiant) return res.redirect('/connexion');
+
+    const idCommande = req.params.id;
+    const identifiant = req.session.user.identifiant;
+
+    try {
+        const commande = await commandesCollection.findOne({
+            _id: new ObjectId(idCommande),
+            utilisateur_identifiant: identifiant
+        });
+
+        if (!commande) {
+            return res.status(404).render('pages/erreur', {
+                message: "Commande introuvable",
+                connecte: true
+            });
+        }
+
+        res.render('pages/commande-details', {
+            commande,
+            connecte: true
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).render('pages/erreur', {
+            message: "Erreur lors de l'affichage de la commande",
             connecte: true
         });
     }
