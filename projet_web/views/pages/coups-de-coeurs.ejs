@@ -74,11 +74,33 @@
                             </form>
                         </div>
                     </div>
+ 
                     <% if (index % 2 === 1 || index === tomes.length - 1) { %>
                         <div class="grid-spacer"></div>
                     <% } %>
                 <% }) %>
             </div>
+    
+                    <!-- Infos -->
+                    <div class="infos-container">
+                        <p class="titre"><%= tome.titre_serie %></p>
+                        <p class="tome">Tome <%= tome.numero_volume %></p>
+                        <p class="auteur"><%= tome.auteur %></p>
+                        <p class="editeur"><%= tome.editeur %></p>
+                    </div>
+    
+                    <!-- Prix et boutons -->
+                    <div class="actions-container">
+                        <p class="prix"><%= tome.prix_unitaire ? tome.prix_unitaire.toFixed(2) : 'Prix inconnu' %> $</p>
+                        <form action="/panier/<%= tome.isbn %>" method="POST">
+                            <button type="submit" class="btn-panier">Ajouter au panier</button>
+                        </form>
+                        <form action="/coupCoeur/<%= tome.isbn %>/supprimer" method="POST">
+                            <button type="submit" class="btn-supprimer">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
         <% } %>
     </main>
 

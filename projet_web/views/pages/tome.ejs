@@ -44,14 +44,14 @@
                                 </form>
                                 <form action="/coupCoeur/<%= tome.isbn %>" method="POST" class="add-to-heart-form">
                                     <button type="submit" class="btn add-to-heart">
-                                        <i class="fas fa-heart heart-icon" title="Ajouter aux coups de cœur"></i>
+                                        <i class="fas fa-heart heart-icon <%= isFavori ? 'favori' : '' %>" title="Ajouter aux coups de cœur"></i>
                                     </button>
                                 </form>
                                 <form action="/emprunter" method="POST" class="borrow-form">
                                     <button class="btn borrow" type="submit">EMPRUNTER</button>
                                 </form>
-                                
-                                
+
+
                             </div>
             </div>
         </div>

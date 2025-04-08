@@ -5,6 +5,7 @@ import con from '../mysqlbd.js';
 import mongocon from '../mongodb.js';
 import bcrypt from "bcryptjs";
 import Stripe from "stripe";
+import { ObjectId}  from 'mongodb';
 
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
@@ -330,33 +331,25 @@ routeur.post("/coupCoeur/:isbn", async function (req, res) {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
+
     const identifiant = req.session.user.identifiant;
     const isbnTome = req.params.isbn;
 
     try {
-        // Vérifier si le tome est déjà dans les favoris
-        const favoriExiste = await utilisateurCollection.findOne({
-            identifiant: identifiant,
-            favorites: isbnTome
-        });
-        if (favoriExiste) {
-            // Retirer le favori
-            await utilisateurCollection.updateOne(
-                { identifiant: identifiant },
-                { $pull: { favorites: isbnTome } }
-            );
-        } else {
-            // Ajouter le favori
-            await utilisateurCollection.updateOne(
-                { identifiant: identifiant },
-                { $addToSet: { favorites: isbnTome } }
-            );
-        }
+        const utilisateur = await utilisateurCollection.findOne({ identifiant });
 
-        res.redirect('/coupCoeur'); // Redirige vers la page précédente
+        const estDejaFavori = utilisateur?.favorites?.includes(isbnTome);
 
+        await utilisateurCollection.updateOne(
+            { identifiant },
+            estDejaFavori
+                ? { $pull: { favorites: isbnTome } }
+                : { $addToSet: { favorites: isbnTome } }
+        );
+
+        res.redirect("/coupCoeur");
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.render("pages/erreur", {
             message: 'Erreur lors de la mise à jour des favoris',
             connecte: true
@@ -391,6 +384,7 @@ routeur.get('/coupCoeur', async function (req, res) {
             t.isbn AS isbn,
             t.numero_volume AS numero_volume,
             t.image AS image,
+            t.prix AS prix_unitaire,
             s.titre_serie AS titre_serie
         FROM 
             tome t
@@ -593,58 +587,64 @@ routeur.get('/confirmation', async (req, res) => {
     }
 });
 
+routeur.get('/commandes', async (req, res) => {
+    if (!req.session.user?.identifiant) return res.redirect('/connexion');
 
-export default routeur;
+    const identifiant = req.session.user.identifiant;
 
+    try {
+        const commandes = await commandesCollection
+            .find({ utilisateur_identifiant: identifiant })
+            .sort({ date_commande: -1 })
+            .toArray();
 
-
-routeur.get('/coupCoeur', (req, res) => {
-    const identifiant = req.session.user?.identifiant;
-
-    if (!identifiant) {
-        return res.redirect('/connexion');
+        res.render('pages/commandes', {
+            commandes,
+            connecte: true
+        });
+    } catch (error) {
+        console.error("Erreur récupération commandes :", error);
+        res.render('pages/commandes', {
+            commandes: [],
+            message: 'Erreur lors de la récupération des commandes.',
+            connecte: true
+        });
     }
+});
 
-    const query = `
-SELECT 
-    t.isbn AS isbn,
-    t.numero_volume AS numero_volume,
-    t.image AS image,
-    t.prix AS prix,
-    s.titre_serie AS titre_serie,
-    s.auteur AS auteur,
-    s.editeur AS editeur
-FROM 
-    coup_de_coeur c
-JOIN 
-    tome t ON c.tome_isbn = t.isbn
-JOIN 
-    serie s ON t.serie_id_serie = s.id_serie
-WHERE 
-    c.utilisateur_identifiant = ?
+routeur.get('/commandes/:id', async (req, res) => {
+    if (!req.session.user?.identifiant) return res.redirect('/connexion');
 
-    `;
+    const idCommande = req.params.id;
+    const identifiant = req.session.user.identifiant;
 
-    con.query(query, [identifiant], (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.render('pages/coups-de-coeurs', {
-                tomes: [],
-                message: 'Erreur lors de la récupération des coups de cœur.',
+    try {
+        const commande = await commandesCollection.findOne({
+            _id: new ObjectId(idCommande),
+            utilisateur_identifiant: identifiant
+        });
+
+        if (!commande) {
+            return res.status(404).render('pages/erreur', {
+                message: "Commande introuvable",
                 connecte: true
             });
         }
 
-        // S'assurer que le prix est bien en float
-        results.forEach(r => r.prix = parseFloat(r.prix));
-
-        res.render('pages/coups-de-coeurs', {
-            tomes: results,
+        res.render('pages/commande-details', {
+            commande,
             connecte: true
         });
-    });
+    } catch (err) {
+        console.error(err);
+        res.status(500).render('pages/erreur', {
+            message: "Erreur lors de l'affichage de la commande",
+            connecte: true
+        });
+    }
 });
 
+ HEAD
 routeur.post("/coupCoeur/:isbn/supprimer", async (req, res) => {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
@@ -734,3 +734,5 @@ routeur.post("/panier/:isbn/modifier", async function (req, res) {
         });
     }
 });
+
+

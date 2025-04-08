@@ -1177,3 +1177,13 @@ body {
     text-transform: uppercase;
     cursor: pointer;
 }
+
+.heart-icon {
+    font-size: 22px;
+    color: black;
+    transition: color 0.3s ease;
+}
+
+.heart-icon.favori {
+    color: red;
+}
