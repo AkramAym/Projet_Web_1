@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('../partials/head') %>
+    <title>Détails de la commande</title>
+    <link rel="stylesheet" href="/css/commande-detail.css">
+</head>
+
+<body>
+<%- include('../partials/header') %>
+
+<div class="order-details">
+    <h2 class="order-number">Commande du <%= new Date(commande.date_commande).toLocaleDateString('fr-FR') %></h2>
+
+    <div class="order-section">
+        <div>
+            <p><strong>Date :</strong> <%= new Date(commande.date_commande).toLocaleString('fr-FR') %></p>
+            <p><strong>Total :</strong> <%= commande.total %> $</p>
+        </div>
+        <% if (commande.adresse) { %>
+            <div>
+                <p><strong>Adresse :</strong></p>
+                <p><%= commande.adresse.prenom %> <%= commande.adresse.nom %></p>
+                <p><%= commande.adresse.adresse || commande.adresse.adresse1 %></p>
+                <p><%= commande.adresse.ville %>, <%= commande.adresse.code_postal %></p>
+            </div>
+        <% } %>
+    </div>
+
+    <div class="items-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Article</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Sous-total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% commande.articles.forEach(a => { %>
+                    <tr>
+                        <td>
+                            <img src="<%= a.image %>" alt="<%= a.titre_serie %>">
+                            <div>
+                                <p><strong><%= a.titre_serie %></strong></p>
+                                <p>Tome <%= a.numero_volume %></p>
+                            </div>
+                        </td>
+                        <td><%= a.quantite %></td>
+                        <td><%= a.prix_unitaire %> $</td>
+                        <td><%= a.sous_total %> $</td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="order-summary">
+        <h3>Résumé de la commande</h3>
+        <p><strong>Total payé :</strong> <%= commande.total %> $</p>
+    </div>
+
+    <div class="back-btn">
+        <a href="/commandes" class="btn">← Retour à l’historique</a>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>
