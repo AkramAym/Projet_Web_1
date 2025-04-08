@@ -331,33 +331,25 @@ routeur.post("/coupCoeur/:isbn", async function (req, res) {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
+
     const identifiant = req.session.user.identifiant;
     const isbnTome = req.params.isbn;
 
     try {
-        // Vérifier si le tome est déjà dans les favoris
-        const favoriExiste = await utilisateurCollection.findOne({
-            identifiant: identifiant,
-            favorites: isbnTome
-        });
-        if (favoriExiste) {
-            // Retirer le favori
-            await utilisateurCollection.updateOne(
-                { identifiant: identifiant },
-                { $pull: { favorites: isbnTome } }
-            );
-        } else {
-            // Ajouter le favori
-            await utilisateurCollection.updateOne(
-                { identifiant: identifiant },
-                { $addToSet: { favorites: isbnTome } }
-            );
-        }
+        const utilisateur = await utilisateurCollection.findOne({ identifiant });
 
-        res.redirect('/coupCoeur'); // Redirige vers la page précédente
+        const estDejaFavori = utilisateur?.favorites?.includes(isbnTome);
 
+        await utilisateurCollection.updateOne(
+            { identifiant },
+            estDejaFavori
+                ? { $pull: { favorites: isbnTome } }
+                : { $addToSet: { favorites: isbnTome } }
+        );
+
+        res.redirect("/coupCoeur");
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.render("pages/erreur", {
             message: 'Erreur lors de la mise à jour des favoris',
             connecte: true

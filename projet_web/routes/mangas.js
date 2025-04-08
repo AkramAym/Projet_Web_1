@@ -5,6 +5,9 @@ import con from '../mysqlbd.js';
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
+
+const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
+import mongocon from '../mongodb.js';
 // Route pour afficher la page "Nos séries"
 routeur.get('/nos-series', function (req, res) {
     console.log(req.session);
@@ -119,14 +122,24 @@ routeur.get('/tomes/:isbn', function (req, res) {
         if (req.session.user?.identifiant){
             utilisateurConnecte = true;
         }
-    con.query(query, [tomeISBN], (err, result) =>{
-        result[0].prix =  result[0].prix.toFixed(2);
-        if (err) throw err;
-        res.render("pages/tome", {
-            tome: result[0],
-            connecte: utilisateurConnecte
+        con.query(query, [tomeISBN], async (err, result) => {
+            if (err) throw err;
+        
+            const tome = result[0];
+            tome.prix = tome.prix.toFixed(2);
+        
+            let isFavori = false;
+            if (req.session.user?.identifiant) {
+                const utilisateur = await utilisateurCollection.findOne({ identifiant: req.session.user.identifiant });
+                isFavori = utilisateur?.favorites?.includes(tomeISBN);
+            }
+        
+            res.render("pages/tome", {
+                tome,
+                isFavori,
+                connecte: utilisateurConnecte
+            });
         });
-    });
 });
 
 export default routeur;
