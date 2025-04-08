@@ -645,3 +645,92 @@ WHERE
     });
 });
 
+routeur.post("/coupCoeur/:isbn/supprimer", async (req, res) => {
+    if (!req.session.user?.identifiant) {
+        return res.redirect("/connexion");
+    }
+
+    const identifiant = req.session.user.identifiant;
+    const isbnTome = req.params.isbn;
+
+    try {
+        await utilisateurCollection.updateOne(
+            { identifiant: identifiant },
+            { $pull: { favorites: isbnTome } }
+        );
+
+        return res.redirect("/coupCoeur");
+    } catch (error) {
+        console.error(error);
+        res.render("pages/coups-de-coeurs", {
+            tomes: [],
+            message: "Erreur lors de la suppression du coup de cœur.",
+            connecte: true
+        });
+    }
+});
+routeur.get('/tome/:isbn', (req, res) => {
+    const isbn = req.params.isbn;
+
+    const query = `
+   SELECT t.isbn, t.numero_volume, t.image, t.prix, t.annee_publication,
+       s.titre_serie, s.auteur, s.editeur
+FROM tome t
+JOIN serie s ON t.serie_id_serie = s.id_serie
+WHERE t.isbn = ?
+
+    `;
+
+    con.query(query, [isbn], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Erreur serveur');
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send('Tome non trouvé');
+        }
+
+        res.render('pages/tome', {
+            tome: results[0],
+            connecte: !!req.session.user
+        });
+    });
+});
+
+
+routeur.post("/panier/:isbn/modifier", async function (req, res) {
+    if (!req.session.user?.identifiant) {
+        return res.redirect("/connexion");
+    }
+
+    const identifiant = req.session.user.identifiant;
+    const isbnTome = parseFloat(req.params.isbn);
+    const nouvelleQuantite = parseInt(req.body.quantite, 10);
+
+    try {
+        const panier = await panierCollection.findOne({ utilisateur_identifiant: identifiant });
+
+        if (!panier) {
+            return res.redirect("/panier");
+        }
+
+        const article = panier.articles.find(a => a.tome_isbn === isbnTome);
+        if (article) {
+            article.quantite = nouvelleQuantite;
+
+            await panierCollection.updateOne(
+                { _id: panier._id },
+                { $set: { articles: panier.articles } }
+            );
+        }
+
+        return res.redirect("/panier");
+    } catch (error) {
+        console.log(error);
+        res.render("pages/panier", {
+            message: "Erreur lors de la modification de la quantité",
+            connecte: true
+        });
+    }
+});

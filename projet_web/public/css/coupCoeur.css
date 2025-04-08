@@ -1,103 +1,252 @@
-/* Conteneur global centré */
-.coups-coeur-container {
-    max-width: 900px;
+/* Styles pour la page Coups de Coeur */
+:root {
+    --primary-color: #000;
+    --secondary-color: #f8f8f8;
+    --border-color: #e0e0e0;
+    --dark-border-color: #ccc;
+    --accent-color: #ff6b6b;
+    --text-color: #333;
+    --light-text: #666;
+    --button-bg: #333;
+    --button-hover: #000;
+  }
+  
+  body {
+    font-family: "Arial", sans-serif;
+    color: var(--text-color);
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .coups-coeur-container {
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 40px 20px;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Titre de la page */
-.page-title {
+    padding: 20px;
+  }
+  
+  /* En-tête de la liste */
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .page-title {
     font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    text-align: left;
-    color: #111;
-}
-
-/* Une ligne par manga */
-.ligne-manga {
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .list-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-copy,
+  .btn-more {
+    background: #f5f5f5;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-copy:hover,
+  .btn-more:hover {
+    background: #e0e0e0;
+  }
+  
+  /* Compteur d'articles */
+  .list-count {
+    font-size: 16px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+  }
+  
+  .header-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--dark-border-color);
+    margin: 0 0 30px 0;
+  }
+  
+  /* Message si aucun coup de coeur */
+  .aucun-coup-de-coeur {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--light-text);
+    font-size: 16px;
+  }
+  
+  /* Grille des mangas */
+  .manga-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  
+  .manga-item {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
+    position: relative;
+  }
+  
+  .manga-content {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+  
+  .manga-image {
+    width: 80px;
+    margin-right: 20px;
+  }
+  
+  .manga-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .manga-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .manga-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: none;
+    margin-bottom: 5px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .manga-title::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--text-color);
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease;
+  }
+  
+  .manga-title:hover::after {
+    transform: scaleX(1);
+  }
+  
+  .manga-author {
+    font-size: 14px;
+    color: var(--light-text);
+    margin: 0 0 5px 0;
+  }
+  
+  .manga-format {
+    font-size: 14px;
+    color: var(--light-text);
+    margin: 0;
+  }
+  
+  .manga-price {
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: auto;
+    min-width: 80px;
+    text-align: right;
+  }
+  
+  .manga-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 0;
-    border-bottom: 1px solid #858585;
-}
-
-/* Image du manga */
-.image-container img {
-    width: 80px;
-    height: auto;
-    object-fit: contain;
-}
-
-/* Informations du manga */
-.infos-container {
+  }
+  
+  .add-cart-form {
     flex: 1;
-    margin-left: 20px;
-    font-size: 14px;
-}
-
-.infos-container .titre {
-    font-weight: 600;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 4px;
-}
-
-.infos-container .auteur-editeur {
-    color: #666;
-}
-
-/* Prix + boutons */
-.actions-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    font-size: 14px;
-}
-
-.actions-container .prix {
-    font-weight: bold;
-    color: #222;
-    margin-bottom: 4px;
-}
-
-/* Boutons */
-.btn-panier,
-.btn-supprimer {
-    background-color: #111;
+    margin-right: 10px;
+  }
+  
+  .btn-add-cart {
+    background-color: var(--button-bg);
     color: white;
     border: none;
-    padding: 8px 16px;
-    font-size: 13px;
-    text-transform: uppercase;
-    font-weight: 600;
-    border-radius: 0;
+    padding: 10px 15px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.btn-panier:hover {
-    background-color: #333;
-}
-
-.btn-supprimer {
-    background-color: #b70000;
-}
-
-.btn-supprimer:hover {
-    background-color: #8c0000;
-}
-.infos-container .auteur,
-.infos-container .editeur {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 2px;
-}
-.infos-container .tome {
     font-size: 14px;
-    margin-bottom: 4px;
-    color: #333;
-}
+    transition: background-color 0.2s;
+    width: 100%;
+  }
+  
+  .btn-add-cart:hover {
+    background-color: var(--button-hover);
+  }
+  
+  .delete-form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn-delete {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+  
+  .btn-delete:hover {
+    color: #e74c3c;
+  }
+  
+  .grid-spacer {
+    grid-column: 1 / -1;
+    height: 1px;
+    background-color: var(--dark-border-color);
+    margin: 0;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .manga-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .manga-content {
+      flex-wrap: wrap;
+    }
+  
+    .manga-info {
+      width: calc(100% - 100px);
+    }
+  
+    .manga-price {
+      margin-top: 10px;
+      margin-left: 100px;
+      text-align: left;
+    }
+  
+    .manga-actions {
+      margin-top: 15px;
+    }
+  }
+  

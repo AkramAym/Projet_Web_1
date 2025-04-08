@@ -3,48 +3,84 @@
 <head>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="/css/coupCoeur.css">
-    <title>Vos coups de cœur</title>
+    <title>Mes coups de cœur</title>
 </head>
 <body>
     <%- include('../partials/header') %>
 
     <main class="coups-coeur-container">
-        <h1 class="page-title">Vos coups de cœur</h1>
+        <div class="list-header">
+            <h1 class="page-title">Mes coups de cœur</h1>
+            <div class="list-actions">
+                <button class="btn-copy" title="Copier la liste">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+                <button class="btn-more" title="Plus d'options">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="list-count"><%= tomes.length %> Article(s)</div>
+        <hr class="header-divider">
     
         <% if (tomes.length === 0) { %>
             <p class="aucun-coup-de-coeur">Vous n'avez aucun coup de cœur pour le moment.</p>
         <% } else { %>
-            <% tomes.forEach(tome => { %>
-                <div class="ligne-manga">
-                    <!-- Image -->
-                    <div class="image-container">
-                        <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
+            <div class="manga-grid">
+                <% tomes.forEach((tome, index) => { %>
+                    <div class="manga-item">
+                        <div class="manga-content">
+                            <!-- Image -->
+                            <div class="manga-image">
+                                <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
+                            </div>
+                
+                            <!-- Infos -->
+                            <div class="manga-info">
+                                <a href="/tomes/<%= tome.isbn %>" class="manga-title"><%= tome.titre_serie %></a>
+                                <% if (tome.auteur) { %>
+                                    <p class="manga-author"><%= tome.auteur %></p>
+                                <% } %>
+                                <p class="manga-format">Couverture souple</p>
+                            </div>
+                
+                            <!-- Prix -->
+                            <div class="manga-price">
+                                <%= tome.prix ? tome.prix.toFixed(2) : '0.00' %> $
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="manga-actions">
+                            <form action="/panier/<%= tome.isbn %>" method="POST" class="add-cart-form">
+                                <input type="hidden" name="quantite" value="1">
+                                <button type="submit" class="btn-add-cart">Ajouter au panier</button>
+                            </form>
+                            <form action="/coupCoeur/<%= tome.isbn %>/supprimer" method="POST" class="delete-form">
+                                <button type="submit" class="btn-delete" title="Supprimer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
                     </div>
-    
-                    <!-- Infos -->
-                    <div class="infos-container">
-                        <p class="titre"><%= tome.titre_serie %></p>
-                        <p class="tome">Tome <%= tome.numero_volume %></p>
-                        <p class="auteur"><%= tome.auteur %></p>
-                        <p class="editeur"><%= tome.editeur %></p>
-                    </div>
-    
-                    <!-- Prix et boutons -->
-                    <div class="actions-container">
-                        <p class="prix"><%= tome.prix ? tome.prix.toFixed(2) : 'Prix inconnu' %> $</p>
-                        <form action="/panier/<%= tome.isbn %>" method="POST">
-                            <button type="submit" class="btn-panier">Ajouter au panier</button>
-                        </form>
-                        <form action="/coupCoeur/<%= tome.isbn %>/supprimer" method="POST">
-                            <button type="submit" class="btn-supprimer">Supprimer</button>
-                        </form>
-                    </div>
-                </div>
-            <% }) %>
+                    <% if (index % 2 === 1 || index === tomes.length - 1) { %>
+                        <div class="grid-spacer"></div>
+                    <% } %>
+                <% }) %>
+            </div>
         <% } %>
     </main>
-    
-    
 
     <%- include('../partials/footer') %>
 </body>
