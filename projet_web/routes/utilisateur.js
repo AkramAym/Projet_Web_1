@@ -391,6 +391,7 @@ routeur.get('/coupCoeur', async function (req, res) {
             t.isbn AS isbn,
             t.numero_volume AS numero_volume,
             t.image AS image,
+            t.prix AS prix_unitaire,
             s.titre_serie AS titre_serie
         FROM 
             tome t
@@ -593,55 +594,4 @@ routeur.get('/confirmation', async (req, res) => {
     }
 });
 
-
 export default routeur;
-
-
-
-routeur.get('/coupCoeur', (req, res) => {
-    const identifiant = req.session.user?.identifiant;
-
-    if (!identifiant) {
-        return res.redirect('/connexion');
-    }
-
-    const query = `
-SELECT 
-    t.isbn AS isbn,
-    t.numero_volume AS numero_volume,
-    t.image AS image,
-    t.prix AS prix,
-    s.titre_serie AS titre_serie,
-    s.auteur AS auteur,
-    s.editeur AS editeur
-FROM 
-    coup_de_coeur c
-JOIN 
-    tome t ON c.tome_isbn = t.isbn
-JOIN 
-    serie s ON t.serie_id_serie = s.id_serie
-WHERE 
-    c.utilisateur_identifiant = ?
-
-    `;
-
-    con.query(query, [identifiant], (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.render('pages/coups-de-coeurs', {
-                tomes: [],
-                message: 'Erreur lors de la récupération des coups de cœur.',
-                connecte: true
-            });
-        }
-
-        // S'assurer que le prix est bien en float
-        results.forEach(r => r.prix = parseFloat(r.prix));
-
-        res.render('pages/coups-de-coeurs', {
-            tomes: results,
-            connecte: true
-        });
-    });
-});
-
