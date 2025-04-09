@@ -1,0 +1,51 @@
+<%- include('../partials/head') %>
+
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/css/recherche.css">
+
+<div class="container mt-4 mb-5">
+  <!-- En-tête des résultats -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="results-count"><%= resultats.length %> résultats pour "<%= terme %>"</h5>
+    <div class="d-flex align-items-center">
+     
+    </div>
+  </div>
+  
+  <% if (erreur) { %>
+    <div class="alert alert-danger">
+      <%= erreur %>
+    </div>
+  <% } %>
+  
+  <% if (resultats.length === 0 && !erreur) { %>
+    <div class="alert alert-info">
+      Aucun résultat trouvé pour "<%= terme %>".
+    </div>
+  <% } %>
+  
+  <!-- Grille de résultats -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% resultats.forEach(function(tome) { %>
+      <div class="col">
+        <div class="manga-item">
+          <a href="/tome/<%= tome.isbn %>" class="manga-link">
+            <img src="<%= tome.image %>" class="manga-cover" alt="<%= tome.titre_serie %>">
+          </a>
+          <div class="manga-info">
+            <h5 class="manga-title">
+              <a href="/tome/<%= tome.isbn %>" class="title-link">
+                <%= tome.titre_serie %><% if (tome.numero_volume) { %>, Vol. <%= tome.numero_volume %><% } %>
+              </a>
+            </h5>
+            <p class="manga-author"><%= tome.auteur %></p>
+            <p class="manga-format">Couverture souple</p>
+            <p class="manga-price"><%= tome.prix.toFixed(2) %> $</p>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

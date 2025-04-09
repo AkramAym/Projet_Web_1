@@ -669,19 +669,18 @@ routeur.post("/coupCoeur/:isbn/supprimer", async (req, res) => {
         });
     }
 });
-routeur.get('/tome/:isbn', (req, res) => {
+routeur.get('/tome/:isbn', async (req, res) => {
     const isbn = req.params.isbn;
 
     const query = `
-   SELECT t.isbn, t.numero_volume, t.image, t.prix, t.annee_publication,
-       s.titre_serie, s.auteur, s.editeur
-FROM tome t
-JOIN serie s ON t.serie_id_serie = s.id_serie
-WHERE t.isbn = ?
-
+        SELECT t.isbn, t.numero_volume, t.image, t.prix, t.annee_publication,
+               s.titre_serie, s.auteur, s.editeur
+        FROM tome t
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE t.isbn = ?
     `;
 
-    con.query(query, [isbn], (err, results) => {
+    con.query(query, [isbn], async (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Erreur serveur');
@@ -691,12 +690,30 @@ WHERE t.isbn = ?
             return res.status(404).send('Tome non trouvé');
         }
 
+        const tome = results[0];
+        tome.prix = tome.prix.toFixed(2); // Arrondi
+
+        let isFavori = false;
+
+        if (req.session.user?.identifiant) {
+            try {
+                const utilisateur = await utilisateurCollection.findOne({ identifiant: req.session.user.identifiant });
+                if (utilisateur?.favorites?.includes(isbn)) {
+                    isFavori = true;
+                }
+            } catch (error) {
+                console.error("Erreur lors de la vérification des favoris:", error);
+            }
+        }
+
         res.render('pages/tome', {
-            tome: results[0],
-            connecte: !!req.session.user
+            tome: tome,
+            connecte: !!req.session.user,
+            isFavori: isFavori
         });
     });
 });
+
 
 
 routeur.post("/panier/:isbn/modifier", async function (req, res) {
