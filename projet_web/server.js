@@ -10,6 +10,7 @@ import mangasRouteur from "./routes/mangas.js";
 import con from './mysqlbd.js';
 import mongocon from './mongodb.js';
 import MongoStore from "connect-mongo";
+import rechercheRouteur from "./routes/recherche.js";
 
 
 const app = express();
@@ -38,6 +39,7 @@ app.use(session({
 
 app.use(utilisateurRouteur);
 app.use(mangasRouteur);
+app.use(rechercheRouteur);
 
 // Route principale (Page d'accueil)
 app.get('/', function (req, res) {
@@ -101,14 +103,15 @@ app.get('/tome/:isbn', (req, res) => {
         }
 
         const tome = result[0];
-        tome.prix = tome.prix.toFixed(2); // Formater le prix à deux décimales
+        tome.prix = tome.prix.toFixed(2);
 
         const utilisateurConnecte = req.session.user?.identifiant ? true : false;
 
-        // Rendu de la page avec les informations du manga et la variable 'connecte'
+        // 👉 AJOUTE ICI une valeur par défaut pour isFavori
         res.render("pages/tome", {
             tome: tome,
-            connecte: utilisateurConnecte // Envoi de la variable 'connecte'
+            connecte: utilisateurConnecte,
+            isFavori: false // ou vraie valeur plus tard
         });
     });
 });

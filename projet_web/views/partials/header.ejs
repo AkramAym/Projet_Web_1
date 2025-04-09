@@ -27,12 +27,13 @@
                 <button class="btn btn-outline-dark" type="submit">
                     <i class="fas fa-search"></i>
                 </button>
+                <!-- Le conteneur de résultats sera ajouté ici par JavaScript -->
             </form>
             
             <!-- Icônes à droite -->
             <div class="icons-container d-flex align-items-center">
                 <a href="/coupCoeur" class="me-3 text-dark"><i class="fas fa-heart fa-lg"></i></a>
-                <a href="/profil" class="me-3 text-dark"><i class="fas fa-user fa-lg"></i></a>
+                <a href="#" id="profile-button" class="me-3 text-dark"><i class="fas fa-user fa-lg"></i></a>
                 <a href="/panier" class="text-dark"><i class="fas fa-shopping-bag fa-lg"></i></a>
             </div>
         </div>
@@ -40,10 +41,57 @@
     
     <!-- Barre des catégories -->
     <div class="category-bar text-center py-2">
-       
         <a href="/nos-series" class="category-link">Nos séries</a>
         <a href="/categories/1" class="category-link">Shonen</a>
         <a href="/categories/2" class="category-link">Seinen</a>
         <a href="/categories/3" class="category-link">Shojo</a>
     </div>
 </header>
+
+<!-- Overlay pour assombrir la page -->
+<div id="profile-overlay" class="profile-overlay"></div>
+
+<!-- Menu déroulant du profil -->
+<div id="profile-dropdown" class="profile-dropdown">
+    <div class="profile-dropdown-header">
+        <h2>Mon profil</h2>
+        <button id="close-profile" class="close-button">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <div class="profile-dropdown-content">
+        <% if (connecte) { %>
+            <div class="profile-menu">
+                <a href="/profil" class="profile-menu-item">
+                    <span>Mon compte</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="/commandes" class="profile-menu-item">
+                    <span>Mes commandes</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="/coupCoeur" class="profile-menu-item">
+                    <span>Mes coups de cœur</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            
+            <a href="/deconnexion" class="btn btn-logout">Se déconnecter</a>
+        <% } else { %>
+            <div class="profile-not-connected">
+                <p>Vous n'êtes pas connecté</p>
+                <a href="/connexion" class="btn btn-primary mb-2 w-100">Se connecter</a>
+                <a href="/inscription" class="btn btn-outline-primary w-100">S'inscrire</a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- Ajoutez cette ligne dans le head de votre layout principal -->
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/profile.css">
+
+<!-- Ajoutez cette ligne avant la fermeture du body dans votre layout principal -->
+<script src="/js/search.js"></script>
+<script src="/js/profile.js"></script>

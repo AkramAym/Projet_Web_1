@@ -2,29 +2,57 @@
 <html lang="fr">
 <head>
     <%- include('../partials/head') %>
-    <%- include('../partials/header') %> <!-- Inclusion du header -->
-    <title>Profil Utilisateur</title>
+    <title>Mon Compte - MangaThèque</title>
+    <link rel="stylesheet" href="/css/profil.css">
 </head>
 <body>
-    <div class="user-profile-section">
-        <div class="container">
-            <h1>Profil de l'utilisateur</h1>
-            <div class="user-info">
-                <p><strong>Nom:</strong> <%= utilisateur.nom %></p>
-                <p><strong>Prénom:</strong> <%= utilisateur.prenom %></p>
-                <p><strong>Email:</strong> <%= utilisateur.email %></p>
-            </div>
-
-            <div class="profile-actions">
-                <a href="/commandes" class="btn btn-outline-dark">Voir mes commandes</a>
-                <a href="/deconnexion" class="btn btn-danger">Déconnexion</a>
+    <%- include('../partials/header') %>
+    
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="account-details-card">
+                    <h2 class="account-title">DÉTAILS DU COMPTE</h2>
+                    
+                    <div class="account-info">
+                        <div class="info-row">
+                            <div class="info-label">NOM :</div>
+                            <div class="info-value"><%= utilisateur.nom %> <%= utilisateur.prenom %></div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-label">COURRIEL :</div>
+                            <div class="info-value"><%= utilisateur.email %></div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-label">MOT DE PASSE :</div>
+                            <div class="info-value">********</div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-label">N° DE TÉLÉPHONE :</div>
+                            <div class="info-value"><%= utilisateur.telephone || 'Non précisé' %></div>
+                        </div>
+                        
+                        <div class="info-row">
+                            <div class="info-label">LANGUE :</div>
+                            <div class="info-value">Français</div>
+                        </div>
+                        
+                      
+                    </div>
+                    
+                    <div class="account-actions">
+                        <a href="/coupCoeur" class="account-button">Mes coups de cœur</a>
+                        <a href="/commandes" class="account-button">Mes commandes</a>
+                        <a href="/deconnexion" class="account-button account-button-logout">Déconnexion</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-<footer>
+    
     <%- include('../partials/footer') %>
-</footer>
+</body>
 </html>
