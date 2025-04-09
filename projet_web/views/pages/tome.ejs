@@ -7,17 +7,14 @@
             <%= tome.titre_serie %> - Tome <%= tome.numero_volume %>
         </title>
         <%- include('../partials/header') %>
-
 </head>
 
 <body class="tome-page">
     <div class="container">
         <div class="book-container">
-            <!-- Image du tome -->
             <div class="book-image zoom-container">
                 <img src="<%= tome.image %>" alt="Couverture de <%= tome.titre_serie %>">
             </div>
-            <!-- Infos du tome -->
             <div class="book-details">
                 <h1>
                     <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
@@ -25,7 +22,7 @@
                 <p class="author-edition">
                     <%= tome.auteur %>, <%= tome.editeur %>
                 </p> <!-- Auteur et maison d'édition -->
-                
+
                 <% if (tome.stock> 0) { %>
                     <p class="availability">Disponible</p>
                     <% } else { %>
@@ -49,7 +46,8 @@
                                         <button class="btn borrow" type="submit">EMPRUNTER</button>
                                     </form>
                                     <form action="/coupCoeur/<%= tome.isbn %>" method="POST" class="add-to-heart-form">
-                                        <button type="submit" class="btn add-to-heart" title="Ajouter aux coups de cœur">
+                                        <button type="submit" class="btn add-to-heart"
+                                            title="Ajouter aux coups de cœur">
                                             <i class="fas fa-heart heart-icon <%= isFavori ? 'favori' : '' %>"></i>
                                         </button>
                                     </form>
@@ -57,7 +55,7 @@
                             </div>
             </div>
         </div>
-        <!-- Informations supplémentaires -->
+
         <div class="additional-info">
             <h2>Informations supplémentaires</h2>
             <ul>
@@ -75,7 +73,52 @@
                 </li>
             </ul>
         </div>
+
+        <!-- Section Avis -->
+        <div class="review-section mt-5">
+            <h2>Donnez votre avis</h2>
+            <% if (connecte) { %>
+                <form action="/avis/<%= tome.isbn %>" method="POST" class="review-form">
+                    <label for="note">Votre note</label>
+                    <div class="star-rating">
+                        <% for(let i=5; i>=1; i--) { %>
+                            <input type="radio" id="star-<%= i %>" name="note" value="<%= i %>">
+                            <label for="star-<%= i %>">&#9733;</label>
+                            <% } %>
+                    </div>
+                    <label for="commentaire">Votre avis *</label>
+                    <textarea id="commentaire" name="commentaire" required></textarea>
+                    <button type="submit" class="btn btn-primary mt-2">Envoyer</button>
+                </form>
+                <% } else { %>
+                    <p class="alert alert-warning">Vous devez vous <a href="/connexion">connecter</a> pour laisser un
+                        commentaire.</p>
+                    <% } %>
+        </div>
+
+        <!-- Affichage des avis -->
+        <% if (avis && avis.length> 0) { %>
+            <div class="avis-list mt-4">
+                <h3>Avis des lecteurs</h3>
+                <% avis.forEach(a=> { %>
+                    <div class="avis-item">
+                        <div class="note">
+                            <% for (let i=0; i < a.note; i++) { %><span class="etoile">&#9733;</span>
+                                <% } %>
+                                    <% for (let i=a.note; i < 5; i++) { %><span class="etoile vide">&#9733;</span>
+                                        <% } %>
+                        </div>
+                        <p class="commentaire">
+                            <%= a.commentaire %>
+                        </p>
+                        <p class="auteur">- <%= a.utilisateur_identifiant %>
+                        </p>
+                    </div>
+                    <% }); %>
+            </div>
+            <% } %>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const zoomContainers = document.querySelectorAll('.zoom-container');
@@ -88,7 +131,7 @@
                     const moveX = (x / rect.width) * 100;
                     const moveY = (y / rect.height) * 100;
                     img.style.transformOrigin = `${moveX}% ${moveY}%`;
-                    img.style.transform = 'scale(1.5)'; // Ajuste le niveau de zoom ici
+                    img.style.transform = 'scale(1.5)';
                 });
                 container.addEventListener('mouseleave', function () {
                     img.style.transform = 'scale(1)';

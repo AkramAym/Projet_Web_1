@@ -15,6 +15,8 @@ const stripe = new Stripe('sk_test_51R8orP8qQxkurE6iWJhRpfNwWjb6NaRILqlS8wJLB1mz
 const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
 const panierCollection = mongocon.db("MangathequeBD").collection("panier");
 const commandesCollection = mongocon.db("MangathequeBD").collection("commande");
+const avisCollection = mongocon.db("MangathequeBD").collection("avis");
+
 
 // Route pour afficher la page d'inscription
 routeur.get('/inscription', (req, res) => {
@@ -674,7 +676,7 @@ routeur.get('/tome/:isbn', async (req, res) => {
 
     const query = `
         SELECT t.isbn, t.numero_volume, t.image, t.prix, t.annee_publication,
-               s.titre_serie, s.auteur, s.editeur
+               s.titre_serie, s.auteur, s.editeur, s.synopsis, t.stock
         FROM tome t
         JOIN serie s ON t.serie_id_serie = s.id_serie
         WHERE t.isbn = ?
@@ -691,28 +693,31 @@ routeur.get('/tome/:isbn', async (req, res) => {
         }
 
         const tome = results[0];
-        tome.prix = tome.prix.toFixed(2); // Arrondi
+        tome.prix = tome.prix.toFixed(2);
 
         let isFavori = false;
+        let avis = [];
 
-        if (req.session.user?.identifiant) {
-            try {
+        try {
+            if (req.session.user?.identifiant) {
                 const utilisateur = await utilisateurCollection.findOne({ identifiant: req.session.user.identifiant });
-                if (utilisateur?.favorites?.includes(isbn)) {
-                    isFavori = true;
-                }
-            } catch (error) {
-                console.error("Erreur lors de la vérification des favoris:", error);
+                isFavori = utilisateur?.favorites?.includes(isbn) || false;
             }
+
+            avis = await avisCollection.find({ isbn }).sort({ date: -1 }).toArray();
+        } catch (error) {
+            console.error("Erreur chargement avis :", error);
         }
 
         res.render('pages/tome', {
-            tome: tome,
+            tome,
             connecte: !!req.session.user,
-            isFavori: isFavori
+            isFavori,
+            avis
         });
     });
 });
+
 
 
 
@@ -754,3 +759,32 @@ routeur.post("/panier/:isbn/modifier", async function (req, res) {
 
 
 export default routeur;
+
+
+routeur.post("/avis/:isbn", async (req, res) => {
+    if (!req.session.user?.identifiant) return res.redirect("/connexion");
+
+    const isbn = req.params.isbn;
+    const { note, commentaire } = req.body;
+    const utilisateur_identifiant = req.session.user.identifiant;
+
+    if (!note || !commentaire) {
+        return res.redirect("/tome/" + isbn);
+    }
+
+    try {
+        const avis = {
+            isbn: isbn,
+            utilisateur_identifiant,
+            note: parseInt(note),
+            commentaire,
+            date: new Date()
+        };
+
+        await avisCollection.insertOne(avis);
+        res.redirect("/tome/" + isbn);
+    } catch (err) {
+        console.error("Erreur lors de l'insertion de l'avis :", err);
+        res.redirect("/tome/" + isbn);
+    }
+});

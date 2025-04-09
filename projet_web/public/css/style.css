@@ -1187,6 +1187,74 @@ body {
 .heart-icon.favori {
     color: red;
 }
+
+.review-section {
+    margin-top: 40px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.review-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 150px;
+    resize: vertical;
+    padding: 10px;
+}
+
+.star-rating {
+    direction: rtl;
+    display: flex;
+    gap: 5px;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 1.5rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.star-rating input[type="radio"]:checked ~ label {
+    color: #f5c518;
+}
+
+.avis-list {
+    margin-top: 30px;
+}
+
+.avis-item {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.avis-item .note {
+    color: #f5c518;
+}
+
+.etoile.vide {
+    color: #ccc;
+}
+
+.avis-item .commentaire {
+    font-style: italic;
+}
+
+.avis-item .auteur {
+    font-size: 0.9rem;
+    color: #666;
+}
+
 .borrow-heart-group {
     display: flex;
     align-items: center;
