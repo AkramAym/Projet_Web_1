@@ -85,7 +85,7 @@ routeur.post("/connexion", async function (req, res) {
         if (!utilisateur) {
             throw new Error('Identifiant inexistant')
         }
-        const motDePasseValide = bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
+        const motDePasseValide = await bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
         if (!motDePasseValide) {
             throw new Error('Mot de passe invalide');
         } else {

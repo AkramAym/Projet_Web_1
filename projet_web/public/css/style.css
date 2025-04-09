@@ -1187,3 +1187,9 @@ body {
 .heart-icon.favori {
     color: red;
 }
+.borrow-heart-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
