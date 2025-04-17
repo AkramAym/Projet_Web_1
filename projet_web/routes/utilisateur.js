@@ -17,6 +17,7 @@ const panierCollection = mongocon.db("MangathequeBD").collection("panier");
 const commandesCollection = mongocon.db("MangathequeBD").collection("commande");
 const avisCollection = mongocon.db("MangathequeBD").collection("avis");
 const empruntsCollection = mongocon.db("MangathequeBD").collection("emprunts");
+const inventaireCollection = mongocon.db("MangathequeBD").collection("inventaire");
 
 
 // Route pour afficher la page d'inscription
@@ -165,7 +166,6 @@ routeur.get('/panier', async function (req, res) {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
     }
-
     const identifiant = req.session.user.identifiant;
 
     try {
@@ -251,11 +251,18 @@ routeur.post("/panier/:isbn", async function (req, res) {
     const quantite = parseInt(req.body.quantite, 10);
     const isbnTome = parseFloat(req.params.isbn);
     console.log(req.body, req.params.isbn);
-    try {
-        let panier = await panierCollection.findOne({
-            utilisateur_identifiant: identifiant
-        });
+    let inventaire = await inventaireCollection.findOne({ isbn: isbnTome });
+    let stock = inventaire.quantite;
 
+    if (quantite > stock) {
+        return res.render("pages/erreur", {
+            message: `Impossible d’ajouter ${quantite} exemplaire(s). stock disponible : ${inventaire.quantite}.`,
+            articles: [],
+            connecte: true
+        });
+    }
+    try {
+        let panier = await panierCollection.findOne({ utilisateur_identifiant: identifiant });
         if (!panier) {
             panier = {
                 utilisateur_identifiant: identifiant,
@@ -567,10 +574,16 @@ routeur.get('/confirmation', async (req, res) => {
         };
 
         await commandesCollection.insertOne(nouvelleCommande);
-
+        for (const article of articles) {
+            let inventaire = await inventaireCollection.findOne({ isbn: article.isbn });
+            let stock = inventaire.quantite;
+            stock -= article.quantite;
+            await inventaireCollection.updateOne({isbn : article.isbn}, {$set: {quantite : stock}});
+        }
         await panierCollection.deleteOne({ utilisateur_identifiant: identifiant });
 
         delete req.session.paiementData;
+
 
         res.render('pages/confirmation', {
             message: "Paiement réussi ! Votre commande a été enregistrée.",
@@ -786,6 +799,16 @@ routeur.post("/emprunt/:isbn", async (req, res) => {
 
     const identifiant = req.session.user.identifiant;
     const isbn = parseFloat(req.params.isbn);
+
+    let inventaire = await inventaireCollection.findOne({ isbn: isbnTome });
+    let stock = inventaire.quantite;
+    if (quantite > stock) {
+        return res.render("pages/erreur", {
+            message: `Impossible d'emprunter ce tome. Aucun tome disponible dans l'inventaire.`,
+            articles: [],
+            connecte: true
+        });
+    }
     const dateEmprunt = new Date();
     const dateRetourPrevue = new Date();
 
@@ -802,6 +825,9 @@ routeur.post("/emprunt/:isbn", async (req, res) => {
 
     try {
         await empruntsCollection.insertOne(emprunt);
+            let inventaire = await inventaireCollection.findOne({ isbn: emprunt.isbn });
+            let stock = inventaire.quantite-1;
+            await inventaireCollection.updateOne({isbn : article.isbn}, {$set: {quantite : stock}});
         res.redirect("/emprunts");
     } catch (err) {
         console.error("Erreur création emprunt :", err);

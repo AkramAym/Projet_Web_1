@@ -1,0 +1,45 @@
+/* Container centré */
+.container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  /* Boîte d’alerte d’erreur */
+  .error-message {
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+    padding: 1rem 1.25rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Titre « Erreur : » */
+  .error-message strong {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Lien de retour */
+  .back-btn {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  .back-btn a {
+    display: inline-block;
+    background-color: #2563eb;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .back-btn a:hover {
+    background-color: #1e40af;
+  }
+  
