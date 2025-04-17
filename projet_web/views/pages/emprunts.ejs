@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <%- include('../partials/head') %>
+  <%- include('../partials/header') %>
+  <title>Mes Emprunts</title>
+  <link rel="stylesheet" href="/css/emprunts.css">
+</head>
+
+<body>
+  <div class="user-emprunts">
+    <h1>Historique de vos emprunts</h1>
+
+    <% if (emprunts.length === 0) { %>
+      <p>Vous n’avez aucun emprunt en cours.</p>
+    <% } else { %>
+      <% emprunts.forEach(emprunt => { %>
+        <a href="/emprunts/<%= emprunt._id %>" class="emprunt-card-link">
+        <div class="emprunt-card">
+          <h3>Emprunt du <%= new Date(emprunt.dateEmprunt).toLocaleDateString('fr-FR') %></h3>
+          <p><strong>Série / Tome :</strong> <%= emprunt.titre_serie %> #<%= emprunt.numero_volume %></p>
+          <p><strong>Retour prévu :</strong> <%= new Date(emprunt.dateRetourPrevue).toLocaleDateString('ca-CA') %></p>
+          <% if (emprunt.returnee) { %>
+            <p class="status returned">
+              <strong>Statut :</strong> Rendu le <%= new Date(emprunt.dateRetournee).toLocaleDateString('ca-CA') %>
+            </p>
+          <% } else { %>
+            <p class="status ongoing"><strong>Statut :</strong> En cours</p>
+            <form action="/emprunt/<%= emprunt._id %>/return" method="POST" class="emprunt-card-form">
+              <button type="submit" class="emprunt-return-btn">Rendre</button>
+            </form>
+          <% } %>
+        </div>
+      </a>
+      <% }) %>
+    <% } %>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

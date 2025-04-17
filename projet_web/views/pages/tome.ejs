@@ -42,7 +42,7 @@
                                 </form>
                                 </form>
                                 <div class="borrow-heart-group">
-                                    <form action="/emprunter" method="POST" class="borrow-form">
+                                    <form action="/emprunt/<%= tome.isbn %>" method="POST" class="borrow-form">
                                         <button class="btn borrow" type="submit">EMPRUNTER</button>
                                     </form>
                                     <form action="/coupCoeur/<%= tome.isbn %>" method="POST" class="add-to-heart-form">

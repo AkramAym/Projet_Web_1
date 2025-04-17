@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <%- include('../partials/head') %>
+  <title>Détails de l’emprunt</title>
+  <link rel="stylesheet" href="/css/emprunt-details.css">
+</head>
+
+<body>
+  <%- include('../partials/header') %>
+
+  <div class="emprunt-details">
+    <h2 class="emprunt-number">
+      Emprunt du <%= new Date(emprunt.dateEmprunt).toLocaleDateString('fr-FR') %>
+    </h2>
+
+    <div class="emprunt-section">
+      <div>
+        <p><strong>Date d’emprunt :</strong>
+          <%= new Date(emprunt.dateEmprunt).toLocaleString('fr-FR') %>
+        </p>
+        <p><strong>Retour prévu :</strong>
+          <%= new Date(emprunt.dateRetourPrevue).toLocaleString('fr-FR') %>
+        </p>
+        <% if (emprunt.returned) { %>
+          <p><strong>Date de retour :</strong>
+            <%= new Date(emprunt.dateRetournee).toLocaleString('fr-FR') %>
+          </p>
+        <% } %>
+      </div>
+
+      <div>
+        <p><strong>Statut :</strong>
+          <% if (emprunt.retournee) { %>
+            Rendu
+          <% } else { %>
+            En cours
+          <% } %>
+        </p>
+      </div>
+    </div>
+
+    <div class="items-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Couverture</th>
+            <th>Série / Tome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <img src="<%= emprunt.image %>" alt="<%= emprunt.titre_serie %>">
+            </td>
+            <td>
+              <p><strong><%= emprunt.titre_serie %></strong></p>
+              <p>Tome <%= emprunt.numero_volume %></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="back-btn">
+      <a href="/emprunts" class="btn">← Retour aux emprunts</a>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

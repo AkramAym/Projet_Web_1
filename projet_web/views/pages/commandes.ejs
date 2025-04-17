@@ -2,43 +2,51 @@
 <html lang="fr">
 
 <head>
-<%- include('../partials/head') %>
-<%- include('../partials/header') %>
-<title>Commandes</title>
-<link rel="stylesheet" href="/css/commandes.css">
+    <%- include('../partials/head') %>
+        <%- include('../partials/header') %>
+            <title>Commandes</title>
+            <link rel="stylesheet" href="/css/commandes.css">
 </head>
 
 <body>
-<div class="user-orders">
-    <h1>Historique de vos commandes</h1>
+    <div class="user-orders">
+        <h1>Historique de vos commandes</h1>
 
-    <% if (commandes.length === 0) { %>
-        <p>Vous n'avez passé aucune commande pour le moment.</p>
-    <% } else { %>
-        <% commandes.forEach(c => { %>
-            <a href="/commandes/<%= c._id %>" class="order-card-link">
-                <div class="order-card">
-                    <h3>Commande du <%= new Date(c.date_commande).toLocaleDateString('fr-FR') %></h3>
-                    <p><strong>Total:</strong> <%= c.total %> $</p>
-                    <% if (c.adresse) { %>
-                        <p><strong>Adresse:</strong> <%= c.adresse.adresse || c.adresse.adresse1 || '' %>, <%= c.adresse.ville %> <%= c.adresse.code_postal %></p>
-                    <% } else { %>
-                        <p><strong>Adresse:</strong> Adresse non disponible</p>
-                    <% } %>
-            
-                    <ul>
-                        <% c.articles.forEach(a => { %>
-                            <li>
-                                <strong><%= a.titre_serie %></strong> - Tome <%= a.numero_volume %>
-                                (x<%= a.quantite %>) - <%= a.sous_total %> $
-                            </li>
-                        <% }) %>
-                    </ul>
-                </div>
-            </a>
-        <% }) %>
-    <% } %>
-</div>
+        <% if (commandes.length===0) { %>
+            <p>Vous n'avez passé aucune commande pour le moment.</p>
+            <% } else { %>
+                <% commandes.forEach(c=> { %>
+                    <a href="/commandes/<%= c._id %>" class="order-card-link">
+                        <div class="order-card">
+                            <h3>Commande du <%= new Date(c.date_commande).toLocaleDateString('fr-FR') %>
+                            </h3>
+                            <p><strong>Total:</strong>
+                                <%= c.total %> $
+                            </p>
+                            <% if (c.adresse) { %>
+                                <p><strong>Adresse:</strong>
+                                    <%= c.adresse.adresse || c.adresse.adresse1 || '' %>, <%= c.adresse.ville %>
+                                            <%= c.adresse.code_postal %>
+                                </p>
+                                <% } else { %>
+                                    <p><strong>Adresse:</strong> Adresse non disponible</p>
+                                    <% } %>
+
+                                        <ul>
+                                            <% c.articles.forEach(a=> { %>
+                                                <li>
+                                                    <strong>
+                                                        <%= a.titre_serie %>
+                                                    </strong> - Tome <%= a.numero_volume %>
+                                                        (x<%= a.quantite %>) - <%= a.sous_total %> $
+                                                </li>
+                                                <% }) %>
+                                        </ul>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+    </div>
 </body>
 <footer>
     <%- include('../partials/footer') %>
