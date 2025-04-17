@@ -9,6 +9,7 @@ import mongocon from '../mongodb.js';
 const avisCollection = mongocon.db("MangathequeBD").collection("avis");
 
 const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
+const inventaireCollection = mongocon.db("MangathequeBD").collection("inventaire");
 // Route pour afficher la page "Nos séries"
 routeur.get('/nos-series', function (req, res) {
     console.log(req.session);
@@ -98,14 +99,13 @@ routeur.get('/categories/:id', function (req, res) {
 });
 
 //Route pour afficher la page d'un tome
-routeur.get('/tomes/:isbn', function (req, res) {
+routeur.get('/tomes/:isbn', async function (req, res) {
     const tomeISBN = req.params.isbn; 
     const query = `
         SELECT t.isbn, 
         t.numero_volume, 
         t.prix, 
         t.image,
-        t.stock, 
         t.serie_id_serie, 
         t.annee_publication,
         s.titre_serie, 
@@ -128,7 +128,14 @@ routeur.get('/tomes/:isbn', function (req, res) {
     
         const tome = result[0];
         tome.prix = tome.prix.toFixed(2);
-    
+
+        let inventaire = await inventaireCollection.findOne({ isbn: tomeISBN});
+        if (!inventaire) {
+            inventaire = { isbn: parseFloat(tomeISBN), quantite: 10 };
+            await inventaireCollection.insertOne(inventaire);
+          }
+          tome.stock = inventaire.quantite;
+
         let isFavori = false;
         let avis = [];
 
@@ -147,7 +154,7 @@ routeur.get('/tomes/:isbn', function (req, res) {
             tome,
             isFavori,
             connecte: utilisateurConnecte,
-            avis // <-- maintenant tu envoies bien `avis` à EJS
+            avis
         });
     });
 });
