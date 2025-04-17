@@ -45,6 +45,7 @@ router.get("/recherche", (req, res) => {
 // Page de résultats complète
 router.get("/recherche-page", (req, res) => {
   const query = req.query.q;
+  const sort = req.query.sort || "asc";
 
   if (!query) {
     return res.render("pages/recherche", {
@@ -52,12 +53,33 @@ router.get("/recherche-page", (req, res) => {
       terme: "",
       erreur: null,
       connecte: !!req.session?.user,
+      sort: sort
     });
   }
 
-  const searchParam = `%${query}%`;
+  // Vérifier si la recherche est pour "manga" (afficher tous les mangas)
+  const isAllMangaSearch = query.toLowerCase() === "manga";
 
-  const sql = `
+  // SQL pour tous les mangas si la recherche est "manga"
+  const sqlAllMangas = `
+    SELECT 
+      t.isbn, 
+      t.numero_volume, 
+      t.image, 
+      t.prix,
+      s.titre_serie,
+      s.auteur,
+      s.editeur
+    FROM 
+      serie s
+    JOIN 
+      tome t ON s.id_serie = t.serie_id_serie
+    ORDER BY 
+      ${sort === "desc" ? "t.prix DESC" : "t.prix ASC"}
+  `;
+
+  // SQL pour la recherche normale
+  const sqlNormal = `
     SELECT 
       t.isbn, 
       t.numero_volume, 
@@ -73,28 +95,55 @@ router.get("/recherche-page", (req, res) => {
     WHERE 
       s.titre_serie LIKE ?
     ORDER BY 
-      s.titre_serie ASC, 
-      t.numero_volume ASC
+      ${sort === "desc" ? "t.prix DESC" : "t.prix ASC"}
   `;
 
-  con.query(sql, [searchParam], (err, results) => {
-    if (err) {
-      console.error("Erreur SQL recherche page:", err);
-      return res.render("pages/recherche", {
-        resultats: [],
-        terme: query,
-        erreur: "Erreur lors de la recherche.",
-        connecte: !!req.session?.user,
-      });
-    }
+  const searchParam = `%${query}%`;
 
-    res.render("pages/recherche", {
-      resultats: results,
-      terme: query,
-      erreur: null,
-      connecte: !!req.session?.user,
+  // Exécuter la requête appropriée
+  if (isAllMangaSearch) {
+    con.query(sqlAllMangas, (err, results) => {
+      if (err) {
+        console.error("Erreur SQL recherche page:", err);
+        return res.render("pages/recherche", {
+          resultats: [],
+          terme: query,
+          erreur: "Erreur lors de la recherche.",
+          connecte: !!req.session?.user,
+          sort: sort
+        });
+      }
+
+      res.render("pages/recherche", {
+        resultats: results,
+        terme: query,
+        erreur: null,
+        connecte: !!req.session?.user,
+        sort: sort
+      });
     });
-  });
+  } else {
+    con.query(sqlNormal, [searchParam], (err, results) => {
+      if (err) {
+        console.error("Erreur SQL recherche page:", err);
+        return res.render("pages/recherche", {
+          resultats: [],
+          terme: query,
+          erreur: "Erreur lors de la recherche.",
+          connecte: !!req.session?.user,
+          sort: sort
+        });
+      }
+
+      res.render("pages/recherche", {
+        resultats: results,
+        terme: query,
+        erreur: null,
+        connecte: !!req.session?.user,
+        sort: sort
+      });
+    });
+  }
 });
 
 export default router;

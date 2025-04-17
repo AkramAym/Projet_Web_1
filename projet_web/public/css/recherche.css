@@ -113,4 +113,22 @@ body {
   .manga-cover {
     height: 300px;
   }
+
+  .prix-filter-btn {
+    border: 1px solid #333;
+    font-size: 14px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;
+    background-color: #333;
+    color: white;
+  }
+  
+  .prix-filter-btn:hover {
+    background-color: #000;
+    color: white;
+  }
+
 }
