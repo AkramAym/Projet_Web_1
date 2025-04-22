@@ -100,7 +100,7 @@ routeur.get('/categories/:id', function (req, res) {
 
 //Route pour afficher la page d'un tome
 routeur.get('/tomes/:isbn', async function (req, res) {
-    const tomeISBN = req.params.isbn; 
+    const tomeISBN = parseFloat(req.params.isbn); 
     const query = `
         SELECT t.isbn, 
         t.numero_volume, 

@@ -59,11 +59,8 @@ CREATE TABLE tome (
     serie_id_serie    INT NOT NULL,
     prix              DECIMAL(10,2) NOT NULL,
     image             VARCHAR(255) NOT NULL,
-    stock             INT NOT NULL,
     PRIMARY KEY (isbn) 
 );
-
-
 
 ALTER TABLE serie
     ADD CONSTRAINT serie_categorie_fk 
@@ -222,11 +219,7 @@ INSERT INTO serie (titre_serie, image_serie, imageLong_serie, auteur, editeur, s
 VALUES (
     'Kagurabachi', 
     '/images/imgserie_kagurabachi.webp',
-<<<<<<< Updated upstream
     '/images/imgLongserie_kagurabachi.jpg',
-=======
-    
->>>>>>> Stashed changes
     'Takeru Hokazono', 
     'Shūeisha', 
     'Kagurabachi est une série qui suit les aventures d''un jeune garçon nommé Chihiro, qui possède une épée magique capable de couper les malédictions. Il voyage à travers un monde rempli de dangers pour venger la mort de son père et protéger les innocents des forces maléfiques.', 
