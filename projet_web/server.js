@@ -5,12 +5,10 @@ import { fileURLToPath } from "url";
 import { body, validationResult } from "express-validator";
 import dateFormat from "dateformat";
 import cookieParser from "cookieparser";
-import utilisateurRouteur from "./routes/utilisateur.js";
-import mangasRouteur from "./routes/mangas.js";
 import con from './mysqlbd.js';
 import mongocon from './mongodb.js';
 import MongoStore from "connect-mongo";
-import rechercheRouteur from "./routes/recherche.js";
+import routeur from "./routes/routeur.js";
 
 
 const app = express();
@@ -37,9 +35,7 @@ app.use(session({
     })
 }));
 
-app.use(utilisateurRouteur);
-app.use(mangasRouteur);
-app.use(rechercheRouteur);
+app.use(routeur);
 
 // Route principale (Page d'accueil)
 app.get('/', function (req, res) {
@@ -107,7 +103,6 @@ app.get('/tome/:isbn', (req, res) => {
 
         const utilisateurConnecte = req.session.user?.identifiant ? true : false;
 
-        // 👉 AJOUTE ICI une valeur par défaut pour isFavori
         res.render("pages/tome", {
             tome: tome,
             connecte: utilisateurConnecte,
