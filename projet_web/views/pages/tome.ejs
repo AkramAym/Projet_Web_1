@@ -9,9 +9,9 @@
         <%- include('../partials/header') %>
 </head>
 
+<% const indisponible = tome.stock <= 0; %>
 <body class="tome-page">
     <% if (typeof avis === 'undefined') { var avis = []; } %>
-
     <div class="container">
         <div class="book-container">
             <div class="book-image zoom-container">
@@ -25,10 +25,10 @@
                     <%= tome.auteur %>, <%= tome.editeur %>
                 </p> <!-- Auteur et maison d'édition -->
 
-                <% if (tome.stock> 0) { %>
+                <% if (!indisponible) { %>
                     <p class="availability">Disponible</p>
                     <% } else { %>
-                        <p class="availability">Hors de Stock</p>
+                        <p class="availability out-of-stock">Hors de Stock</p>
                         <% } %>
                             <p class="price"><strong>
                                     <%= tome.prix %> $
@@ -39,13 +39,13 @@
                             <!-- Boutons -->
                             <div class="buttons-container">
                                 <form action="/panier/<%= tome.isbn %>" method="POST" class="add-to-cart-form">
-                                    <button class="btn add-to-cart" type="submit">AJOUTER AU PANIER</button>
-                                    <input type="number" name="quantite" value="1" min="1" class="quantity-selector">
+                                    <button class="btn add-to-cart" type="submit" <%= indisponible ? 'disabled' : ''%>>AJOUTER AU PANIER</button>
+                                    <input type="number" name="quantite" value="1" min="1" class="quantity-selector" <%= indisponible ? 'disabled' : ''%>>
                                 </form>
                                 </form>
                                 <div class="borrow-heart-group">
                                     <form action="/emprunt/<%= tome.isbn %>" method="POST" class="borrow-form">
-                                        <button class="btn borrow" type="submit">EMPRUNTER</button>
+                                        <button class="btn borrow" type="submit" <%= indisponible ? 'disabled' : ''%>>EMPRUNTER</button>
                                     </form>
                                     <form action="/coupCoeur/<%= tome.isbn %>" method="POST" class="add-to-heart-form">
                                         <button type="submit" class="btn add-to-heart"
