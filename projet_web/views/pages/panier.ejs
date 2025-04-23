@@ -42,7 +42,7 @@
                                         <div class="quantity-selector">
                                             <form action="/panier/<%= article.isbn %>/modifier" method="POST" class="quantity-form">
                                                 <select name="quantite" onchange="this.form.submit()">
-                                                    <% for(let i = 1; i <= 10; i++) { %>
+                                                    <% for(let i = 1; i <= article.stock; i++) { %>
                                                         <option value="<%= i %>" <%= article.quantite === i ? 'selected' : '' %>><%= i %></option>
                                                     <% } %>
                                                 </select>

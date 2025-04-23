@@ -23,6 +23,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+//Désactive le cache du navigateur pour les requêtes GET
+app.use((req, res, next) => {
+    if (req.method === 'GET') {
+      res.setHeader('Cache-Control', 'no-store');
+    }
+    next();
+  });
+
 app.use(session({
     secret: "yahou",
     saveUninitialized: false,

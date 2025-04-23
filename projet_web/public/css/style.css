@@ -712,6 +712,12 @@ html, body {
     margin-bottom: 15px;
 }
 
+.tome-page .availability.out-of-stock {
+    font-size: 1.5rem;
+    color: rgb(179, 11, 11);
+    margin-bottom: 15px;
+}
+
 .tome-page .price {
     font-size: 2rem;
     font-weight: bold;
