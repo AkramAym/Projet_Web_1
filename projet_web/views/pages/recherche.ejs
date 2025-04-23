@@ -1,5 +1,4 @@
 <%- include('../partials/head') %>
-
 <%- include('../partials/header') %>
 <link rel="stylesheet" href="/css/recherche.css">
 
@@ -22,30 +21,30 @@
       </div>
     </div>
   </div>
-  
+
   <% if (erreur) { %>
     <div class="alert alert-danger">
       <%= erreur %>
     </div>
   <% } %>
-  
+
   <% if (resultats.length === 0 && !erreur) { %>
     <div class="alert alert-info">
       Aucun résultat trouvé pour "<%= terme %>".
     </div>
   <% } %>
-  
+
   <!-- Grille de résultats -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <% resultats.forEach(function(tome) { %>
       <div class="col">
         <div class="manga-item">
-          <a href="/tome/<%= tome.isbn %>" class="manga-link">
+          <a href="/tomes/<%= tome.isbn %>" class="manga-link">
             <img src="<%= tome.image %>" class="manga-cover" alt="<%= tome.titre_serie %>">
           </a>
           <div class="manga-info">
             <h5 class="manga-title">
-              <a href="/tome/<%= tome.isbn %>" class="title-link">
+              <a href="/tomes/<%= tome.isbn %>" class="title-link">
                 <%= tome.titre_serie %><% if (tome.numero_volume) { %>, Vol. <%= tome.numero_volume %><% } %>
               </a>
             </h5>

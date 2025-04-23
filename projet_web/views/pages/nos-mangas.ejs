@@ -1,0 +1,91 @@
+<%- include('../partials/head') %>
+<link rel="stylesheet" href="/css/nos-mangas.css">
+<%- include('../partials/header') %>
+
+<div class="container-fluid nos-mangas-layout">
+  <!-- Sidebar des filtres -->
+  <aside class="filter-sidebar">
+    <form method="GET" action="/nos-mangas">
+      <h4>Filtres</h4>
+  
+      <div class="filter-group">
+        <label>Maison d’édition</label>
+        <div class="filter-group-content">
+          <% editeurs.forEach(e => { %>
+            <div><input type="checkbox" name="editeurs" value="<%= e.editeur %>"> <%= e.editeur %></div>
+          <% }) %>
+        </div>
+      </div>
+  
+      <div class="filter-group">
+        <label>Auteur</label>
+        <div class="filter-group-content">
+          <% auteurs.forEach(a => { %>
+            <div><input type="checkbox" name="auteurs" value="<%= a.auteur %>"> <%= a.auteur %></div>
+          <% }) %>
+        </div>
+      </div>
+  
+      <div class="filter-group">
+        <label>Série</label>
+        <div class="filter-group-content">
+          <% series.forEach(s => { %>
+            <div><input type="checkbox" name="series" value="<%= s.titre_serie %>"> <%= s.titre_serie %></div>
+          <% }) %>
+        </div>
+      </div>
+  
+      <button class="btn btn-apply" type="submit">Appliquer</button>
+    </form>
+  </aside>
+  
+
+  <!-- Contenu principal -->
+  <main class="main-content">
+    <div class="filter-sort">
+      <form method="GET" action="/nos-mangas">
+        <select name="sort" onchange="this.form.submit()">
+          <option value="default">Trier par pertinence</option>
+          <option value="prix_asc">Prix croissant</option>
+          <option value="prix_desc">Prix décroissant</option>
+          <option value="stock">Popularité (stock faible en haut)</option>
+        </select>
+      </form>
+    </div>
+
+    <!-- Grille de mangas -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <% mangas.forEach(function(tome) { %>
+        <div class="col">
+          <div class="manga-item">
+            <a href="/tomes/<%= tome.isbn %>" class="manga-link">
+              <img src="<%= tome.image %>" class="manga-cover" alt="<%= tome.titre_serie %>">
+            </a>
+            <div class="manga-info">
+              <h5 class="manga-title">
+                <a href="/tomes/<%= tome.isbn %>" class="title-link">
+                  <%= tome.titre_serie %><% if (tome.numero_volume) { %>, Vol. <%= tome.numero_volume %><% } %>
+                </a>
+              </h5>
+              <p class="manga-author"><%= tome.auteur %></p>
+              <p class="manga-format">Couverture souple</p>
+              <p class="manga-price"><%= tome.prix.toFixed(2) %> $</p>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll(".filter-group label").forEach(label => {
+      label.addEventListener("click", () => {
+        const group = label.parentElement;
+        group.classList.toggle("open");
+      });
+    });
+  </script>
+  
+</div>
+
+<%- include('../partials/footer') %>
