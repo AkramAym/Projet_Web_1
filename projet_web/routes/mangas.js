@@ -7,6 +7,7 @@ routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
 import mongocon from '../mongodb.js';
 const avisCollection = mongocon.db("MangathequeBD").collection("avis");
+const router = express.Router();
 
 const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
 const inventaireCollection = mongocon.db("MangathequeBD").collection("inventaire");
@@ -158,6 +159,78 @@ routeur.get('/tomes/:isbn', async function (req, res) {
         });
     });
 });
+routeur.get('/nos-mangas', async (req, res) => {
+    const { sort = 'default', editeurs = [], auteurs = [], series = [] } = req.query;
+
+    let filters = '';
+    const params = [];
+
+    if (editeurs.length) {
+        filters += ' AND s.editeur IN (?)';
+        params.push(editeurs);
+    }
+    if (auteurs.length) {
+        filters += ' AND s.auteur IN (?)';
+        params.push(auteurs);
+    }
+    if (series.length) {
+        filters += ' AND s.titre_serie IN (?)';
+        params.push(series);
+    }
+
+    let orderBy = 's.titre_serie ASC, t.numero_volume ASC';
+    if (sort === 'prix_asc') orderBy = 't.prix ASC';
+    if (sort === 'prix_desc') orderBy = 't.prix DESC';
+
+    const sql = `
+        SELECT 
+            t.isbn, t.numero_volume, t.image, t.prix,
+            s.titre_serie, s.auteur, s.editeur
+        FROM tome t
+        JOIN serie s ON t.serie_id_serie = s.id_serie
+        WHERE 1 = 1 ${filters}
+        ORDER BY ${orderBy}
+    `;
+
+    const editeurSQL = 'SELECT DISTINCT editeur FROM serie ORDER BY editeur ASC';
+    const auteurSQL = 'SELECT DISTINCT auteur FROM serie ORDER BY auteur ASC';
+    const serieSQL = 'SELECT DISTINCT titre_serie FROM serie ORDER BY titre_serie ASC';
+
+    try {
+        con.query(sql, params, async (err, mangas) => {
+            if (err) throw err;
+
+            // Stock MongoDB
+            for (let m of mangas) {
+                const inv = await mongocon.db("MangathequeBD").collection("inventaire").findOne({ isbn: m.isbn });
+                m.stock = inv ? inv.quantite : 0;
+            }
+
+            // Tri par stock (popularité)
+            if (sort === 'stock') {
+                mangas.sort((a, b) => a.stock - b.stock);
+            }
+
+            con.query(editeurSQL, (err, editeurs) => {
+                con.query(auteurSQL, (err, auteurs) => {
+                    con.query(serieSQL, (err, series) => {
+                        res.render('pages/nos-mangas', {
+                            mangas,
+                            editeurs,
+                            auteurs,
+                            series,
+                            connecte: !!req.session?.user
+                        });
+                    });
+                });
+            });
+        });
+    } catch (e) {
+        console.error("Erreur /nos-mangas :", e);
+        res.status(500).send('Erreur serveur');
+    }
+});
+
 
 
 export default routeur;

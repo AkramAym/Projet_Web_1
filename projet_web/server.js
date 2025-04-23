@@ -2,46 +2,47 @@ import express from "express";
 import session from "express-session";
 import path from "path";
 import { fileURLToPath } from "url";
-import { body, validationResult } from "express-validator";
-import dateFormat from "dateformat";
+import MongoStore from "connect-mongo";
 import cookieParser from "cookieparser";
 import con from './mysqlbd.js';
 import mongocon from './mongodb.js';
-import MongoStore from "connect-mongo";
 import routeur from "./routes/routeur.js";
-
+import rechercheRouteur from "./routes/recherche.js";
 
 const app = express();
-// Définition du dossier contenant les vues
+
+// Chemins
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// View engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Servir les fichiers statiques
+// Middlewares
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(session({
     secret: "yahou",
-    saveUninitialized: false, //ne sauvegarde pa la session si l'utilisateur n'a rien fait
-    resave: false, //ne sauvegarde pas la session si elle n'a pas ete sauvegarde
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    },
-    store: MongoStore.create({
-        client: mongocon
-    })
+    saveUninitialized: false,
+    resave: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+    store: MongoStore.create({ client: mongocon })
 }));
 
+// Routes
+app.use(rechercheRouteur);
 app.use(routeur);
 
-// Route principale (Page d'accueil)
+// Redirection ancienne URL
+app.get('/tome/:isbn', (req, res) => {
+    res.redirect(301, '/tomes/' + req.params.isbn);
+});
+
+// Accueil
 app.get('/', function (req, res) {
-    console.log(req.session);
-    console.log(req.sessionID);
-    console.log("accueil")
     req.session.visited = true;
     const query = `
         SELECT t.isbn, t.numero_volume, t.prix, t.image, t.serie_id_serie, s.titre_serie 
@@ -50,18 +51,15 @@ app.get('/', function (req, res) {
         WHERE t.numero_volume = 1
     `;
 
-    var utilisateurConnecte = false;
-    if (req.session.user?.identifiant) {
-        utilisateurConnecte = true;
-    }
+    const utilisateurConnecte = !!req.session.user?.identifiant;
 
     con.query(query, function (err, result) {
         if (err) throw err;
 
-        result.forEach(objet => {
-            objet.prix = objet.prix.toFixed(2);
+        result.forEach(obj => {
+            obj.prix = obj.prix.toFixed(2);
         });
-        
+
         res.render("pages/index", {
             tomes: result,
             connecte: utilisateurConnecte
@@ -69,12 +67,8 @@ app.get('/', function (req, res) {
     });
 });
 
-// Démarrer le serveur
+// Démarrage
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
-
-
-console.log(path.join(__dirname, 'views'));
-
