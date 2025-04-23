@@ -43,7 +43,8 @@ routeur.post("/inscription", async function (req, res) {
                 prenom: prenom,
                 mot_de_passe: motDePasseEncrypte,
                 email: email,
-                telephone: telephone || null
+                telephone: telephone || null,
+                solde: 0
             };
 
             await utilisateurCollection.insertOne(newUser);
@@ -96,12 +97,6 @@ routeur.post("/connexion", async function (req, res) {
     }
 });
 
-/*routeur.get('/status', (req, res) => {
-    return req.session.user ? res.status(200).send(request.session.user) :
-        res.status(401).send({ message: "Non authentifie" });
-});*/
-
-
 //Route pour afficher le profil de l'utilisateur
 routeur.get('/profil', async function (req, res) {
     console.log(req.session);
@@ -112,7 +107,6 @@ routeur.get('/profil', async function (req, res) {
     }
     try {
         const identifiant = req.session.user.identifiant;
-
         const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
 
         if (!utilisateur) {
@@ -123,6 +117,9 @@ routeur.get('/profil', async function (req, res) {
             req.session.adresseTemp = utilisateur.adresse;
         }
 
+        if (utilisateur.solde == null){
+            utilisateur.solde = 0;
+        }
         res.render("pages/profil", {
             utilisateur: utilisateur,
             connecte: true

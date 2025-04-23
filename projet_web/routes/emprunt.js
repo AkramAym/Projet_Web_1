@@ -3,6 +3,7 @@ import express from "express";
 import con from '../mysqlbd.js';
 import mongocon from '../mongodb.js';
 import { ObjectId } from 'mongodb';
+import cron from 'node-cron';
 
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
@@ -10,6 +11,46 @@ routeur.use(express.json());
 
 const empruntsCollection = mongocon.db("MangathequeBD").collection("emprunts");
 const inventaireCollection = mongocon.db("MangathequeBD").collection("inventaire");
+const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
+
+const penaliteJournaliere = -0.5;
+
+async function appliquerPenalites() {
+    console.log("pénalités démarré à", new Date().toISOString());
+    const maintenant = new Date();
+    const hier = new Date(maintenant);
+    hier.setDate(maintenant.getDate() - 1);
+    hier.setHours(23,59,59,999);
+
+    const empruntsTard = await empruntsCollection.find({
+        retournee : false,
+        date_retour_prevue: { $lt: maintenant},
+        $or: [
+            {derniereDatePenalisee:{ $lt: hier} },
+            {derniereDatePenalisee: null }
+        ]
+    }).toArray();
+
+    for (const emprunt of empruntsTard){
+        await utilisateurCollection.updateOne(
+            { identifiant: emprunt.utilisateur_identifiant },
+            { $inc: { solde : penaliteJournaliere } }
+        );
+
+        await empruntsCollection.updateOne(
+            {_id : emprunt.id},
+            { $set: { derniereDatePenalisee : maintenant} }
+        );
+    }
+    console.log("pénalitées terminées à", new Date().toISOString());
+}
+cron.schedule('0 0 * * *', appliquerPenalites);
+
+routeur.post('/test-penalites', async (req, res) => {
+    await appliquerPenalites();
+    res.send("Pénalités appliquées");
+  });
+
 
 // Ajouter un emprunt
 routeur.post("/emprunt/:isbn", async (req, res) => {
@@ -17,11 +58,11 @@ routeur.post("/emprunt/:isbn", async (req, res) => {
         return res.redirect("/connexion");
 
     const identifiant = req.session.user.identifiant;
-    const isbn = parseFloat(req.params.isbn);
+    const isbnTome = parseFloat(req.params.isbn);
 
     let inventaire = await inventaireCollection.findOne({ isbn: isbnTome });
     let stock = inventaire.quantite;
-    if (quantite > stock) {
+    if (stock === 0) {
         return res.render("pages/erreur", {
             message: `Impossible d'emprunter ce tome. Aucun tome disponible dans l'inventaire.`,
             articles: [],
@@ -36,24 +77,26 @@ routeur.post("/emprunt/:isbn", async (req, res) => {
 
     const emprunt = {
         utilisateur_identifiant: identifiant,
-        tome_isbn: isbn,
+        isbn: isbnTome,
         date_emprunt: dateEmprunt,
         date_retour_prevue: dateRetourPrevue,
-        retournee: false
+        retournee: false,
+        derniereDatePenalisee: null
     };
 
     try {
         await empruntsCollection.insertOne(emprunt);
         let inventaire = await inventaireCollection.findOne({ isbn: emprunt.isbn });
         let stock = inventaire.quantite - 1;
-        await inventaireCollection.updateOne({ isbn: article.isbn }, { $set: { quantite: stock } });
+        await inventaireCollection.updateOne({ isbn: emprunt.isbn }, { $set: { quantite: stock } });
         res.redirect("/emprunts");
     } catch (err) {
         console.error("Erreur création emprunt :", err);
-        res.redirect("/tome/" + isbn);
+        res.redirect("/tome/" + isbnTome);
     }
 });
 
+//liste d'emprunts
 routeur.get("/emprunts", async (req, res) => {
     if (!req.session.user?.identifiant)
         return res.redirect("/connexion");
@@ -69,7 +112,7 @@ routeur.get("/emprunts", async (req, res) => {
                 connecte: true
             });
         }
-        const listeIsbn = emprunts.map(emprunt => emprunt.tome_isbn);
+        const listeIsbn = emprunts.map(emprunt => emprunt.isbn);
         const query = `
             SELECT 
                 t.isbn AS isbn,
@@ -93,7 +136,7 @@ routeur.get("/emprunts", async (req, res) => {
                 });
             }
             results.forEach(objet => {
-                const emprunt = emprunts.find(e => e.tome_isbn === objet.isbn);
+                const emprunt = emprunts.find(e => e.isbn === objet.isbn);
                 if (emprunt) {
                     objet._id = emprunt._id;
                     objet.dateEmprunt = emprunt.date_emprunt;
@@ -102,7 +145,7 @@ routeur.get("/emprunts", async (req, res) => {
                     objet.dateRetournee = emprunt.date_retournee;
                 }
             });
-            console.log("200 Résultats :", results);
+            console.log("200, Résultats :", results);
             res.render("pages/emprunts", {
                 emprunts: results,
                 connecte: true
@@ -132,12 +175,13 @@ routeur.get("/emprunts/:id", async (req, res) => {
         });
 
         if (!emprunt) {
+            console.log("168 :" + emprunt);
             return res.render("pages/erreur", {
                 message: "Emprunt introuvable",
                 connecte: true
             });
         }
-        const isbn = parseFloat(emprunt.tome_isbn);
+        const isbn = parseFloat(emprunt.isbn);
         const query = `
             SELECT 
                 t.isbn AS isbn,
@@ -153,7 +197,7 @@ routeur.get("/emprunts/:id", async (req, res) => {
 
         con.query(query, isbn, (error, results) => {
             if (error) {
-                console.error("Erreur récupération tomes pour emprunts :", error);
+                console.error("190, Erreur récupération tomes pour emprunts :", error);
                 return res.render("pages/erreur", {
                     message: "Emprunt introuvable",
                     connecte: true
