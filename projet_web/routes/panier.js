@@ -48,22 +48,27 @@ routeur.get('/panier', async function (req, res) {
                 WHERE 
                     t.isbn IN (?)`;
 
-            con.query(query, [listeIsbn], (error, results) => {
+            con.query(query, [listeIsbn], async (error, results) => {
                 if (error) {
                     console.log(error);
                     throw error;
                 }
                 console.log("191 Résultats de la requête:", results);
                 // Calcul du sous-total pour chaque article
-                results.forEach(objet => {
+
+                for (const objet of results){
                     const articlePanier = panier.articles.find(article => article.tome_isbn === objet.isbn);
+
+                    const inventaire = await inventaireCollection.findOne({ isbn: objet.isbn });
                     if (articlePanier) {
                         objet.prix_unitaire = objet.prix_unitaire.toFixed(2);
                         objet.quantite = articlePanier.quantite || 1;
                         objet.sous_total = (objet.prix_unitaire * articlePanier.quantite).toFixed(2); // Calcul du sous-total avec deux décimales
+                        objet.stock = inventaire.quantite;
                     }
-                });
+                }
                 console.log("200 Résultats de l'attachament quantité+sous-total:", results);
+
                 // Calcul du total du panier
                 let prixTotal = 0;
                 results.forEach(article => {
@@ -152,7 +157,7 @@ routeur.post("/panier/:isbn", async function (req, res) {
     }
 });
 
-//Suppression d'un tome dans un panier
+//Suppression d'un tome depuis le panier
 routeur.post("/panier/:isbn/supprimer", async function (req, res) {
     if (!req.session.user?.identifiant) {
         return res.redirect("/connexion");
