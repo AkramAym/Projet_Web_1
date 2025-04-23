@@ -16,7 +16,7 @@ routeur.post("/avis/:isbn", async (req, res) => {
     const utilisateur_identifiant = req.session.user.identifiant;
 
     if (!note || !commentaire) {
-        return res.redirect("/tome/" + isbn);
+        return res.redirect("/tomes/" + isbn);
     }
     const avis = {
         isbn: isbn,
@@ -27,10 +27,10 @@ routeur.post("/avis/:isbn", async (req, res) => {
     };
     try {
         await avisCollection.insertOne(avis);
-        res.redirect("/tome/" + isbn);
+        res.redirect("/tomes/" + isbn);
     } catch (err) {
         console.error("Erreur lors de l'insertion de l'avis :", err);
-        res.redirect("/tome/" + isbn);
+        res.redirect("/tomes/" + isbn);
     }
 });
 
