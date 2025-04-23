@@ -1,13 +1,21 @@
 <div class="manga-list">
     <% tomes.forEach(tome => { %>
-        <a href="/tomes/<%= tome.isbn %>" class="manga-card">
-            <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>">
-            <p class="title">
-                <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
-            </p>
-            <p class="price">
-                <%= tome.prix %>$
-            </p>
-        </a> 
+      <div class="manga-item">
+        <a href="/tomes/<%= tome.isbn %>">
+          <img src="<%= tome.image %>" alt="<%= tome.titre_serie %> Tome <%= tome.numero_volume %>" class="manga-cover">
+        </a>
+  
+        <div class="manga-info">
+          <h3 class="manga-title">
+            <a href="/tomes/<%= tome.isbn %>" class="title-link">
+              <%= tome.titre_serie %> Tome <%= tome.numero_volume %>
+            </a>
+          </h3>
+          <p class="manga-author"><%= tome.auteur %></p>
+          <p class="manga-format">Couverture souple</p>
+          <p class="manga-price"><%= tome.prix %> $</p>
+        </div>
+      </div>
     <% }) %>
-</div>
+  </div>
+  

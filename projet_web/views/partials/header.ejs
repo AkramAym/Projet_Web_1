@@ -4,54 +4,70 @@
         2 mangas achetés, livraison offerte
     </div>
     
-    <% if (!connecte) { %>
-    <!-- Barre grise avec "Se connecter" et "S'inscrire" -->
-    <div class="top-bar d-flex justify-content-end align-items-center px-4 py-1 bg-light" style="background-color: #cfcfcf;">
-        <a href="/connexion" class="text-dark me-3">Se connecter</a>
-        <a href="/inscription" class="text-dark fw-bold">S'inscrire</a>
-    </div>
-    <% } %>
-    
-    <!-- Barre de navigation principale -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm py-2">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-            
-            <!-- Logo -->
-            <a class="navbar-brand" href="/">
-                <img src="/images/logo.png" alt="MangaThèque" class="logo-img">
-            </a>
-            
-            <!-- Barre de recherche -->
-            <form class="d-flex search-bar">
-                <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-                <!-- Le conteneur de résultats sera ajouté ici par JavaScript -->
-            </form>
-            
-            <!-- Icônes à droite -->
-            <div class="icons-container d-flex align-items-center">
-                <a href="/coupCoeur" class="me-3 text-dark"><i class="fas fa-heart fa-lg"></i></a>
-                <a href="#" id="profile-button" class="me-3 text-dark"><i class="fas fa-user fa-lg"></i></a>
-                <a href="/panier" class="text-dark"><i class="fas fa-shopping-bag fa-lg"></i></a>
+    <!-- Header principal -->
+    <div class="main-header">
+        <div class="container-fluid">
+            <div class="header-content">
+                <!-- Logo -->
+                <a href="/" class="header-logo">
+                    <img src="/images/logo.png" alt="MangaThèque" class="logo-img">
+                </a>
+                
+                <!-- Navigation -->
+                <nav class="header-nav">
+                    <a href="/nos-series" class="nav-link">Nos séries</a>
+                    <a href="/categories/1" class="nav-link">Shonen</a>
+                    <a href="/categories/2" class="nav-link">Seinen</a>
+                    <a href="/categories/3" class="nav-link">Shojo</a>
+                </nav>
+                
+                <!-- Icônes -->
+                <div class="header-icons">
+                    <% if (connecte) { %>
+                        <a href="/coupCoeur" class="icon-link">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                    <% } %>
+                    <a href="#" id="search-toggle" class="icon-link">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <a href="#" id="profile-button" class="icon-link">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="/panier" class="icon-link">
+                        <i class="fas fa-shopping-bag"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
     
-    <!-- Barre des catégories -->
-    <div class="category-bar text-center py-2">
-        <a href="/nos-series" class="category-link">Nos séries</a>
-        <a href="/categories/1" class="category-link">Shonen</a>
-        <a href="/categories/2" class="category-link">Seinen</a>
-        <a href="/categories/3" class="category-link">Shojo</a>
+    <!-- Barre de recherche (cachée par défaut) -->
+    <div class="search-bar-container" id="search-bar-container">
+        <div class="container-fluid">
+            <form action="/recherche-page" method="GET" class="search-form">
+                <div class="search-input-wrapper">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input type="text" name="q" id="search-input" class="search-input" placeholder="Chercher..." autocomplete="off">
+                    <button type="button" class="search-close" id="search-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="search-results" id="search-results">
+            <!-- Les résultats de recherche seront ajoutés ici par JavaScript -->
+        </div>
     </div>
 </header>
 
 <!-- Overlay pour assombrir la page -->
-<div id="profile-overlay" class="profile-overlay"></div>
+<div id="search-overlay" class="search-overlay"></div>
 
-<!-- Menu déroulant du profil -->
+<!-- Éléments nécessaires pour le menu du profil -->
+<div id="profile-overlay" class="profile-overlay"></div>
 <div id="profile-dropdown" class="profile-dropdown">
     <div class="profile-dropdown-header">
         <h2>Mon profil</h2>
@@ -93,9 +109,11 @@
 </div>
 
 <!-- Ajoutez cette ligne dans le head de votre layout principal -->
+<link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/profile.css">
 
 <!-- Ajoutez cette ligne avant la fermeture du body dans votre layout principal -->
+<script src="/js/header.js"></script>
 <script src="/js/search.js"></script>
 <script src="/js/profile.js"></script>

@@ -8,15 +8,18 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h5 class="results-count"><%= resultats.length %> résultats pour "<%= terme %>"</h5>
     <div class="d-flex align-items-center">
-      <% if (typeof sort !== 'undefined' && sort === 'desc') { %>
-        <a href="/recherche-page?q=<%= terme %>&sort=asc" class="btn btn-dark prix-filter-btn">
-          PRIX : ÉLEVÉ À FAIBLE <i class="fas fa-arrow-down"></i>
-        </a>
-      <% } else { %>
-        <a href="/recherche-page?q=<%= terme %>&sort=desc" class="btn btn-dark prix-filter-btn">
-          PRIX : FAIBLE À ÉLEVÉ <i class="fas fa-arrow-up"></i>
-        </a>
-      <% } %>
+      <div class="filter-container">
+        <span class="filter-label">Trier par:</span>
+        <div class="dropdown filter-dropdown">
+          <button class="btn btn-outline-dark dropdown-toggle filter-btn" type="button" id="sortFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= typeof sort !== 'undefined' && sort === 'desc' ? 'PRIX : ÉLEVÉ À FAIBLE' : 'PRIX : FAIBLE À ÉLEVÉ' %>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="sortFilterDropdown">
+            <li><a class="dropdown-item <%= typeof sort === 'undefined' || sort === 'asc' ? 'active' : '' %>" href="/recherche-page?q=<%= terme %>&sort=asc">PRIX : FAIBLE À ÉLEVÉ</a></li>
+            <li><a class="dropdown-item <%= typeof sort !== 'undefined' && sort === 'desc' ? 'active' : '' %>" href="/recherche-page?q=<%= terme %>&sort=desc">PRIX : ÉLEVÉ À FAIBLE</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
   

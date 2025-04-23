@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="stylesheet" href="/css/index.css">
     <%- include('../partials/head') %>
-    <%- include('../partials/header') %> <!-- Inclusion du header -->
+    <%- include('../partials/header') %>
+
     <title><%= serie.titre_serie %> - Tomes</title>
 </head>
 <body>
     <div class="serie-container">
-        <!-- Image Longue en bannière -->
-        <div class="serie-banner <%= serie.titre_serie.toLowerCase().replace(/\s/g, '-') %>">
+        <!-- Bannière longue en haut -->
+        <div class="serie-banner <%= serie.titre_serie.toLowerCase().replace(/\\s/g, '-') %>">
             <img src="<%= serie.imageLong_serie %>" alt="Bannière de <%= serie.titre_serie %>">
         </div>
-        
-        
-        <!-- Liste des tomes -->
-        <%- include('../partials/tomes') %>
-    </div>
+
+        <!-- Liste des tomes format moderne -->
+        <section class="manga-section">
+            <div class="container">
+                <%- include('../partials/tomes') %>
+            </div>
+        </section>
+    </div> 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
@@ -23,3 +28,4 @@
     <%- include('../partials/footer') %>
 </footer>
 </html>
+ 

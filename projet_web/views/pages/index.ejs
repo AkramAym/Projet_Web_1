@@ -1,65 +1,39 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="stylesheet" href="/css/index.css">
     <%- include('../partials/head') %>
-    <%- include('../partials/header') %> <!-- Inclusion du header -->
+    <%- include('../partials/header') %>
     <title>Accueil</title>
 </head>
 <body>
+    <!-- BANNIÈRE MODERNE -->
+    <section class="banner">
+        <img src="/images/mangauno.jpg" class="active" alt="Bannière 1">
+        <img src="/images/mangatres.jpg" alt="Bannière 2">
+        <img src="/images/mangaquatro.jpg" alt="Bannière 3">
+    </section>
+
+    <!-- SECTION MANGAS -->
+    <h2 class="manga-section-title">Nos Mangas Populaires</h2>
     <section class="manga-section">
         <div class="container">
-            <div class="top-section">
-                <!-- Image principale à gauche -->
-                <div class="left-image">
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="/images/danslbon.png" class="d-block w-100" alt="Mangas en vedette">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/images/image2.webp" class="d-block w-100" alt="Mangas en vedette">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="/images/image3.jpg" class="d-block w-100" alt="Mangas en vedette">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-    
-                <!-- Texte à droite -->
-                <div class="right-text">
-                    <p class="big-text">Trouvez le manga qui vous plaît</p>
-                    <p class="small-text">好きなマンガを見つけてください</p>
-    
-                    <hr>
-    
-                    <p class="big-text">Peu importe le genre</p>
-                    <p class="small-text">性別関係なく</p>
-    
-                    <hr>
-    
-                    <p class="big-text">Inscris-toi pour acheter</p>
-                    <p class="small-text">購入するために登録する</p>
-    
-                </div>
-            </div>
-    
-            <!-- Section des mangas en bas -->
-    
             <%- include('../partials/tomes') %>
         </div>
-        </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const images = document.querySelectorAll('.banner img');
+            let index = 0;
+            setInterval(() => {
+                images[index].classList.remove('active');
+                index = (index + 1) % images.length;
+                images[index].classList.add('active');
+            }, 5000);
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <footer>
