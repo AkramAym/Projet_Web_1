@@ -135,6 +135,12 @@
     color: #000;
   }
 
+  .manga-info {
+    display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  }
+
 /* Layout principal */
 .nos-mangas-layout {
     display: flex;

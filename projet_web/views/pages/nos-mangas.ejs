@@ -67,12 +67,11 @@
             <div class="manga-info">
               <h5 class="manga-title">
                 <a href="/tomes/<%= tome.isbn %>" class="title-link">
-                  <%= tome.titre_serie %><% if (tome.numero_volume) { %>, Vol. <%= tome.numero_volume %><% } %>
+                  <%= tome.titre_serie %>, Vol. <%= tome.numero_volume %>
                 </a>
               </h5>
-              <p class="manga-author"><%= tome.auteur %></p>
-              <p class="manga-format">Couverture souple</p>
-              <p class="manga-price"><%= tome.prix.toFixed(2) %> $</p>
+              <p class="manga-author"> <%= tome.auteur %></p>
+              <p class="manga-price"> <%= tome.prix.toFixed(2) %> $</p>
             </div>
           </div>
         </div>
