@@ -40,7 +40,10 @@
                             <div class="info-value">Français</div>
                         </div>
                         
-                      
+                        <div class="info-row">
+                            <div class="info-label">SOLDE :</div>
+                            <div class="info-value"><%= utilisateur.solde.toFixed(2) %> $</div>
+                        </div>
                     </div>
                     
                     <div class="account-actions">
@@ -48,6 +51,9 @@
                         <a href="/commandes" class="account-button">Mes commandes</a>
                         <a href="/emprunts" class="account-button">Mes emprunts</a>
                         <a href="/deconnexion" class="account-button account-button-logout">Déconnexion</a>
+                        <form action="/test-penalites" method="POST">
+                            <button type="submit">Tester pénalités</button>
+                          </form>
                     </div>
                 </div>
             </div>

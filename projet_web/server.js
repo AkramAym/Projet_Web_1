@@ -3,7 +3,6 @@ import session from "express-session";
 import path from "path";
 import { fileURLToPath } from "url";
 import MongoStore from "connect-mongo";
-import cookieParser from "cookieparser";
 import con from './mysqlbd.js';
 import mongocon from './mongodb.js';
 import routeur from "./routes/routeur.js";

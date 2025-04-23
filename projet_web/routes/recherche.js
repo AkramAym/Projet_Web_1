@@ -1,10 +1,10 @@
 import express from "express"
 import con from "../mysqlbd.js"
 
-const router = express.Router()
+const routeur = express.Router()
 
 // Recherche AJAX (pour search.js)
-router.get("/recherche", (req, res) => {
+routeur.get("/recherche", (req, res) => {
   const query = req.query.q
 
   if (!query || query.length < 2) {
@@ -44,7 +44,7 @@ router.get("/recherche", (req, res) => {
 })
 
 // Page de résultats complète
-router.get("/recherche-page", (req, res) => {
+routeur.get("/recherche-page", (req, res) => {
   const query = req.query.q
   const sort = req.query.sort || "relevance" // Par défaut, trier par pertinence
 
@@ -158,4 +158,4 @@ router.get("/recherche-page", (req, res) => {
   }
 })
 
-export default router
+export default routeur
