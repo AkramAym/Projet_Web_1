@@ -29,17 +29,29 @@
     padding: 0 15px;
   }
   
-  /* Logo */
-  .header-logo {
-    display: block;
-    height: 40px;
-  }
-  
   .logo-img {
-    height: 100%;
-    width: auto;
+    height: 60px !important;
+    width: auto !important;
   }
   
+  
+
+/* Logo */
+.header-logo {
+  display: block;
+  height: 18px; /* encore plus petit */
+  margin-left: 15px; /* léger décalage à gauche */
+  padding: 10px 0;
+  object-fit: contain;
+}
+
+/* Conteneur du logo */
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
   /* Navigation */
   .header-nav {
     display: flex;
