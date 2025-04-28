@@ -11,7 +11,7 @@ const avisCollection = mongocon.db("MangathequeBD").collection("avis");
 routeur.post("/avis/:isbn", async (req, res) => {
     if (!req.session.user?.identifiant) return res.redirect("/connexion");
 
-    const isbn = req.params.isbn;
+    const isbn = parseFloat(req.params.isbn);
     const { note, commentaire } = req.body;
     const utilisateur_identifiant = req.session.user.identifiant;
 

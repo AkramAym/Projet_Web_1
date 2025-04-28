@@ -129,6 +129,7 @@ routeur.get('/tomes/:isbn', async function (req, res) {
         const tome = result[0];
         tome.prix = tome.prix.toFixed(2);
 
+        //Récupère le stock restant du tome
         let inventaire = await inventaireCollection.findOne({ isbn: tomeISBN});
         if (!inventaire) {
             inventaire = { isbn: parseFloat(tomeISBN), quantite: 10 };
@@ -136,6 +137,7 @@ routeur.get('/tomes/:isbn', async function (req, res) {
           }
           tome.stock = inventaire.quantite;
 
+        //Regarde si l'utilisateur a déjà emprunté ce tome
         const dejaEmprunte = await empruntsCollection.findOne({ 
             utilisateur_identifiant : identifiant,
             isbn : tomeISBN,

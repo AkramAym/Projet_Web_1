@@ -9,11 +9,11 @@
         <%- include('../partials/header') %>
 </head>
 
+<!-- Variables pour les boutons d'emprunt/d'ajout au panier-->
 <% const indisponible = tome.stock <= 0;
 const empruntPossible = indisponible || !!dejaEmprunte;
 const texteEmprunt = dejaEmprunte ? 'EMPRUNT EN COURS' : 'EMPRUNTER';
 %>
-
 
 <body class="tome-page">
     <% if (typeof avis === 'undefined') { var avis = []; } %>
