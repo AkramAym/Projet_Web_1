@@ -39,11 +39,11 @@
 /* Logo */
 .header-logo {
   display: block;
-  height: 18px; /* encore plus petit */
-  margin-left: 15px; /* léger décalage à gauche */
+  margin-left: 15px;
   padding: 10px 0;
   object-fit: contain;
 }
+
 
 /* Conteneur du logo */
 .header-logo-container {
