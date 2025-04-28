@@ -7,10 +7,9 @@ routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
 import mongocon from '../mongodb.js';
 const avisCollection = mongocon.db("MangathequeBD").collection("avis");
-const router = express.Router();
-
 const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
 const inventaireCollection = mongocon.db("MangathequeBD").collection("inventaire");
+const empruntsCollection = mongocon.db("MangathequeBD").collection("emprunts");
 // Route pour afficher la page "Nos séries"
 routeur.get('/nos-series', function (req, res) {
     console.log(req.session);
@@ -118,7 +117,7 @@ routeur.get('/tomes/:isbn', async function (req, res) {
         JOIN serie s ON t.serie_id_serie = s.id_serie
         WHERE t.isbn = ?
     `;
-
+    const identifiant = req.session.user.identifiant;
     var utilisateurConnecte = false;
     if (req.session.user?.identifiant){
         utilisateurConnecte = true;
@@ -130,6 +129,7 @@ routeur.get('/tomes/:isbn', async function (req, res) {
         const tome = result[0];
         tome.prix = tome.prix.toFixed(2);
 
+        //Récupère le stock restant du tome
         let inventaire = await inventaireCollection.findOne({ isbn: tomeISBN});
         if (!inventaire) {
             inventaire = { isbn: parseFloat(tomeISBN), quantite: 10 };
@@ -137,12 +137,19 @@ routeur.get('/tomes/:isbn', async function (req, res) {
           }
           tome.stock = inventaire.quantite;
 
+        //Regarde si l'utilisateur a déjà emprunté ce tome
+        const dejaEmprunte = await empruntsCollection.findOne({ 
+            utilisateur_identifiant : identifiant,
+            isbn : tomeISBN,
+            retournee : false
+         })
+
         let isFavori = false;
         let avis = [];
 
         try {
             if (req.session.user?.identifiant) {
-                const utilisateur = await utilisateurCollection.findOne({ identifiant: req.session.user.identifiant });
+                const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
                 isFavori = utilisateur?.favorites?.includes(tomeISBN);
             }
 
@@ -155,7 +162,8 @@ routeur.get('/tomes/:isbn', async function (req, res) {
             tome,
             isFavori,
             connecte: utilisateurConnecte,
-            avis
+            avis,
+            dejaEmprunte
         });
     });
 });

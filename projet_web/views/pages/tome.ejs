@@ -9,7 +9,12 @@
         <%- include('../partials/header') %>
 </head>
 
-<% const indisponible = tome.stock <= 0; %>
+<!-- Variables pour les boutons d'emprunt/d'ajout au panier-->
+<% const indisponible = tome.stock <= 0;
+const empruntPossible = indisponible || !!dejaEmprunte;
+const texteEmprunt = dejaEmprunte ? 'EMPRUNT EN COURS' : 'EMPRUNTER';
+%>
+
 <body class="tome-page">
     <% if (typeof avis === 'undefined') { var avis = []; } %>
     <div class="container">
@@ -45,7 +50,7 @@
                                 </form>
                                 <div class="borrow-heart-group">
                                     <form action="/emprunt/<%= tome.isbn %>" method="POST" class="borrow-form">
-                                        <button class="btn borrow" type="submit" <%= indisponible ? 'disabled' : ''%>>EMPRUNTER</button>
+                                        <button class="btn borrow" type="submit" <%= empruntPossible ? 'disabled' : ''%>><%= texteEmprunt %></button>
                                     </form>
                                     <form action="/coupCoeur/<%= tome.isbn %>" method="POST" class="add-to-heart-form">
                                         <button type="submit" class="btn add-to-heart"
