@@ -60,6 +60,19 @@ routeur.post("/emprunt/:isbn", async (req, res) => {
     const identifiant = req.session.user.identifiant;
     const isbnTome = parseFloat(req.params.isbn);
 
+    const dejaEmprunte = await empruntsCollection.findOne({ 
+        isbn: isbnTome,
+        utilisateur_identifiant : identifiant,
+        retournee : false
+    });
+
+    if (dejaEmprunte){
+        return res.render("pages/erreur", {
+            message: `Impossible d'emprunter ce tome. Vous l'avez déjà emprunté.`,
+            articles: [],
+            connecte: true
+        });
+    }
     let inventaire = await inventaireCollection.findOne({ isbn: isbnTome });
     let stock = inventaire.quantite;
     if (stock === 0) {
