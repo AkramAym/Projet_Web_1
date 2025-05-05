@@ -3,7 +3,6 @@ import express from "express";
 import con from '../mysqlbd.js';
 import mongocon from '../mongodb.js';
 import { ObjectId } from 'mongodb';
-import cron from 'node-cron';
 
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
@@ -60,13 +59,13 @@ routeur.post("/emprunt/:isbn", async (req, res) => {
     const identifiant = req.session.user.identifiant;
     const isbnTome = parseFloat(req.params.isbn);
 
-    const dejaEmprunte = await empruntsCollection.findOne({ 
+    const dejaEmprunte = await empruntsCollection.findOne({
         isbn: isbnTome,
-        utilisateur_identifiant : identifiant,
-        retournee : false
+        utilisateur_identifiant: identifiant,
+        retournee: false
     });
 
-    if (dejaEmprunte){
+    if (dejaEmprunte) {
         return res.render("pages/erreur", {
             message: `Impossible d'emprunter ce tome. Vous l'avez déjà emprunté.`,
             articles: [],

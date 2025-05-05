@@ -8,8 +8,11 @@ import empruntsRouteur from './emprunt.js';
 import avisRouteur from './avis.js';
 import favorisRouteur from './favoris.js';
 import mangaRouteur from './mangas.js';
+import administrationRouteur from './administration.js'
 
 const routeur = express.Router();
+
+routeur.use(administrationRouteur);
 
 routeur.use(authRouteur);
 

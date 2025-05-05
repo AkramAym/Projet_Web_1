@@ -238,6 +238,4 @@ routeur.get('/nos-mangas', async (req, res) => {
     }
 });
 
-
-
 export default routeur;
