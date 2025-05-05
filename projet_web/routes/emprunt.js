@@ -12,45 +12,6 @@ const empruntsCollection = mongocon.db("MangathequeBD").collection("emprunts");
 const inventaireCollection = mongocon.db("MangathequeBD").collection("inventaire");
 const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
 
-const penaliteJournaliere = -0.5;
-
-async function appliquerPenalites() {
-    console.log("pénalités démarré à", new Date().toISOString());
-    const maintenant = new Date();
-    const hier = new Date(maintenant);
-    hier.setDate(maintenant.getDate() - 1);
-    hier.setHours(23,59,59,999);
-
-    const empruntsTard = await empruntsCollection.find({
-        retournee : false,
-        date_retour_prevue: { $lt: maintenant},
-        $or: [
-            {derniereDatePenalisee:{ $lt: hier} },
-            {derniereDatePenalisee: null }
-        ]
-    }).toArray();
-
-    for (const emprunt of empruntsTard){
-        await utilisateurCollection.updateOne(
-            { identifiant: emprunt.utilisateur_identifiant },
-            { $inc: { solde : penaliteJournaliere } }
-        );
-
-        await empruntsCollection.updateOne(
-            {_id : emprunt.id},
-            { $set: { derniereDatePenalisee : maintenant} }
-        );
-    }
-    console.log("pénalitées terminées à", new Date().toISOString());
-}
-cron.schedule('0 0 * * *', appliquerPenalites);
-
-routeur.post('/test-penalites', async (req, res) => {
-    await appliquerPenalites();
-    res.send("Pénalités appliquées");
-  });
-
-
 // Ajouter un emprunt
 routeur.post("/emprunt/:isbn", async (req, res) => {
     if (!req.session.user?.identifiant)
@@ -147,19 +108,25 @@ routeur.get("/emprunts", async (req, res) => {
                     connecte: true
                 });
             }
-            results.forEach(objet => {
-                const emprunt = emprunts.find(e => e.isbn === objet.isbn);
-                if (emprunt) {
-                    objet._id = emprunt._id;
-                    objet.dateEmprunt = emprunt.date_emprunt;
-                    objet.dateRetourPrevue = emprunt.date_retour_prevue;
-                    objet.retournee = emprunt.retournee;
-                    objet.dateRetournee = emprunt.date_retournee;
-                }
+
+            const empruntsEnrichis = emprunts.map(emprunt => {
+                const details = results.find(r => r.isbn === emprunt.isbn);
+                return {
+                    _id: emprunt._id,
+                    isbn: emprunt.isbn,
+                    utilisateur_identifiant: emprunt.utilisateur_identifiant,
+                    dateEmprunt: emprunt.date_emprunt,
+                    dateRetourPrevue: emprunt.date_retour_prevue,
+                    retournee: emprunt.retournee,
+                    dateRetournee: emprunt.date_retournee,
+                    titre_serie: details?.titre_serie || "Titre inconnu",
+                    numero_volume: details?.numero_volume || "N/A",
+                    image: details?.image || "/images/placeholder.jpg"
+                };
             });
             console.log("200, Résultats :", results);
             res.render("pages/emprunts", {
-                emprunts: results,
+                emprunts: empruntsEnrichis,
                 connecte: true
             });
         });
@@ -233,6 +200,53 @@ routeur.get("/emprunts/:id", async (req, res) => {
         console.error("Erreur route GET /emprunts/:id :", err);
         res.render("pages/erreur", {
             message: "Erreur serveur, veuillez réessayer plus tard",
+            connecte: true
+        });
+    }
+});
+
+routeur.post("/emprunts/:_id/retour", async (req, res) => {
+    if (!req.session.user?.identifiant)
+        return res.redirect("/connexion");
+
+    const identifiant = req.session.user.identifiant;
+    const idEmprunt = req.params._id;
+
+    try {
+        const emprunt = await empruntsCollection.findOne({
+            _id: new ObjectId(idEmprunt),
+            utilisateur_identifiant: identifiant
+        });
+
+        if (!emprunt || emprunt.retournee) {
+            return res.render("pages/erreur", {
+                message: "Cet emprunt est introuvable ou déjà retourné.",
+                connecte: true
+            });
+        }
+
+        // Marquer comme retourné
+        await empruntsCollection.updateOne(
+            { _id: new ObjectId(idEmprunt) },
+            {
+                $set: {
+                    retournee: true,
+                    date_retournee: new Date()
+                }
+            }
+        );
+
+        // Réincrémenter le stock
+        await inventaireCollection.updateOne(
+            { isbn: emprunt.isbn },
+            { $inc: { quantite: 1 } }
+        );
+
+        res.redirect("/emprunts");
+    } catch (err) {
+        console.error("Erreur lors du retour de l’emprunt :", err);
+        res.render("pages/erreur", {
+            message: "Erreur lors du retour. Veuillez réessayer plus tard.",
             connecte: true
         });
     }
