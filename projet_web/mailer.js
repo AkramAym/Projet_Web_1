@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 export async function envoyerMail(destinataire, objet, message) {
     const mailOptions = {
-        from: '"Mangathèque"', // ← à changer si domaine pas encore validé
+        from: '"Mangathèque"<agouneyani@gmail.com>', // ← à changer si domaine pas encore validé
         to: destinataire,
         subject: objet,
         text: message

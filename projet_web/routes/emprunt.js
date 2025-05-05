@@ -76,7 +76,7 @@ routeur.get("/emprunts", async (req, res) => {
 
     const identifiant = req.session.user.identifiant;
     try {
-        const emprunts = await empruntsCollection.find({ utilisateur_identifiant: identifiant }).toArray();
+        const emprunts = await empruntsCollection.find({ utilisateur_identifiant: identifiant }).sort({ retournee: 1, date_emprunt: -1 }).toArray();
 
         if (emprunts.length === 0) {
             return res.render("pages/emprunts", {

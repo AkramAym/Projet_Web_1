@@ -32,8 +32,11 @@
                     <a href="#" id="search-toggle" class="icon-link">
                         <i class="fas fa-search"></i>
                     </a>
-                    <a href="#" id="profile-button" class="icon-link">
+                    <a href="#" id="profile-button" class="icon-link position-relative">
                         <i class="fas fa-user"></i>
+                        <% if (notificationNonLue > 0) { %>
+                            <span class="notif-badge"></span>
+                        <% } %>
                     </a>
                     <a href="/panier" class="icon-link">
                         <i class="fas fa-shopping-bag"></i>

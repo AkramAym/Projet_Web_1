@@ -1289,3 +1289,15 @@ body {
 .btn.restock:hover {
     background-color: #19024e;
 }
+
+.notif-badge {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    z-index: 5;
+    border: 2px solid white; 
+}

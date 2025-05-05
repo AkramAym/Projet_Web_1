@@ -39,6 +39,19 @@ app.use(session({
     store: MongoStore.create({ client: mongocon })
 }));
 
+app.use(async (req, res, next) => {
+    if (req.session.user?.identifiant) {
+        const notification = await mongocon.db("MangathequeBD").collection("notification").countDocuments({
+                utilisateur_identifiant: req.session.user.identifiant,
+                lu: false
+            });
+        res.locals.notificationNonLue = notification;
+    } else {
+        res.locals.notificationNonLue = 0;
+    }
+    next();
+});
+
 // Routes
 app.use(rechercheRouteur);
 app.use(routeur);

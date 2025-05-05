@@ -15,7 +15,7 @@ routeur.post("/coupCoeur/:isbn", async function (req, res) {
     }
 
     const identifiant = req.session.user.identifiant;
-    const isbnTome = req.params.isbn;
+    const isbnTome = parseFloat(req.params.isbn);
 
     try {
         const utilisateur = await utilisateurCollection.findOne({ identifiant });
@@ -108,7 +108,7 @@ routeur.post("/coupCoeur/:isbn/supprimer", async (req, res) => {
     }
 
     const identifiant = req.session.user.identifiant;
-    const isbnTome = req.params.isbn;
+    const isbnTome = parseFloat(req.params.isbn);
 
     try {
         await utilisateurCollection.updateOne(
