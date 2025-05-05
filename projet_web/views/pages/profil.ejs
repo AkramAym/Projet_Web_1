@@ -51,9 +51,11 @@
                         <a href="/commandes" class="account-button">Mes commandes</a>
                         <a href="/emprunts" class="account-button">Mes emprunts</a>
                         <a href="/deconnexion" class="account-button account-button-logout">Déconnexion</a>
+                        <% if (utilisateur.role === 'Administrateur') {%>
                         <form action="/test-penalites" method="POST">
                             <button type="submit">Tester pénalités</button>
                           </form>
+                          <% } %>
                     </div>
                 </div>
             </div>

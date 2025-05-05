@@ -444,6 +444,8 @@ html, body {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     max-width: 250px;
 }
 
@@ -476,7 +478,6 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 0; /* Pas de bords arrondis */
-    margin: 0 auto; /* Centrer le bouton si nécessaire */
 }
 
 .tome-page .buttons-container .btn.add-to-cart:hover {
@@ -497,7 +498,6 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 0; /* Pas de bords arrondis */
-    margin: 10px auto; /* Espacement entre les boutons et centrer */
 }
 
 .tome-page .buttons-container .btn.borrow:hover {
@@ -530,7 +530,7 @@ html, body {
 }
 
 .tome-page .quantity-selector {
-    width: 60px;
+    width: 50px;
     padding: 10px;
     font-size: 1.2rem;
     border: 1px solid #ccc;
@@ -552,7 +552,6 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 0; /* Pas de bords arrondis */
-    margin: 0 auto; /* Centrer le bouton si nécessaire */
 }
 .btn-outline-danger {
     border-color: #dc3545;
@@ -608,7 +607,6 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 0; /* Pas de bords arrondis */
-    margin: 0 auto; /* Centrer le bouton si nécessaire */
 }
 
 .tome-page .buttons-container .btn.add-to-cart:hover {
@@ -629,7 +627,6 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     border-radius: 0; /* Pas de bords arrondis */
-    margin: 10px auto; /* Espacement entre les boutons et centrer */
 }
 
 .tome-page .buttons-container .btn.borrow:hover {
@@ -1265,5 +1262,30 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 10px;
+}
+
+.restock-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tome-page .buttons-container .btn.restock {
+    background-color: rgb(9, 10, 97);
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 450px; 
+    height: 70px;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0; /* Pas de bords arrondis */
+}
+
+.btn.restock:hover {
+    background-color: #19024e;
 }

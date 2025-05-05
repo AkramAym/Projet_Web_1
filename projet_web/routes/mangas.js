@@ -118,14 +118,11 @@ routeur.get('/tomes/:isbn', async function (req, res) {
         WHERE t.isbn = ?
     `;
     const identifiant = req.session.user.identifiant;
-    var utilisateurConnecte = false;
-    if (req.session.user?.identifiant){
-        utilisateurConnecte = true;
-    }
+    let utilisateurConnecte = Boolean(identifiant);
+    let utilisateur = null;
 
     con.query(query, [tomeISBN], async (err, result) => {
         if (err) throw err;
-    
         const tome = result[0];
         tome.prix = tome.prix.toFixed(2);
 
@@ -149,7 +146,7 @@ routeur.get('/tomes/:isbn', async function (req, res) {
 
         try {
             if (req.session.user?.identifiant) {
-                const utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
+                utilisateur = await utilisateurCollection.findOne({ identifiant: identifiant });
                 isFavori = utilisateur?.favorites?.includes(tomeISBN);
             }
 
@@ -159,6 +156,7 @@ routeur.get('/tomes/:isbn', async function (req, res) {
         }
     
         res.render("pages/tome", {
+            utilisateur,
             tome,
             isFavori,
             connecte: utilisateurConnecte,

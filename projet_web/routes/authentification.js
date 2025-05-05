@@ -44,7 +44,8 @@ routeur.post("/inscription", async function (req, res) {
                 mot_de_passe: motDePasseEncrypte,
                 email: email,
                 telephone: telephone || null,
-                solde: 0
+                solde: 0,
+                role: "client"
             };
 
             await utilisateurCollection.insertOne(newUser);
@@ -84,7 +85,8 @@ routeur.post("/connexion", async function (req, res) {
             throw new Error('Mot de passe invalide');
         } else {
             req.session.user = {
-                identifiant: identifiant
+                identifiant: identifiant,
+                role: utilisateur.role || client
             };
             res.redirect('/profil');
             console.log(utilisateur);
