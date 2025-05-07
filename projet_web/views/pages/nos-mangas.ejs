@@ -53,6 +53,7 @@
           <option value="prix_asc">Prix croissant</option>
           <option value="prix_desc">Prix décroissant</option>
           <option value="stock">Popularité (stock faible en haut)</option>
+          <option value="avis_desc">Meilleures notes (avis)</option>
         </select>
       </form>
     </div>
@@ -73,6 +74,22 @@
               </h5>
               <p class="manga-author"> <%= tome.auteur %></p>
               <p class="manga-price"> <%= tome.prix.toFixed(2) %> $</p>
+              <div class="star-rating">
+                <% const avg = tome.note_moyenne || 0; %>
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <% if (i <= Math.floor(avg)) { %>
+                    <span class="star filled">&#9733;</span>
+                  <% } else if (i - avg < 1) { %>
+                    <span class="star half">&#9733;</span>
+                  <% } else { %>
+                    <span class="star">&#9733;</span>
+                  <% } %>
+                <% } %>
+              </div>
+              
+              
+              
+              
             </div>
           </div>
         </div>

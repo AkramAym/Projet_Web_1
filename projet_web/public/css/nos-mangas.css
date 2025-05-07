@@ -321,6 +321,41 @@
     transition: all 0.3s ease;
   }
   
+  .star-rating {
+    display: flex;
+    justify-content: center;
+    direction: ltr; /* garantit gauche → droite */
+    gap: 3px;
+  }
+  
+  .star {
+    font-size: 18px;
+    color: #ccc;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .star.filled {
+    color: #ffcc00;
+  }
+  
+  .star.half {
+    color: #ccc;
+  }
+  
+  .star.half::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #ffcc00;
+    display: block;
+  }
+  
+  
+  
+
   .manga-title a::after {
     content: '';
     position: absolute;

@@ -207,15 +207,33 @@ routeur.get('/nos-mangas', async (req, res) => {
         con.query(sql, params, async (err, mangas) => {
             if (err) throw err;
 
-            // Stock MongoDB
+            const db = mongocon.db("MangathequeBD");
+            const avisCollection = db.collection("avis");
+            const inventaireCollection = db.collection("inventaire");
+
+            const allAvis = await avisCollection.find({}).toArray();
+
             for (let m of mangas) {
-                const inv = await mongocon.db("MangathequeBD").collection("inventaire").findOne({ isbn: m.isbn });
+                // Ajout du stock
+                const inv = await inventaireCollection.findOne({ isbn: m.isbn });
                 m.stock = inv ? inv.quantite : 0;
+
+                // Calcul de la moyenne des avis
+                const avisManga = allAvis.filter(a => a.isbn === m.isbn);
+                if (avisManga.length > 0) {
+                    const moyenne = avisManga.reduce((sum, a) => sum + a.note, 0) / avisManga.length;
+                    m.note_moyenne = moyenne;
+                } else {
+                    m.note_moyenne = 0;
+                }
             }
 
-            // Tri par stock (popularité)
             if (sort === 'stock') {
                 mangas.sort((a, b) => a.stock - b.stock);
+            }
+
+            if (sort === 'avis_desc') {
+                mangas.sort((a, b) => b.note_moyenne - a.note_moyenne); // 🟡 CORRECTION ICI
             }
 
             con.query(editeurSQL, (err, editeurs) => {
@@ -237,5 +255,8 @@ routeur.get('/nos-mangas', async (req, res) => {
         res.status(500).send('Erreur serveur');
     }
 });
+
+
+
 
 export default routeur;
