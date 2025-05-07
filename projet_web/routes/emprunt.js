@@ -133,9 +133,8 @@ routeur.get("/emprunts", async (req, res) => {
 
     } catch (err) {
         console.error("Erreur route GET /emprunts :", err);
-        res.render("pages/emprunts", {
+        res.render("pages/erreur", {
             message: "Erreur serveur, veuillez réessayer plus tard",
-            emprunts: [],
             connecte: true
         });
     }

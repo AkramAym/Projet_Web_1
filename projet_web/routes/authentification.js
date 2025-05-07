@@ -8,6 +8,7 @@ routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
 
 const utilisateurCollection = mongocon.db("MangathequeBD").collection("utilisateur");
+const notificationCollection = mongocon.db("MangathequeBD").collection("notification");
 
 // Route pour afficher la page d'inscription
 routeur.get('/inscription', (req, res) => {
@@ -131,6 +132,33 @@ routeur.get('/profil', async function (req, res) {
         return res.redirect("/connexion");
     }
 });
+
+//Route pour afficher les notifications de l'utilisateur
+routeur.get('/notifications', async function (req, res) {
+    const identifiant = req.session.user.identifiant;
+
+    if (!identifiant) {
+        return res.redirect("/connexion");
+    }
+    try{
+        const notifications = await notificationCollection.find({utilisateur_identifiant: identifiant })
+        .sort({ date: -1})
+        .toArray();
+
+        res.render('pages/notifications', {
+            notifications,
+            connecte: true
+        });
+    }
+    catch (err) {
+        console.log("Erreur route GET /notifications:", err);
+        res.render("pages/erreur", {
+            message: "Erreur serveur, veuillez réessayer plus tard",
+            connecte: true
+        });
+    }
+})
+
 
 //Route pour deconnecter l'utilisateur
 routeur.get('/deconnexion', (req, res) => {

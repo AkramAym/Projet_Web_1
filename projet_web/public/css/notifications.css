@@ -1,0 +1,80 @@
+.notifications-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.notifications-container h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.notification-card {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-left: 6px solid #333;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.notification-card.unread {
+    background-color: #e8e8e8;
+    font-weight: bold;
+}
+
+.notification-date {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.notification-message {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.mark-single-form {
+    text-align: right;
+}
+
+.mark-read-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.mark-read-button:hover {
+    background-color: #555;
+}
+
+.mark-all-form {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.mark-all-button {
+    background-color: transparent;
+    border: 2px solid #333;
+    color: #333;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mark-all-button:hover {
+    background-color: #333;
+    color: #fff;
+}

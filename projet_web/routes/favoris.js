@@ -28,8 +28,7 @@ routeur.post("/coupCoeur/:isbn", async function (req, res) {
                 ? { $pull: { favorites: isbnTome } }
                 : { $addToSet: { favorites: isbnTome } }
         );
-
-        res.redirect("/coupCoeur");
+        res.redirect(`/tomes/${isbnTome}`);
     } catch (error) {
         console.error(error);
         res.render("pages/erreur", {

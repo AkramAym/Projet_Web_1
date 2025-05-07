@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <%- include('../partials/head') %>
+    <%- include('../partials/header') %>
+    <title>Notifications</title>
+    <link rel="stylesheet" href="/css/notifications.css">
+</head>
+
+<body>
+    <div class="notifications-container">
+        <h1>Vos notifications</h1>
+
+        <% if (notifications.length === 0) { %>
+            <p>Vous n’avez aucune notification pour le moment.</p>
+        <% } else { %>
+            <form action="/notifications/marquer-toutes-lues" method="POST" class="mark-all-form">
+                <button type="submit" class="mark-all-button">Tout marquer comme lu</button>
+            </form>
+
+            <% notifications.forEach(n => { %>
+                <div class="notification-card <%= n.lu ? '' : 'unread' %>">
+                    <p class="notification-date"><%= new Date(n.date).toLocaleString('fr-FR') %></p>
+                    <p class="notification-message"><%= n.message %></p>
+
+                    <% if (!n.lu) { %>
+                        <form action="/notifications/<%= n._id %>/lue" method="POST" class="mark-single-form">
+                            <button type="submit" class="mark-read-button">Marquer comme lu</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+</body>
+
+<footer>
+    <%- include('../partials/footer') %>
+</footer>
+</html>
