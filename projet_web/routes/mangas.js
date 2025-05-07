@@ -117,10 +117,10 @@ routeur.get('/tomes/:isbn', async function (req, res) {
         JOIN serie s ON t.serie_id_serie = s.id_serie
         WHERE t.isbn = ?
     `;
-    const identifiant = req.session.user.identifiant;
-    let utilisateurConnecte = Boolean(identifiant);
+    const utilisateurConnecte = !!req.session.user;
+    const identifiant = utilisateurConnecte ? req.session.user.identifiant : null;
     let utilisateur = null;
-
+    
     con.query(query, [tomeISBN], async (err, result) => {
         if (err) throw err;
         const tome = result[0];
@@ -135,6 +135,7 @@ routeur.get('/tomes/:isbn', async function (req, res) {
           tome.stock = inventaire.quantite;
 
         //Regarde si l'utilisateur a déjà emprunté ce tome
+
         const dejaEmprunte = await empruntsCollection.findOne({ 
             utilisateur_identifiant : identifiant,
             isbn : tomeISBN,

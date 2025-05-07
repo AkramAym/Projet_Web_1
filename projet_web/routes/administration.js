@@ -112,10 +112,10 @@ routeur.post('/restock/:isbn', async (req, res) => {
         });
     });
 
-    const message = `Bonjour  ${utilisateur.prenom || utilisateur.identifiant}, {${tomeDetail.titre_serie}, Tome ${tomeDetail.numero_volume} est à nouveau en stock !`;
-
     for (const utilisateur of utilisateursFavoris) {
+        const message = `Bonjour  ${utilisateur.prenom || utilisateur.identifiant}, ${tomeDetail.titre_serie}, Tome ${tomeDetail.numero_volume} est à nouveau en stock !`;
         await notificationsCollection.insertOne({
+
             utilisateur_identifiant: utilisateur.identifiant,
             message,
             lu: false,
