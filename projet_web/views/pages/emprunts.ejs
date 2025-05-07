@@ -12,33 +12,36 @@
   <div class="user-emprunts">
     <h1>Historique de vos emprunts</h1>
 
-    <% if (emprunts.length===0) { %>
+    <% if (emprunts.length === 0) { %>
       <p>Vous n’avez aucun emprunt en cours.</p>
-      <% } else { %>
-        <% emprunts.forEach(emprunt=> { %>
-          <a href="/emprunts/<%= emprunt._id %>" class="emprunt-card-link">
-            <div class="emprunt-card">
-              <h3>Emprunt du <%= new Date(emprunt.dateEmprunt).toLocaleDateString('fr-FR') %>
-              </h3>
-              <p><strong>Série / Tome :</strong>
-                <%= emprunt.titre_serie %> #<%= emprunt.numero_volume %>
+    <% } else { %>
+      <% emprunts.forEach(emprunt => {
+        const maintenant = new Date();
+        const retournee = emprunt.retournee;
+        const estEnRetard = !retournee && new Date(emprunt.dateRetourPrevue) < maintenant;
+      %>
+        <a href="/emprunts/<%= emprunt._id %>" class="emprunt-card-link">
+          <div class="emprunt-card <%= estEnRetard ? 'late-card' : '' %>">
+            <h3>Emprunt du <%= new Date(emprunt.dateEmprunt).toLocaleDateString('fr-FR') %></h3>
+            <p><strong>Série / Tome :</strong> <%= emprunt.titre_serie %> #<%= emprunt.numero_volume %></p>
+            <p><strong>Retour prévu :</strong> <%= new Date(emprunt.dateRetourPrevue).toLocaleDateString('ca-CA') %></p>
+    
+            <% if (retournee) { %>
+              <p class="status returned">
+                <strong>Statut :</strong> Rendu le <%= new Date(emprunt.dateRetournee).toLocaleDateString('ca-CA') %>
               </p>
-              <p><strong>Retour prévu :</strong> <%= new Date(emprunt.dateRetourPrevue).toLocaleDateString('ca-CA') %>
+            <% } else { %>
+              <p class="status <%= estEnRetard ? 'late' : 'ongoing' %>">
+                <strong>Statut :</strong> <%= estEnRetard ? 'En retard' : 'En cours' %>
               </p>
-              <% if (emprunt.retournee) { %>
-                <p class="status returned">
-                  <strong>Statut :</strong> Rendu le <%= new Date(emprunt.dateRetournee).toLocaleDateString('ca-CA') %>
-                </p>
-                <% } else { %>
-                  <p class="status ongoing"><strong>Statut :</strong> En cours</p>
-                  <form action="/emprunts/<%= emprunt._id %>/retour" method="POST" class="emprunt-card-form">
-                    <button type="submit" class="emprunt-return-btn">Rendre</button>
-                  </form>
-                  <% } %>
-            </div>
-          </a>
-          <% }) %>
+              <form action="/emprunts/<%= emprunt._id %>/retour" method="POST" class="emprunt-card-form">
+                <button type="submit" class="emprunt-return-btn">Rendre</button>
+              </form>
             <% } %>
+          </div>
+        </a>
+      <% }) %>
+    <% } %>
   </div>
 
   <%- include('../partials/footer') %>

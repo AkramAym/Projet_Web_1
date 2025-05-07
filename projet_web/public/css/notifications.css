@@ -25,6 +25,7 @@
 .notification-card.unread {
     background-color: #e8e8e8;
     font-weight: bold;
+    border-left-color: #e53935;
 }
 
 .notification-date {

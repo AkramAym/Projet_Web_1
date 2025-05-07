@@ -1,8 +1,9 @@
 import { response, Router } from "express";
 import express from "express";
-import session from "express-session";
 import mongocon from '../mongodb.js';
 import bcrypt from "bcryptjs";
+import { ObjectId } from 'mongodb';
+
 const routeur = Router();
 routeur.use(express.urlencoded({ extended: false }));
 routeur.use(express.json());
@@ -136,7 +137,6 @@ routeur.get('/profil', async function (req, res) {
 //Route pour afficher les notifications de l'utilisateur
 routeur.get('/notifications', async function (req, res) {
     const identifiant = req.session.user.identifiant;
-
     if (!identifiant) {
         return res.redirect("/connexion");
     }
@@ -157,7 +157,45 @@ routeur.get('/notifications', async function (req, res) {
             connecte: true
         });
     }
-})
+});
+
+routeur.post('/notifications/marquer-toutes-lues', async function (req, res) {
+    const identifiant = req.session.user.identifiant;
+    try{
+        await notificationCollection.updateMany(
+            { utilisateur_identifiant : identifiant},
+            {$set: {lu : true}}
+        );
+        res.redirect('/notifications');
+    }
+    catch (err) {
+        console.log("Erreur route POST /notifications/marquer-toutes-lues:", err);
+        res.render("pages/erreur", {
+            message: "Erreur serveur, veuillez réessayer plus tard",
+            connecte: true
+        });
+    }
+});
+
+routeur.post('/notifications/:id/lue', async function (req, res) {
+    const identifiant = req.session.user.identifiant;
+    const idNotif = req.params.id;
+    try {
+        await notificationCollection.updateOne(
+            {_id: new ObjectId(idNotif),
+            utilisateur_identifiant: identifiant},
+            {$set: {lu : true}}
+    );
+
+    res.redirect('/notifications');
+    } catch (err) {
+        console.log("Erreur route POST /notifications/:id/lue:", err);
+        res.render("pages/erreur", {
+            message: "Erreur serveur, veuillez réessayer plus tard",
+            connecte: true
+        });
+    }
+});
 
 
 //Route pour deconnecter l'utilisateur

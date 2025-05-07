@@ -28,6 +28,10 @@
        border-radius: 5px;
        transition: background 0.2s ease;
    }
+   .emprunt-card-link {
+    text-decoration: none;
+    color: inherit;
+  }
 
    .emprunt-card:hover {
        background: #fafafa;
@@ -45,6 +49,10 @@
        margin: 6px 0;
    }
 
+   .late-card {
+    border-left: 6px solid #e53935;
+  }
+  
    .status.returned {
        color: #2d6a4f;
    }
@@ -52,6 +60,10 @@
    .status.ongoing {
        color: #bc6c25;
    }
+
+   .status.late {
+    color: #e53935; 
+}
 
    .emprunt-card-form {
        margin-top: 15px;

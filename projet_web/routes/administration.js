@@ -64,7 +64,7 @@ cron.schedule('0 0 * * *', appliquerPenalites);
 
 routeur.post('/test-penalites', async (req, res) => {
     await appliquerPenalites();
-    res.send("Pénalités appliquées");
+    res.redirect('/profil');
 });
 
 routeur.post('/restock/:isbn', async (req, res) => {
@@ -91,10 +91,6 @@ routeur.post('/restock/:isbn', async (req, res) => {
     const utilisateursFavoris = await utilisateurCollection.find({
         favorites: { $in: [isbn] }
     }).toArray();
-    if (utilisateursFavoris.length === 0) {
-        console.log("❌ Aucun utilisateur avec ce tome en favori.");
-        return res.redirect(`/tome/${isbn}`);
-    }
     console.log("95" + utilisateursFavoris);
     const tomeDetail = await new Promise((resolve, reject) => {
         const query = `
