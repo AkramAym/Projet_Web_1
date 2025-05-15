@@ -3,7 +3,9 @@
 <head>
     <%- include('../partials/head') %>
     <title>Inscription</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/inscription.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="inscription-page">
 
@@ -13,7 +15,7 @@
                 <!-- Logo -->
                 <div class="logo-container">
                     <a href="/">
-                        <img src="/images/logo.png" alt="MangaThèque" class="logo-img">
+                    <img src="/images/newLogo.png" alt="MangaThèque" class="logo-img">
                     </a>
                 </div>
 
@@ -25,32 +27,42 @@
 
                 <!-- Formulaire -->
                 <form action="/inscription" method="POST" onsubmit="return validerFormulaire()">
-                    <label for="identifiant">Identifiant</label>
-                    <input type="text" id="identifiant" name="identifiant" required>
+                    <div class="input-field">
+                        <input type="text" id="identifiant" name="identifiant" placeholder=" " required>
+                        <label for="identifiant">Identifiant</label>
+                    </div>
 
-                    <label for="prenom">Prénom</label>
-                    <input type="text" id="prenom" name="prenom" required>
+                    <div class="input-field">
+                        <input type="text" id="prenom" name="prenom" placeholder=" " required>
+                        <label for="prenom">Prénom</label>
+                    </div>
 
-                    <label for="nom">Nom de famille</label>
-                    <input type="text" id="nom" name="nom" required>
+                    <div class="input-field">
+                        <input type="text" id="nom" name="nom" placeholder=" " required>
+                        <label for="nom">Nom de famille</label>
+                    </div>
 
-                    <label for="telephone">Numéro de téléphone</label>
-                    <input type="tel" id="telephone" name="telephone" required>
+                    <div class="input-field">
+                        <input type="tel" id="telephone" name="telephone" placeholder=" " required>
+                        <label for="telephone">Numéro de téléphone</label>
+                    </div>
 
-                    <label for="email">Adresse de courriel</label>
-                    <input type="email" id="email" name="email" required>
+                    <div class="input-field">
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">Adresse de courriel</label>
+                    </div>
 
-                    <label for="password">Mot de passe</label>
-                    <div class="password-container">
-                        <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+                    <div class="input-field password-container">
+                        <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder=" " required>
+                        <label for="mot_de_passe">Mot de passe</label>
                         <span class="toggle-password">
                             <i class="fas fa-eye"></i>
                         </span>
                     </div>
 
-                    <label for="passwordConfirme">Confirmer le Mot de passe</label>
-                    <div class="password-container">
-                        <input type="password" id="motDePasseConfirme" name="motDePasseConfirme" required>
+                    <div class="input-field password-container">
+                        <input type="password" id="motDePasseConfirme" name="motDePasseConfirme" placeholder=" " required>
+                        <label for="motDePasseConfirme">Confirmer le Mot de passe</label>
                         <span class="toggle-password">
                             <i class="fas fa-eye"></i>
                         </span>

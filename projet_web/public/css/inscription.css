@@ -1,215 +1,308 @@
-/* Applique un fond gris clair à toute la page */
+/* Style général */
 body {
-    background-color: #e6e6e6;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Conteneur principal */
+.inscription-page, .connexion-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Container principal */
+.content-container, .signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+  padding: 20px;
+}
+
 .signup-container {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    text-align: center;
-    min-height: 100%;
-    align-self: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
+
+/* Boîte d'inscription avec ombre noire élégante */
 .signup-box {
-    min-height: 10px; /* Ajuste selon ton besoin */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centre le contenu verticalement */
+  background-color: white;
+  border-radius: 8px;
+  /* Ombre noire élégante sans teinte rose */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.07);
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
-
-
-.logo-container img {
-    width: 240px; /* Ajuste la taille si nécessaire */
-    margin-top: 20px; /* Ajoute un espace sous le logo */
+/* Logo */
+.logo-container {
+  margin-bottom: 20px;
 }
 
+.logo-img {
+  max-width: 120px;
+  height: auto;
+}
 
-
-
+/* Titres et textes */
 h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #333;
 }
 
+p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 25px;
+}
 
 p a {
-    color: #007bff;
-    text-decoration: none;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 p a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-
+/* Formulaire */
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  text-align: left;
 }
 
-label {
-    align-self: flex-start;
-    font-weight: bold;
-    margin-top: 10px;
+/* Style pour les labels */
+form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 600;
 }
 
-input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Style pour les champs de saisie - POLICE STYLISÉE EN GRAS */
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: 600; /* Texte en gras */
+  font-family: 'Poppins', 'Montserrat', sans-serif; /* Police stylisée */
+  letter-spacing: 0.3px; /* Espacement des lettres pour un look plus élégant */
+  color: #333;
 }
 
+form input:focus {
+  outline: none;
+  border-color: #555;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
 
+/* Pour l'effet des labels flottants */
+.input-field {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: 600; /* Texte en gras */
+  font-family: 'Poppins', 'Montserrat', sans-serif; /* Police stylisée */
+  letter-spacing: 0.3px;
+  color: #333;
+}
+
+.input-field label {
+  position: absolute;
+  left: 15px;
+  top: 12px;
+  color: #777;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  background-color: transparent;
+  font-weight: 500;
+}
+
+.input-field input:focus,
+.input-field input:not(:placeholder-shown) {
+  border-color: #555;
+}
+
+.input-field input:focus + label,
+.input-field input:not(:placeholder-shown) + label {
+  top: -20px;
+  left: 0;
+  font-size: 12px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Container pour le mot de passe et l'icône */
 .password-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    position: relative;
-}
-
-.password-container input {
-    flex-grow: 1;
-    padding-right: 30px;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .toggle-password {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+  z-index: 10;
 }
 
-
+/* Bouton d'inscription */
 .signup-button {
-    background-color: #d1d1d1;
-    border: none;
-    padding: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-    width: 100%;
-    border-radius: 5px;
-    font-weight: bold;
+  width: 100%;
+  padding: 14px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .signup-button:hover {
-    background-color: #bbb;
+  background-color: #222;
 }
 
-.content-wrap {
-    flex: 1; /* Takes up remaining space */
-    padding: 20px;
+/* Message d'erreur */
+.content-container > div,
+#erreur-message {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 4px;
+  max-width: 500px;
+  text-align: center;
+  font-weight: 500;
 }
 
-
-
-.page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Full viewport height */
-}
-/* Ajuste la hauteur totale de la page */
-.full-height {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-}
-
-/* Contenu principal qui pousse le footer vers le bas */
-.content-container {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.signup-container {
-    flex-grow: 1; /* Permet au contenu de s'étirer et pousse le footer vers le bas */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh; /* Ajuste la hauteur du contenu */
-}
-
+/* Masquer le footer */
 footer {
-    background-color: #d8d7d7;
-    padding: 10px 20px; /* Réduit l'espace autour du footer */
-    font-family: Arial, sans-serif;
-    color: #333;
-    width: 100%;
-    text-align: center;
-    font-size: 14px; /* Diminue légèrement la taille du texte */
+  display: none;
 }
 
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    margin: auto;
-    padding: 10px 0; /* Réduit l'espace interne */
+/* Remet le fond blanc et une belle ombre noire */
+.signup-box {
+  background-color: white !important;
+  border-radius: 8px;
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+
+  /* Ombre noire élégante */
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
 }
 
-.footer-links ul li {
-    margin-bottom: 5px; /* Réduit l'espacement entre les éléments */
+/* Police propre et uniforme */
+.input-field input,
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="password"] {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 15px;
+  color: #333;
+  letter-spacing: 0.3px;
 }
 
-.footer-bottom {
-    font-size: 12px; /* Réduit la taille du texte */
-}
-.inscription-page, .connexion-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-.content-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 90vh;
-}
-/* Empêche le footer d'apparaître immédiatement */
-footer {
-    display: none;
-    position: relative;
-    width: 100%;
-    background-color: #d8d7d7;
-    padding: 40px 20px;
+/* Labels en gras avec police uniforme */
+.input-field label {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  color: #777;
 }
 
-/* Garde le formulaire centré */
-.content-container {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Permet un bon centrage */
+/* Supprime toute trace d'effet rose éventuel */
+.signup-container,
+.content-container,
+.inscription-page {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+/* Supprimer l'image de fond du body */
+body {
+  background-image: none !important;
+  background-color: #8b8b8b !important;
 }
 
-/* Fait apparaître le footer uniquement au scroll */
-body.scrolled footer {
-    display: block;
+/* Enlever les coins arrondis de la boîte blanche */
+.signup-box {
+  border-radius: 0 !important;
+}
+/* Applique un fond gris clair à toute la page d’inscription */
+body.inscription-page {
+  background-color: #8b8b8b !important; /* Gris clair */
+  background-image: none !important;    /* Supprime les images de fond si présentes */
+}
+
+/* Corrige la boîte blanche */
+.signup-box {
+  background-color: white !important;
+  border-radius: 0 !important; /* Bords carrés */
+}
+
+/* Style général du message d'erreur */
+.erreur-message {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #ffe5e5; /* Rouge très pâle */
+  color: #b30000;            /* Rouge profond */
+  border: 1px solid #ff4d4d; /* Bordure rouge vive */
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.1); /* ombre légère rouge */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

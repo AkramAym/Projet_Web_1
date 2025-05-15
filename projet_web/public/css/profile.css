@@ -107,17 +107,68 @@
 .btn-logout:hover {
   background-color: #e9ecef;
 }
-
 /* Styles pour utilisateur non connecté */
 .profile-not-connected {
   text-align: center;
   padding: 20px 0;
+  background-color: white;
+  color: black;
+  border-radius: 0;
+  border: 1px solid black;
 }
 
+/* Texte */
 .profile-not-connected p {
   margin-bottom: 20px;
-  color: #666;
+  color: black;
 }
+
+/* Bloc utilisateur non connecté */
+.profile-not-connected {
+  text-align: center;
+  padding: 20px;
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid black !important;
+  border-radius: 0 !important;
+}
+
+/* Forcer le style du bouton "Se connecter" même si c’est .btn-primary */
+.profile-not-connected .btn-primary {
+  background-color: black !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-weight: bold !important;
+  width: 100% !important;
+  text-align: center;
+}
+
+/* Hover forcé */
+.profile-not-connected .btn-primary:hover {
+  background-color: #222 !important;
+  color: white !important;
+}
+
+/* Forcer le style du bouton "S’inscrire" même si c’est .btn-outline-primary */
+.profile-not-connected .btn-outline-primary {
+  background-color: #e0e0e0 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-weight: bold !important;
+  width: 100% !important;
+  text-align: center;
+}
+
+/* Hover forcé pour "S’inscrire" */
+.profile-not-connected .btn-outline-primary:hover {
+  background-color: #cfcfcf !important;
+  color: black !important;
+}
+
+
+
 
 /* Responsive */
 @media (max-width: 576px) {

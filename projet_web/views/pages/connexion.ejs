@@ -11,7 +11,7 @@
         <!-- Logo -->
         <div class="logo-container">
             <a href="/">
-                <img src="/images/logo.png" alt="MangaThèque" class="logo-img">
+                    <img src="/images/newLogo.png" alt="MangaThèque" class="logo-img">
             </a>
         </div>
         <link rel="stylesheet" href="/css/inscription.css">
@@ -24,34 +24,34 @@
         <!-- Lien de connexion -->
         <p>Première fois sur la MangaThèque ? <a href="/inscription">Inscrivez-vous maintenant.</a></p>
 
-        <!-- Formulaire -->
-        <form action="/connexion" method="POST">
-            <label for="identifiant">Identifiant</label>
-            <input type="text" id="identifiant" name="identifiant" required>
-
-            <label for="password">Mot de passe</label>
-            <div class="password-container">
-                <input type="password" id="mot_de_passe" name="mot_de_passe" required>
-                <span class="toggle-password">
-                    <i class="fas fa-eye"></i>
-                </span>
-            </div>
-
-            <!-- Bouton de validation -->
-            <button type="submit" class="signup-button">Ouvrir une session</button>
-        </form>
+     <!-- Formulaire -->
+<form action="/connexion" method="POST">
+    <div class="input-field">
+        <input type="text" id="identifiant" name="identifiant" placeholder=" " required>
+        <label for="identifiant">Identifiant</label>
     </div>
-    <% if (message) { %>
-        <div>
-            <%= message %>
-        </div>
-    <% } %>
+
+    <div class="input-field password-container">
+        <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder=" " required>
+        <label for="mot_de_passe">Mot de passe</label>
+        <span class="toggle-password">
+            <i class="fas fa-eye"></i>
+        </span>
+    </div>
+
+    <!-- Bouton de validation -->
+    <button type="submit" class="signup-button">Ouvrir une session</button>
+</form>
+    </div>
+ <% if (message) { %>
+  <div class="erreur-message">
+    <%= message %>
+  </div>
+<% } %>
+
 </div>
 
-<!-- Footer en dehors du conteneur pour qu'il se place en bas -->
-<footer>
-    <%- include('../partials/footer') %>
-</footer>
+
 
 <script src="/js/main.js"></script> 
 
